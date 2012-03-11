@@ -74,6 +74,6 @@ void Config::PrintConf()
 	cout<<"RX"<<RXport<<" TX"<<TXport<<endl;
 	if (use280) cout << "using bh280";
 	if (usePPS && use280) cout << " with PPS\n"; else cout<<endl;
-	if (use262) cout<<"using bh280 @com"<<serialPort<<endl;
+	if (use262) cout<<"using bh262 @com"<<serialPort<<endl;
 }
 

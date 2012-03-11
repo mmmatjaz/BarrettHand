@@ -23,8 +23,8 @@ Config	Config;
 Server 	Server;
 BH280	bh280;
 
-struct DataIN  din;
-struct DataOUT dout;
+struct Controls  din;
+struct Measurements dout;
 timeval LastReceived;
 
 pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
@@ -51,34 +51,41 @@ int main(int argc, char* argv[])
 	App.PrintBanner();
 	Config.FromArgs(argc, argv);
 	Config.PrintConf();
-		
-	char * rxPnt=Config.use262 ? &din.t262 : &din.t280;
+	
+	bzero(&din,sizeof(din)); bzero(&dout,sizeof(dout));	
+	
+	char * rxPnt=Config.use262 ? (char *)&din.t262 : (char *)&din.t280;
 	int rxl=0;
-	rxl +=Config.use262? 1+4*4 : 0;
-	rxl +=Config.use280? 1+4*4 : 0;
+	if (Config.use262) rxl +=sizeof(din)/2;
+	if (Config.use280) rxl +=sizeof(din)/2;
 	
 	char * txPnt=Config.use262 ? (char *)&dout.m262 : (char *)&dout.m280;
-	int txl=2;
-	txl +=Config.use262? 4*4*4 : 0;
-	txl +=Config.use280? 4*4*4 : 0;
-	txl +=Config.usePPS? 4*24*4: 0;
+	int txl=8;
+	//cout<<Config.use262<<Config.use280<<Config.usePPS<<endl;
 	
+	if (Config.use262) txl +=4*4*4;
+	if (Config.use280) txl +=4*4*4;
+	if (Config.usePPS) txl +=4*24*4;
+	//cout<<txl<< " rxl:" <<rxl<<" size"<<sizeof(dout)<<endl;
+	printf("%i %i \n",sizeof(din),sizeof(dout));
 	Server.Init(	Config.RXport, Config.TXport,
 					rxPnt, txPnt,
-					rxl, txl,
+					sizeof(din),sizeof(dout),//rxl, txl,
 					&mutex1,
 					&LastReceived,
 					Config.ST);//(Config);
-/*
+
 	bh280.Initialize(Config.usePPS,
 						&din,&dout,
 						&mutex1,
 						&LastReceived);
-	*/					
+						
 	pthread_create(&rxThread, 		NULL, rxLoop, NULL);
-	pthread_create(&txThread, 		NULL, txLoop, NULL);
-	//pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
+	//pthread_create(&txThread, 		NULL, txLoop, NULL);
+	pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
 
+	
+		
 	string input;
 	string tmp;
 	int offset;

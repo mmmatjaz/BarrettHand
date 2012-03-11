@@ -21,27 +21,27 @@ using namespace std;
 
 struct Props
 {
-	float scaleIN[4];
-	float scaleOUT[4];
-	float range[4];
+	double scaleIN[4];
+	double scaleOUT[4];
+	double range[4];
 };
 
 struct Regulator
 {
-	float maxV[4];
-	float P[4];
-	float D[4];
+	double maxV[4];
+	double P[4];
+	double D[4];
 };
 
 class BH280
 {
 private:
 //data
-	struct DataIN din;
-	struct DataOUT dout;
+	struct Controls din;
+	struct Measurements dout;
 	
-	struct DataIN * din_;
-	struct DataOUT * dout_;
+	struct Controls * din_;
+	struct Measurements * dout_;
 	timeval * tstamp;
 	pthread_mutex_t * Mutex;
 //flags
@@ -60,15 +60,17 @@ private:
 	double diffclock(timeval* currentTime, timeval* startTime);
 	void Error();
 	int PrepareRealTime();
-	float Regulate(int m);
+	double Regulate(int m);
 	void RunRealTime();
 public:
 	BH280();
 	void Initialize(bool PPS,
-					struct DataIN * DIN, struct DataOUT * DOUT,
+					struct Controls * DIN, struct Measurements * DOUT,
 					pthread_mutex_t * mutex,
 					timeval * LastReceived);
 	void Stop();
 	void Loop();
+	void LoopTest();
+	void PrepareRT();
 };
 #endif

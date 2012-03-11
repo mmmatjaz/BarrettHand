@@ -36,6 +36,9 @@ BH280::BH280()
 	reg.P[0]=Pg; reg.P[1]=Pg; reg.P[2]=Pg; reg.P[3]=Ps;
 	reg.D[0]=Dg; reg.D[1]=Dg; reg.D[2]=Dg; reg.D[3]=Ds;
 	reg.maxV[0]=MAX_G; reg.maxV[1]=MAX_G; reg.maxV[2]=MAX_G; reg.maxV[3]=MAX_S;
+	
+	bzero(&din,sizeof(din)); bzero(&dout,sizeof(dout));
+	conn=false;conn_=false;
 }
 
 void BH280::Error()
@@ -45,17 +48,18 @@ void BH280::Error()
 	//exit(0);
 }
 
-void BH280::Initialize(bool PPS,
-					struct DataIN * DIN, struct DataOUT * DOUT,
-					pthread_mutex_t * mutex,
-					timeval * LastReceived)
+void BH280::Initialize(	bool PPS,
+						struct Controls * DIN, struct Measurements * DOUT,
+						pthread_mutex_t * mutex,
+						timeval * LastReceived)
 {
 	pps=PPS;
 	din_=DIN; dout_=DOUT;
 	Mutex=mutex;
 	tstamp=LastReceived;
 	shouldRun=true;
-	
+	printf("hand: %i: \n",din_);
+
 	int hwIndex = BHandHardware::getBHandHardwareIndex("BH8-280");
 	if (hwIndex < 0)
 	{
@@ -69,12 +73,12 @@ void BH280::Initialize(bool PPS,
 	if (result = bh.InitHand("")) Error();
 	else ;//printC("Done",BHAND280);	
 	if (pps) if(result = bh.Set("GS","LFPPS",1)) ;//Error();
-	bh.Command("123m");
+	
 }
 
-float BH280::Regulate(int m)
+double BH280::Regulate(int m)
 {
-  float out=1.0;
+  double out=1.0;
   out=reg.P[m]* (din.c280[m]-dout.m280[0][m]);
   
   if (out>reg.maxV[m]) 		out=reg.maxV[m];
@@ -83,28 +87,36 @@ float BH280::Regulate(int m)
 }
 void BH280::RunRealTime()
 {
-	struct timeval read1;
-	struct timeval read2;
-	gettimeofday(&read1, NULL);
-	char ctrl;
-	float temp;
+	//struct timeval read1;
+	//struct timeval read2;
+	//gettimeofday(&read1, NULL);
+	char ctrl=(int)(din.t280+0.5);
+	int temp;
+	
 	
 	for (int m = 0; m < 4; m++)//! 3->4
-	{
+	{	
 		dout.m280[0][m] = bh.RTGetPosition(m + '1')/props.scaleOUT[m];
 		dout.m280[1][m] = bh.RTGetVelocity(m + '1')/props.scaleOUT[m];
 		dout.m280[2][m] = bh.RTGetDeltaPos(m + '1')/props.scaleOUT[m];
 		dout.m280[3][m] = bh.RTGetStrain(m + '1');
 		if (pps)
-			bh.RTGetPPS(m + '1', &dout.pps[m][0], MAX_PPS_ELEMENTS);
+			bh.RTGetPPS(m + '1', &dout.pps[m][0], MAX_PPS_ELEMENTS);	
 	}
 	
 	// read & write server buffers
 	pthread_mutex_lock( Mutex );
-		memcpy((char *)dout_+4*4*4, (char *)dout.m280, 	4*4*4);
-		memcpy((char *)din.t280,	(char *)din_+1+4*4,	1+4*4);
+		memcpy(	(char *)dout_->m280, 	
+				(char *)dout.m280, 	
+				sizeof(dout.m280));
+		memcpy(	(char *)&(din.t280),
+				(char *)&(din_->t280),	
+				sizeof(Controls)/2);
 		if (pps)
-			memcpy((char *)dout_+2*4*4*4,(char *)dout.pps,4*24*4);
+		 memcpy((char *)dout_->pps,
+				(char *)dout.pps,
+				sizeof(dout.pps));
+				
 	pthread_mutex_unlock( Mutex );
 
 	// set data to hand
@@ -112,31 +124,54 @@ void BH280::RunRealTime()
 	{
 	case 0:	// velocity control		
 		printf("\r");
-		for (int m = 0; m < 4; m++)
+		for (int m = 2; m < 3; m++)
 		{
 			temp=(int)(((din.c280[m])*props.scaleIN[m])+0.5);
-			result=bh.RTSetVelocity(m + '1', temp);
+			result=bh.RTSetVelocity(m + '1', 30);
 		}
 		break;
 	case 1:	// position control
 		for (int m = 0; m < 4; m++)
 		{	
-			temp=Regulate(m);
-			temp=(int)((temp*props.scaleIN[m])+0.5);
-			result=bh.RTSetVelocity(m + '1', temp);
+			temp=(int)((Regulate(m)*props.scaleIN[m])+0.5);
+			//result=bh.RTSetVelocity(m + '1', temp);
 		}
 		break;
 
 	case 2:	// torque control
-		for (int m = 0; m < 4; m++)
-		{	
-		}
+		
 		break;
 	}
+	
 	bh.RTUpdate();
-	gettimeofday(&read2, NULL);
+	//gettimeofday(&read2, NULL);
+	
 }
 
+void BH280::LoopTest()
+{
+	PrepareRealTime();
+	//bh.RTStart( "123" );
+	//bh.RTUpdate();
+	result=bh.RTSetVelocity(2 + '1', 50);
+	bh.RTUpdate();
+	sleep(1);
+	result=bh.RTSetVelocity(2 + '1', 0);
+	bh.RTUpdate();
+	bh.RTAbort();
+	result = bh.Command("t");
+	
+	sleep(1);
+	
+	PrepareRealTime();
+	result=bh.RTSetVelocity(2 + '1', 30);
+	bh.RTUpdate();
+	usleep(900000);
+	result=bh.RTSetVelocity(2 + '1', 0);
+	bh.RTUpdate();
+	bh.RTAbort();
+	result = bh.Command("t");
+}
 void BH280::Loop()
 {
 /*  *****************************
@@ -145,72 +180,89 @@ void BH280::Loop()
 	timeval time2;
 	double T;
 	while(shouldRun)
-	{
+	{	
 		gettimeofday(&time2, NULL);
 		pthread_mutex_lock( Mutex );
 		T=diffclock(&time2,tstamp);
 		pthread_mutex_unlock( Mutex );
-		printf("\r%f",T);
-		conn=false;
-		if (T<0.5) conn=true;
-		if (!conn_ && !conn) // do nothing ;//printf("\rnothing");
+		cout<<"\r"<<T;
+		if (T<0.3) conn=true; 
+		
+		else conn=false;
+		//cout<<conn<<" "<<conn_<<endl;
+		if (!conn_ && !conn) 
+		{
+			usleep(1000);// do nothing ;//printf("\rnothing");
+		}
 		if (!conn_ && conn) // begin
 		{
-			sprintf(bufy,"Client connecting\n");
-			cout<<bufy;
+			cout<<"Starting\n";//cout<<"\nClient connecting";
 			if(PrepareRealTime() )// && !bhRTrunning)
-				cout<<"bh280 FAIL\n";
+				cout<<"Fail"<<endl;
 		}
 		if (conn_ && conn) // normal
 		{	
+			//for (int i=0;i<4;i++) cout<<din.c280[i]<<" ";
+			//cout<<endl;
 			RunRealTime();
 		}
 		if (conn_ && !conn)
 		{
-			cout<<"Connection lost\n";
+			cout<<"Disconnecting"<<endl;
 			bh.RTAbort();
 			result = bh.Command("t");
 		}
-		conn_=conn;
 		
+		conn_=conn;
+	
 	}
 	bh.RTAbort();
 	result = bh.Command("t");
 	cout<<"Terminating thread bh280\n";
 }
 
+void BH280::PrepareRT()
+{
+	if (result = bh.RTSetFlags( "123", 1, 3, 0, 0, 1, 1, 0, 1, 0, 1,0,0,0,0 ))
+		Error();
+}
+
 int BH280::PrepareRealTime()
 {
-	int ctrl;
+	int ctrl=(int)din.t280+0.5;
 	char reply[50];
 			
 	bh.Command("3fsave");
-	cout<<("PrepareRealTime()....\n");	
+	cout<<("PrepareRealTime()....");	
 	cout<<("RTSetFlags()....");	
 	switch(ctrl)
 	{
 		case 0:	// velocity control
-			if(result = bh.Set("","LCP",0)) Error();
+			cout<<"Velocity mode ";
+			if(result = bh.Set("","LCP",0)) ;//Error();
 			if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
-				Error();
+				;//Error();
 			break;
 
 		case 1:	// position control
+		  cout<<"Position mode ";
 		  if(result = bh.Set("","LCP",0)) Error();
 			if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
 				Error();
 			break;
 		
 		case 2:	// torque control
+			cout<<"Compliant mode ";
 			if(result = bh.Set("","LCP",1)) Error();
 			if (result = bh.RTSetFlags( "1234", 0, 3, 0, 1, 1, 1, 1, 1, 0, 1,0,0,0,0 ))
 				Error();
 			break;
 	}
 	
-	cout<<("RTStart()....\n");	
-	if (result = bh.RTStart( "1234" )) Error();
-	else cout<<("RTStart() OK\n");
+	cout<<("RTStart()....");
+
+	if (result = bh.RTStart( "1234" )) ;//Error();
+	else cout<<("OK\n");
 
 	bh.RTUpdate();
 	bh.Command("1fset tstop 10000");
@@ -218,6 +270,7 @@ int BH280::PrepareRealTime()
 	bh.Command("3fset tstop 10000");
 	bh.Command("sset tstop 10000");
 	bh.Command("3fsave");
+
 	return 0;
 }
 void BH280::Stop()

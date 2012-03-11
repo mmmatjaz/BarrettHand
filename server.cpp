@@ -4,7 +4,7 @@
 
 #define BUFFSIZE 255
 
-
+extern pthread_mutex_t mutex1;
 /*	Default constructor. Nothing to see here, cause the class must be initialized
  * 	before main() (so its global), but the necessary parameters are not
  * 	available before main() -> see ServerSetup */
@@ -45,6 +45,15 @@ void Server::Init( 	int RXport, int TXport,
 		
 		shouldRun=true;
 		gettimeofday(&begin, NULL);
+		
+		bool blocking=true;
+		if (blocking)
+		{
+			// from another movie
+			int flags = fcntl(setup.sock, F_GETFL);
+			flags |= O_NONBLOCK;
+			fcntl(setup.sock, F_SETFL, flags);
+		}
 }
 
 Server::~Server()
@@ -58,28 +67,58 @@ void Server::rxLoop()
 	int rxBufflen=rxl;
 	int received;
 	
+	while (shouldRun)
+	{
+		memset(&rxBuff[0], 0, sizeof(rxBuff));
+		rxBuff[0]='\0';
+		//cout<<"cakam"<<endl;
+		received = recvfrom(sockRX,rxBuff,rxl,0,(struct sockaddr *)&from,&fromlen);
+		from.sin_port = htons(portTX);
+		if (received < 0) Die("rx");
+		//cout<<"dobil"<<endl;
+		
+	pthread_mutex_lock( Mutex );
+	gettimeofday(timeStamp, NULL);
+	memcpy(rxpnt,rxBuff,rxl);
+	pthread_mutex_unlock( Mutex );
+		
+		gettimeofday(&current, NULL);
+		//cout<<DiffClock(&current,&begin)<<endl;
+		
+		if (!haveIP)	
+			haveIP=true;		
+	}	
+}
+/* Receiving-thread routine*/
+void Server::Pong()
+{
+	char message[100];
+	char rxBuff[rxl];
+	int rxBufflen=rxl;
+	int received;
 	
 	while (shouldRun)
 	{
 		memset(&rxBuff[0], 0, sizeof(rxBuff));
 		rxBuff[0]='\0';
-		
+		//cout<<"cakam"<<endl;
 		received = recvfrom(sockRX,rxBuff,rxl,0,(struct sockaddr *)&from,&fromlen);
 		from.sin_port = htons(portTX);
 		if (received < 0) Die("rx");
+		cout<<"dobil: "<<received<<"bajtou"<<endl;
 		
 		pthread_mutex_lock( Mutex );
 		gettimeofday(timeStamp, NULL);
 		memcpy(rxpnt,rxBuff,rxl);
-		pthread_mutex_lock( Mutex );
+		pthread_mutex_unlock( Mutex );
 		
 		gettimeofday(&current, NULL);
-		cout<<DiffClock(&current,&begin)<<endl;
+		//cout<<DiffClock(&current,&begin)<<endl;
+		
 		if (!haveIP)	
 			haveIP=true;		
 	}	
 }
-
 /*	Sending-thread routine*/
 void Server::txLoop()
 {
@@ -90,7 +129,7 @@ void Server::txLoop()
 	
 	char message[100];
 	char txBuff[txl];
-	int txBufflen=txl;
+	
 	
 	while (shouldRun)
 	{		
@@ -104,9 +143,10 @@ void Server::txLoop()
 			dt=DiffClock(&time2,&time1);
 			usleep(SampleTime*1000000/10);
 		}	
+		
 		pthread_mutex_lock( Mutex );
 		memcpy(txBuff,txpnt,txl);
-		pthread_mutex_lock( Mutex );
+		pthread_mutex_unlock( Mutex );
 		
 		n = sendto(sockTX,txBuff,txl,
 			0,(struct sockaddr *)&from,fromlen);

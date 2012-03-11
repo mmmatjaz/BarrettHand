@@ -19,17 +19,18 @@
 
 using namespace std;
 
-struct DataIN
+struct Controls
 {
-	char t262;
-	float c262[4];
-	char t280;
-	float c280[4];
+	double t262;
+	double c262[4];
+	double t280;
+	double c280[4];
 };
-struct DataOUT
+struct Measurements
 {
-	float m262[4][4];
-	float m280[4][4];
+	double time;
+	double m262[4][4];
+	double m280[4][4];
 	int pps[4][24];
 };
 
