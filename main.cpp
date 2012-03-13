@@ -35,7 +35,7 @@ pthread_t bh280Thread;
 
 void *rxLoop(void *threadid)
 {	
-	Server.rxLoop();
+	Server.Pong();
 }
 void *txLoop(void *threadid)
 {	
@@ -53,20 +53,26 @@ int main(int argc, char* argv[])
 	Config.PrintConf();
 	
 	bzero(&din,sizeof(din)); bzero(&dout,sizeof(dout));	
-	
+	/*
 	char * rxPnt=Config.use262 ? (char *)&din.t262 : (char *)&din.t280;
 	int rxl=0;
 	if (Config.use262) rxl +=sizeof(din)/2;
 	if (Config.use280) rxl +=sizeof(din)/2;
-	
 	char * txPnt=Config.use262 ? (char *)&dout.m262 : (char *)&dout.m280;
-	int txl=8;
-	//cout<<Config.use262<<Config.use280<<Config.usePPS<<endl;
-	
-	if (Config.use262) txl +=4*4*4;
-	if (Config.use280) txl +=4*4*4;
+	rxPnt=(char *)&din;
+	txPnt=(char *)&dout;
+	rxl=sizeof(din);
+	txl=2*sizeof(dout.m262);
+	*/
+	char * rxPnt=(char *) &din;
+	int rxl =sizeof(din);
+	char * txPnt=(char *) &dout;
+	int txl =2*4*4*8;
 	if (Config.usePPS) txl +=4*24*4;
-	//cout<<txl<< " rxl:" <<rxl<<" size"<<sizeof(dout)<<endl;
+	
+	
+	if (Config.usePPS) txl +=sizeof(dout.pps);
+	
 	printf("%i %i \n",sizeof(din),sizeof(dout));
 	Server.Init(	Config.RXport, Config.TXport,
 					rxPnt, txPnt,
@@ -74,18 +80,17 @@ int main(int argc, char* argv[])
 					&mutex1,
 					&LastReceived,
 					Config.ST);//(Config);
-
 	bh280.Initialize(Config.usePPS,
 						&din,&dout,
 						&mutex1,
-						&LastReceived);
+						&LastReceived);	
 						
 	pthread_create(&rxThread, 		NULL, rxLoop, NULL);
 	//pthread_create(&txThread, 		NULL, txLoop, NULL);
 	pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
 
 	
-		
+	struct Controls * test=&din;
 	string input;
 	string tmp;
 	int offset;
@@ -93,6 +98,7 @@ int main(int argc, char* argv[])
 	while (true)
 	{
 		getline(cin,input);
+		printf("mode @%i %f = %f : %f \n", &din.t280, din.t280,test->t280,din.c280[0]);
 		offset=input.find("q");
 		if (offset>-1 && input.size()==1)
 		{
@@ -101,6 +107,7 @@ int main(int argc, char* argv[])
 		}
 		cout<<"cmd> ";
 	}
+	
 	Server.Stop();
 	bh280.Stop();
 	Server;

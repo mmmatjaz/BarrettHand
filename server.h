@@ -80,10 +80,15 @@ public:
 				timeval * LastReceived,
 				double ST);
 	~Server();
+	void Pong();
 	void rxLoop();
 	void txLoop();
 	//static void* run_server(void *ptr){return (serverremote *) ptr->run(); };
 	void Stop();
-	
+	/*
+	if(pthread_create(&thread_server, &tattr_server, &ServerRemote::run_server, (void *) this) != 0)
+	void* run();  //kle not je zanka: void *ServerRemote::run()
+	static void* run_server(void *ptr) { return ((ServerRemote *) ptr)->run(); }
+	*/
 };
 

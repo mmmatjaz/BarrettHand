@@ -21,13 +21,12 @@ void Server::Init( 	int RXport, int TXport,
 		Mutex=mutex;
 		timeStamp=LastReceived;
 		SampleTime=ST;
+		int nTimeout = 100;
 		
-		sockRX=socket(AF_INET, SOCK_DGRAM, 0);
-		//setsockopt(sockRX, SOL_SOCKET, SO_REUSEADDR, 0, 0);
-		sockTX=socket(AF_INET, SOCK_DGRAM, 0);
-		//setsockopt(sockTX, SOL_SOCKET, SO_REUSEADDR, 0, 0);
+		sockRX=socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
+		setsockopt(sockRX, SOL_SOCKET, SO_REUSEADDR, 0, 0);  
 		if (sockRX < 0) Die("Opening RX socket failed");
-		if (sockTX < 0) Die("Opening TX socket failed");
+		//if (sockTX < 0) Die("Opening TX socket failed");
 		int flags;
 
 		length = sizeof(server);
@@ -46,14 +45,15 @@ void Server::Init( 	int RXport, int TXport,
 		shouldRun=true;
 		gettimeofday(&begin, NULL);
 		
-		bool blocking=true;
-		if (blocking)
+		bool nonblocking=false;
+		
+		if (nonblocking)
 		{
-			// from another movie
-			int flags = fcntl(setup.sock, F_GETFL);
-			flags |= O_NONBLOCK;
-			fcntl(setup.sock, F_SETFL, flags);
+			int flags = fcntl(sockRX, F_GETFL);
+			if (fcntl(sockRX, F_SETFL, O_NONBLOCK) < 0)
+				perror("set fcntl flags failed.\n");
 		}
+		
 }
 
 Server::~Server()
@@ -94,29 +94,34 @@ void Server::Pong()
 {
 	char message[100];
 	char rxBuff[rxl];
+	char txBuff[txl];
 	int rxBufflen=rxl;
 	int received;
-	
+	int n;
+	double T;
 	while (shouldRun)
 	{
 		memset(&rxBuff[0], 0, sizeof(rxBuff));
 		rxBuff[0]='\0';
 		//cout<<"cakam"<<endl;
 		received = recvfrom(sockRX,rxBuff,rxl,0,(struct sockaddr *)&from,&fromlen);
-		from.sin_port = htons(portTX);
+		//from.sin_port = htons(portTX);
 		if (received < 0) Die("rx");
-		cout<<"dobil: "<<received<<"bajtou"<<endl;
+		//cout<<"dobil"<<endl;
 		
-		pthread_mutex_lock( Mutex );
-		gettimeofday(timeStamp, NULL);
-		memcpy(rxpnt,rxBuff,rxl);
-		pthread_mutex_unlock( Mutex );
+	pthread_mutex_lock( Mutex );
+	gettimeofday(timeStamp, NULL);
+	memcpy(rxpnt,rxBuff,rxl);
+	memcpy(txBuff,txpnt,txl);
+	pthread_mutex_unlock( Mutex );
 		
 		gettimeofday(&current, NULL);
-		//cout<<DiffClock(&current,&begin)<<endl;
-		
-		if (!haveIP)	
-			haveIP=true;		
+		T=DiffClock(&current,&begin);
+		memcpy(txBuff,&T,sizeof(double));
+		n = sendto(sockRX,txBuff,txl,
+			0,(struct sockaddr *)&from,fromlen);
+		if (n  < 0) Die("tx");	
+			
 	}	
 }
 /*	Sending-thread routine*/
