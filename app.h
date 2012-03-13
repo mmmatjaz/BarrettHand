@@ -21,10 +21,10 @@ using namespace std;
 
 struct Controls
 {
-	double t262;
-	double c262[4];
-	double t280;
-	double c280[4];
+	double Mode262;
+	double cValues262[4];
+	double Mode280;
+	double cValues280[4];
 };
 struct Measurements
 {

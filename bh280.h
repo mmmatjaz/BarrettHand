@@ -60,7 +60,9 @@ private:
 	double diffclock(timeval* currentTime, timeval* startTime);
 	void Error();
 	int PrepareRealTime();
-	double Regulate(int m);
+	double PositionControl(int m);
+	double VelocityControl(int m);
+	double TorqueControl(int m);
 	void RunRealTime();
 public:
 	BH280();
@@ -70,7 +72,5 @@ public:
 					timeval * LastReceived);
 	void Stop();
 	void Loop();
-	void LoopTest();
-	void PrepareRT();
 };
 #endif

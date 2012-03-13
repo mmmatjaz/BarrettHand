@@ -53,12 +53,9 @@ void BH280::Initialize(	bool PPS,
 						pthread_mutex_t * mutex,
 						timeval * LastReceived)
 {
-	pps=PPS;
-	din_=DIN; dout_=DOUT;
-	Mutex=mutex;
-	tstamp=LastReceived;
-	shouldRun=true;
-	printf("hand: %i: \n",din_);
+//	copy parameters
+	pps=PPS; din_=DIN; dout_=DOUT;
+	Mutex=mutex; tstamp=LastReceived; shouldRun=true;
 
 	int hwIndex = BHandHardware::getBHandHardwareIndex("BH8-280");
 	if (hwIndex < 0)
@@ -76,15 +73,37 @@ void BH280::Initialize(	bool PPS,
 	
 }
 
-double BH280::Regulate(int m)
+double BH280::PositionControl(int m)
 {
+	// r = position, u = velocity
   double out=1.0;
-  out=reg.P[m]* (din.c280[m]-dout.m280[0][m]);
+  out=reg.P[m]* (din.cValues280[m]-dout.m280[0][m]);
   
   if (out>reg.maxV[m]) 		out=reg.maxV[m];
   if (out<-reg.maxV[m]) 	out=-reg.maxV[m];
   return out;
 }
+double BH280::VelocityControl(int m)
+{
+	// r = velocity, u = velocity (speed limits only)
+  double out=1.0;
+  out=din.cValues280[m];
+  
+  if (out>reg.maxV[m]) 		out=reg.maxV[m];
+  if (out<-reg.maxV[m]) 	out=-reg.maxV[m];
+  return out;
+}
+double BH280::TorqueControl(int m)
+{
+	// r = position, u = torque (speed limits only)
+  double out=1.0;
+  out=din.cValues280[m];
+  
+  if (out>reg.maxV[m]) 		out=reg.maxV[m];
+  if (out<-reg.maxV[m]) 	out=-reg.maxV[m];
+  return out;
+}
+
 void BH280::RunRealTime()
 {
 	int temp;
@@ -101,15 +120,10 @@ void BH280::RunRealTime()
 	
 	// read & write server buffers
 	pthread_mutex_lock( Mutex );		
-		memcpy(	(char *)&(din.t280),
-				(char *)&(din_->t280),	
+	
+		memcpy(	(char *)&(din.Mode280),
+				(char *)&(din_->Mode280),	
 				sizeof(Controls)/2);
-	/*			
-		for (int i=0;i<4;i++)
-		{
-			dout.m280[2][i]=din.c280[i];
-		}
-	*/		
 		memcpy(	(char *)dout_->m280, 	
 				(char *)dout.m280, 	
 				sizeof(dout.m280));
@@ -120,7 +134,7 @@ void BH280::RunRealTime()
 		
 	pthread_mutex_unlock( Mutex );
 
-	int ctrl=(int)(din.t280+0.5);
+	int ctrl=(int)(din.Mode280+0.5);
 	
 	
 	// set data to hand
@@ -129,15 +143,15 @@ void BH280::RunRealTime()
 	case 1:	// velocity control		
 		for (int m = 2; m < 3; m++)
 		{
-			temp=(int)(((din.c280[m])*props.scaleIN[m])+0.5);
-			//result=bh.RTSetVelocity(m + '1', 30);
+			temp=(int)((VelocityControl(m) * props.scaleIN[m])+0.5);
+			result=bh.RTSetVelocity(m + '1', temp);
 		}
 		
 		break;
 	case 2:	// position control
 		for (int m = 2; m < 3; m++)
 		{	
-			temp=(int)((Regulate(m)*props.scaleIN[m])+0.5);
+			temp=(int)((PositionControl(m) * props.scaleIN[m])+0.5);
 			//cout<<"\n"<<temp;
 			result=bh.RTSetVelocity(m + '1', temp);
 		}
@@ -146,9 +160,10 @@ void BH280::RunRealTime()
 	case 3:	// torque control
 		for (int m = 2; m < 3; m++)
 		{	
-			temp=(int)((Regulate(m)*props.scaleIN[m])+0.5);
-			//cout<<"\n"<<temp;
-			result=bh.RTSetTorque(m + '1', temp);
+			//temp=(int)((TorqueControl(m) * props.scaleIN[m])+0.5);
+			cout<<"\n"<<(int)(din.cValues280[m]);
+			// result=bh.RTSetTorque('3', 50);
+			 //result=bh.RTSetTorque(m + '1', (int)(din.cValues280[m]));
 		}
 		break;
 	}
@@ -158,28 +173,7 @@ void BH280::RunRealTime()
 	
 }
 
-void BH280::LoopTest()
-{
-	PrepareRealTime();
-	result=bh.RTSetVelocity(2 + '1', 50);
-	bh.RTUpdate();
-	sleep(1);
-	result=bh.RTSetVelocity(2 + '1', 0);
-	bh.RTUpdate();
-	bh.RTAbort();
-	result = bh.Command("t");
-	
-	sleep(1);
-	
-	PrepareRealTime();
-	result=bh.RTSetVelocity(2 + '1', 30);
-	bh.RTUpdate();
-	usleep(900000);
-	result=bh.RTSetVelocity(2 + '1', 0);
-	bh.RTUpdate();
-	bh.RTAbort();
-	result = bh.Command("t");
-}
+
 void BH280::Loop()
 {
 /*  *****************************
@@ -226,12 +220,6 @@ void BH280::Loop()
 	cout<<"Terminating thread bh280\n";
 }
 
-void BH280::PrepareRT()
-{
-	if (result = bh.RTSetFlags( "123", 1, 3, 0, 0, 1, 1, 0, 1, 0, 1,0,0,0,0 ))
-		Error();
-}
-
 int BH280::PrepareRealTime()
 {
 	cout<<("PrepareRealTime()....");
@@ -245,35 +233,31 @@ int BH280::PrepareRealTime()
 				(din_),	
 				sizeof(Controls));
 		pthread_mutex_unlock( Mutex );
-		ctrl=(int)((din.t280)+0.5);
+		ctrl=(int)((din.Mode280)+0.5);
 	}
-	//printf("mode @%i %f = %f : %f \n", &din_->t280, din.t280,din_->t280,din.c280[0]);
-	
+	//printf("mode @%i %f = %f : %f \n", &din_->Mode280, din.Mode280,din_->Mode280,din.cValues280[0]);
 	
 	cout<<"mode"<<ctrl<<" ";
 	switch(ctrl)
 	{
 		case 1:	// velocity control
 			cout<<"Velocity mode ";
-			if(result = bh.Set("","LCP",0)) ;//Error();
+			//if(result = bh.Set("","LCP",0)) ;//Error();
 			if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
 				;//Error();
 			break;
 
 		case 2:	// position control
 		  cout<<"Position mode ";
-		  if(result = bh.Set("","LCP",0)) Error();
+		  //if(result = bh.Set("","LCP",0)) Error();
 			if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
 				Error();
 			break;
 		
 		case 3:	// torque control
-			cout<<"Torque mode ";
-			
-			//if (result = bh.RTSetFlags( "1234", 0, 3, 0, 1, 1, 1, 1, 1, 0, 1,0,0,0,0 ))
-				//Error();
-			if(result = bh.Set("","LCP",0)) Error();
-			if(result = bh.Set("","LCT",1)) Error();
+			cout<<"Torque mode ";			
+			if (result = bh.RTSetFlags( "1234", 0, 0, 0, 1, 1, 1, 1, 1, 0, 1,0,0,0,0 ))
+				Error();
 			break;
 	}
 	
