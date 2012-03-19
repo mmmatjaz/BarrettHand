@@ -19,19 +19,40 @@
 
 using namespace std;
 
+struct HandMeas
+{
+	double Position[4];
+	double Velocity[4];
+	double DeltaPos[4];
+	double Strain[4];
+	double StrainFilt[4];
+};
+struct HandMeasPPS
+{
+	double Position[4];
+	double Velocity[4];
+	double DeltaPos[4];
+	double Strain[4];
+	double StrainFilt[4];
+	int pps[4][24];
+};
+struct HandControls
+{
+	double Mode;
+	double cValues[4];
+};
+
 struct Controls
 {
-	double Mode262;
-	double cValues262[4];
-	double Mode280;
-	double cValues280[4];
+	HandControls con262;
+	HandControls con280;
 };
+
 struct Measurements
 {
-	double time;
-	double m262[4][4];
-	double m280[4][4];
-	int pps[4][24];
+	double 		time;
+	HandMeas 	hdata262;
+	HandMeasPPS hdata280;
 };
 
 class App

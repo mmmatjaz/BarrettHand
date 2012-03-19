@@ -81,10 +81,15 @@ public:
 				double ST);
 	~Server();
 	void Pong();
+	//void *Pong();
+	static void* RunServer(void *ptr){return (Server *) ptr->Pong(); };
 	void rxLoop();
 	void txLoop();
-	//static void* run_server(void *ptr){return (serverremote *) ptr->run(); };
 	void Stop();
+	/*
+	void *run();
+	static void* run_server(void *ptr){return (serverremote *) ptr->run(); };
+	*/
 	/*
 	if(pthread_create(&thread_server, &tattr_server, &ServerRemote::run_server, (void *) this) != 0)
 	void* run();  //kle not je zanka: void *ServerRemote::run()
