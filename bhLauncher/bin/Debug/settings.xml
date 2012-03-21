@@ -1,0 +1,13 @@
+<settings>
+  <IP>127.0.0.1</IP>
+  <RXport>4444</RXport>
+  <TXport>5555</TXport>
+  <use280>True</use280>
+  <PPS>False</PPS>
+  <use262>True</use262>
+  <com>1</com>
+  <RTfile>BHserver.exe</RTfile>
+  <RTpath>G:\matjaz\BH\sandbox\server2.0\Release</RTpath>
+  <Sfile>BHsupervisory.exe</Sfile>
+  <Spath>G:\matjaz\BH\sandbox\super2.0\Release</Spath>
+</settings>

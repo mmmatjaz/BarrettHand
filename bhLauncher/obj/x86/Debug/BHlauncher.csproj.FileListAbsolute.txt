@@ -1,0 +1,9 @@
+G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\bin\Debug\BHlauncher.exe
+G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\bin\Debug\BHlauncher.pdb
+G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\ResolveAssemblyReference.cache
+G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\BHlauncher.Form1.resources
+G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\BHlauncher.Properties.Resources.resources
+G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\GenerateResource.read.1.tlog
+G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\GenerateResource.write.1.tlog
+G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\BHlauncher.exe
+G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\BHlauncher.pdb
