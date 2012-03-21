@@ -18,7 +18,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <netdb.h>
-typedef void * threadMethod 
+#define threadMethod void*  
 #endif
 
 #ifdef _WIN32 || defined _WIN64
