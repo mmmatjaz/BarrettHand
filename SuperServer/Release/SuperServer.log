@@ -1,0 +1,18 @@
+﻿Build started 22.3.2012 17:07:30.
+     1>Project "Z:\BarrettHand\SuperServer\SuperServer.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\SuperServer.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(Z:\BarrettHand\Release\SuperServer.exe) does not match the Linker's OutputFile property value (Z:\BarrettHand\bin-win\SuperServer.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         All outputs are up-to-date.
+         SuperServer.vcxproj -> Z:\BarrettHand\Release\SuperServer.exe
+       FinalizeBuildStatus:
+         Deleting file "Release\SuperServer.unsuccessfulbuild".
+         Touching "Release\SuperServer.lastbuildstate".
+     1>Done Building Project "Z:\BarrettHand\SuperServer\SuperServer.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.31

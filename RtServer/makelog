@@ -1,0 +1,2 @@
+Linkam
+g++ ./obj/main.o ./obj/app.o ./obj/server.o ./obj/bh280.o -I/usr/local/Barrett/BHand/thirdparty/include -I/usr/local/Barrett/BHand/API -I../../thirdparty/peak-linux-driver-6.20/driver -I../../thirdparty/peak-linux-driver-6.20/lib -L/usr/local/Barrett/BHand/API/lib -lBHand -lpcan -lPocoFoundationBarrett -o ../bin-linux/RTserver

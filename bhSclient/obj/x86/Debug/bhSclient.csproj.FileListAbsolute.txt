@@ -1,0 +1,9 @@
+G:\matjaz\BH\sandbox\bhSclient\bhSclient\bin\Debug\bhSclient.exe
+G:\matjaz\BH\sandbox\bhSclient\bhSclient\bin\Debug\bhSclient.pdb
+G:\matjaz\BH\sandbox\bhSclient\bhSclient\obj\x86\Debug\ResolveAssemblyReference.cache
+G:\matjaz\BH\sandbox\bhSclient\bhSclient\obj\x86\Debug\bhSclient.Form1.resources
+G:\matjaz\BH\sandbox\bhSclient\bhSclient\obj\x86\Debug\bhSclient.Properties.Resources.resources
+G:\matjaz\BH\sandbox\bhSclient\bhSclient\obj\x86\Debug\GenerateResource.read.1.tlog
+G:\matjaz\BH\sandbox\bhSclient\bhSclient\obj\x86\Debug\GenerateResource.write.1.tlog
+G:\matjaz\BH\sandbox\bhSclient\bhSclient\obj\x86\Debug\bhSclient.exe
+G:\matjaz\BH\sandbox\bhSclient\bhSclient\obj\x86\Debug\bhSclient.pdb
