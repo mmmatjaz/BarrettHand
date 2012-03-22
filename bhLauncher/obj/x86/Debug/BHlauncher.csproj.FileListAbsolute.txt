@@ -7,3 +7,5 @@ G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\GenerateResource.read.1
 G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\GenerateResource.write.1.tlog
 G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\BHlauncher.exe
 G:\matjaz\BH\sandbox\BHlauncher\BHlauncher\obj\x86\Debug\BHlauncher.pdb
+Z:\BarrettHand\bhLauncher\obj\x86\Debug\BHlauncher.exe
+Z:\BarrettHand\bhLauncher\obj\x86\Debug\BHlauncher.pdb

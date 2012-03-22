@@ -7,7 +7,7 @@ SuperServer::SuperServer( 	int port,
 							pthread_mutex_t * mutex,
 							timeval * LastReceived)
 {
-		Port=port;		
+		Port=port;	
 		Comm=Comm_;			Rep=Rep_;
 		Mutex=mutex;
 		timeStamp=LastReceived;
@@ -118,12 +118,13 @@ void SuperServer::SendReply()
 	
 }
 /* Receiving-thread routine*/
-void *SuperServer::Pong()
+threadMethod SuperServer::Pong()
 {
 	cout << "Server thread started" <<endl;
 	isRunning=true;
 	while (shouldRun)
 	{		
+		cout<<"ne vem kaj mi je"<<endl;
 		ReceiveCommands();
 		WaitForHands();
 		SendReply();			

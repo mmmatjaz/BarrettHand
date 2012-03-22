@@ -54,9 +54,9 @@ public:
 				timeval * LastReceived);
 	
 	~SuperServer();
-	void *Pong();
+	threadMethod Pong();
 	void Start();
-	static void* RunServer(void *ptr){return ((SuperServer *) ptr)->Pong(); };
+	static threadMethod RunServer(void *ptr){return ((SuperServer *) ptr)->Pong(); };
 	void Stop();
 	
 };

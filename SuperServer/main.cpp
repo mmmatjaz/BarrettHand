@@ -26,10 +26,10 @@ int main(int argc, char* argv[])
 						&ComG, &RepG,
 						&mutex1, 
 						&LastReceived);//(Config);
-	BHsupervisory bh280(0,ComG.command280,RepG.reply280,&RepG.executed280,
-						&mutex1,&LastReceived);
+	//BHsupervisory bh280(0,ComG.command280,RepG.reply280,&RepG.executed280,
+	//					&mutex1,&LastReceived);
 	Server.Start();
-	bh280.Start();
+	//bh280.Start();
 	
 	string input;
 	string tmp;
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 	}
 	
 	Server.Stop();
-	bh280.Stop();
+	//bh280.Stop();
 	
 	
 	printf("\n");

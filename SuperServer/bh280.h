@@ -40,8 +40,8 @@ public:
 					pthread_mutex_t * mutex,
 					timeval * LastReceived);
 	void Stop();
-	void *Loop();
+	threadMethod Loop();
 	void Start();
-	static void* Run(void *ptr){return ((BHsupervisory *) ptr)->Loop(); };
+	static threadMethod Run(void *ptr){return ((BHsupervisory *) ptr)->Loop(); };
 };
 #endif

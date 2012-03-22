@@ -37,7 +37,7 @@ BHsupervisory::BHsupervisory(	int hand,
 }
 
 
-void *BHsupervisory::Loop()
+threadMethod BHsupervisory::Loop()
 {
 /*  *****************************
 			hand thread

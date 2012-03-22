@@ -14,7 +14,7 @@ void App::PrintBanner()
 	printf("\n");
 	printf("\n     0 0               IJS             ");
 	printf("\n   0 0             BARRETT HAND         ");
-	printf("\n   0   0   VERY REAL-TIME UDP SERVER   ");
+	printf("\n   0   0         SUPER UDP SERVER   ");
 	printf("\n     0                             \n\n");
 }
 
@@ -35,7 +35,7 @@ double App::DiffClock(timeval* currentTime, timeval* startTime)
 
 Config::Config()
 {
-	port=	5555;
+	port=	4444;
 	use280=true;
 	use262=false;
 	usePPS=false;
