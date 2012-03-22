@@ -32,6 +32,12 @@ threadMethod bh280Loop(void *threadid)
 
 int main(int argc, char* argv[])
 {
+
+	char mode[4]={0,0,0,0};
+	double moded=0.0;
+	memcpy(mode,&moded,sizeof(moded));
+	printf("char %s double %f",mode,moded);
+
 	App.PrintBanner();
 	Config.FromArgs(argc, argv);
 	Config.PrintConf();
@@ -55,9 +61,9 @@ int main(int argc, char* argv[])
 						&LastReceived);	
 	
 	//pthread_create(&rxThread, &tattr_server, &Server::RunServer, (void *) this)	
-	pthread_create(&rxThread, 		NULL, rxLoop, NULL);
-	pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
-
+	//pthread_create(&rxThread, 		NULL, rxLoop, NULL);
+	//pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
+	
 	
 	string input;
 	string tmp;
@@ -81,8 +87,7 @@ int main(int argc, char* argv[])
 	
 	Server.Stop();
 	bh280.Stop();
-	Server;
-	bh280;
+	
 	 pthread_join( rxThread, NULL);
 	  pthread_join( txThread, NULL);
 	   //pthread_join( bh280Thread, NULL);

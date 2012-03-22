@@ -59,6 +59,7 @@ struct HandMeasPPS
 	double StrainFilt[4];
 	int pps[4][24];
 };
+
 struct HandControls
 {
 	double Mode;

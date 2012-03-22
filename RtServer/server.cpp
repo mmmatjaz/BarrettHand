@@ -22,8 +22,17 @@ void Server::Init( 	int RXport, int TXport,
 		SampleTime=ST;
 		int nTimeout = 100;
 		
+#ifdef _WIN32 || defined _WIN64
+		WSADATA wsaData;
+		WSAStartup(MAKEWORD(2,2), &wsaData);
+#endif
+
 		sockRX=socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
-		setsockopt(sockRX, SOL_SOCKET, SO_REUSEADDR, 0, 0);  
+		setsockopt(sockRX, SOL_SOCKET, SO_REUSEADDR, 0, 0);
+
+		//setsockopt(sockRX, SOL_SOCKET, SO_RCVTIMEO, (const char*)&nTimeout, sizeof(int)); 
+		//setsockopt(sockRX, SOL_SOCKET, SO_SNDTIMEO, (const char*)&nTimeout, sizeof(int));
+
 		if (sockRX < 0) Die("Opening RX socket failed");
 		//if (sockTX < 0) Die("Opening TX socket failed");
 		int flags;
@@ -190,4 +199,7 @@ void Server::Stop()
 void Server::Die(char *mess)
 {
 	perror(mess);
+	#ifdef _WIN32 || defined _WIN64
+		WSACleanup();
+	#endif
 }

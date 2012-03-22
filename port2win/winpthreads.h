@@ -28,6 +28,12 @@ static HANDLE pthread_create(pthread_t *th, pthread_attr_t *attr,
 	return (HANDLE)_beginthread(func, 0, NULL);
 }
 
+static HANDLE pthread_create(pthread_t *th, pthread_attr_t *attr, 
+							_In_ void *(__cdecl * func) (void *), void *arg)
+{
+	//return (HANDLE)_beginthread(func, 0, NULL);
+}
+
 static int pthread_join(pthread_t pt, void * dva)
 {
 	return 0;
@@ -45,4 +51,8 @@ static int pthread_mutex_unlock(pthread_mutex_t *m)
 	return 0;
 }
 
+static int pthread_cancel(pthread_t t)
+{
+	TerminateThread(t,0);
+}
 #endif

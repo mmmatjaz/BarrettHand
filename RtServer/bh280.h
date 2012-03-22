@@ -51,6 +51,7 @@ private:
 	bool shouldRun;
 	bool conn;
 	bool conn_;
+	bool realtime;
 //par	
 	Props props;
 	Regulator reg; 
@@ -59,7 +60,7 @@ private:
 	int result;
 	char bufy[100];
 //methods
-	int PrepareRealTime();
+	int Begin();
 	double PositionControlC(int m);
 	double VelocityControl(int m);
 	void LowPass(int m,double a);

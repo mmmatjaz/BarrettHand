@@ -14,6 +14,15 @@
 #define MAX_G 0.003
 #define MAX_S 0.001
 
+#define VEL_CONTROL 1
+#define POS_CONTROL 2
+#define TOR_CONTROL 3
+
+#define NO_CONN		!conn_ && !conn
+#define CONN		 conn_ &&  conn
+#define CONN_LOST	 conn_ && !conn
+#define CONN_INIT	!conn_ &&  conn
+
 #include "bh280.h"
 
 
@@ -197,23 +206,19 @@ void BH280::Loop()
 		if (T<0.3) conn=true; 	
 		else conn=false;
 		
-		if (!conn_ && !conn) 
+		if ( NO_CONN ) 
 		{
-		// do nothing ;//printf("\rnothing");
 			usleep(1000);
 		}
-		if (!conn_ && conn) 
+		if ( CONN_INIT ) 
 		{
-		// begin
-			cout<<"\nStarting\n";//cout<<"\nClient connecting";
-			if(PrepareRealTime() )// && !bhRTrunning)
-				cout<<"Fail"<<endl;
+			Begin();
 		}
-		if (conn_ && conn) // normal
+		if ( CONN && realtime) // normal
 		{		
 			RunRealTime();	
 		}
-		if (conn_ && !conn)
+		if ( CONN_LOST && realtime)
 		{
 			cout<<"\nDisconnecting\n"<<endl;
 			bh.RTAbort();
@@ -327,50 +332,43 @@ void BH280::LoopOfflineTorque()
 	cout<<"Terminating thread bh280\n";
 }
 
-int BH280::PrepareRealTime()
+int BH280::Begin()
 {
-	cout<<("PrepareRealTime()....");
+	cout<<("PrepareRealTime()... ");
 	char reply[50];
 	int  ctrl=0;
-	while(ctrl<1 || ctrl>3) 
+	while(ctrl<1 || ctrl>4) 
 	{
 		usleep(1000);
-		pthread_mutex_lock( Mutex );		
-		memcpy(	&(Cons),
-				(Cons_),	
-				sizeof(HandControls));
-		pthread_mutex_unlock( Mutex );
+		RefreshData();
 		ctrl=(int)((Cons.Mode)+0.5);
 	}
 	
-	cout<<"mode"<<ctrl<<" ";
 	switch(ctrl)
 	{
-		case 1:	// velocity control
-			cout<<"Velocity mode ";
+		case VEL_CONTROL:	// velocity control
+			cout<<"PrepareRealTime()... Velocity mode "<<endl;
 			if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
 				Error();
+			realtime=true;
 			break;
 
-		case 2:	// position control
-		  cout<<"Position mode ";
+		case POS_CONTROL:	// position control
+		  cout<<"PrepareRealTime()... Position mode "<<endl;
 			if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
 				Error();
+			realtime=true;
 			break;
 		
-		case 4:	// torque control
-			cout<<"Torque mode ";					
+		case TOR_CONTROL:	// torque control
+			cout<<"PrepareRealTime()... Torque mode "<<endl;					
 			if (result = bh.RTSetFlags( "1234", 0, 0, 0, 1, 1, 1, 1, 1, 0, 1,0,0,0,0 ))
 				Error();
 				/*
 			if(result = bh.Set("4","LCP",1))
 				;*/
+			realtime=true;
 			break;		
-		case 3:	// zero force control
-			cout<<"Position mode ";
-			if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
-				Error();
-			break;
 	}
 	
 	cout<<("RTStart()....");
@@ -384,6 +382,7 @@ int BH280::PrepareRealTime()
 	bh.Command("3fsave");
 	return 0;
 }
+
 void BH280::Stop()
 {
 	bh.RTAbort();
@@ -420,7 +419,6 @@ void BH280::RefreshData()
 	
 	pthread_mutex_unlock( Mutex );
 }
-
 void BH280::RefreshMeas()
 {
 	pthread_mutex_lock( Mutex );				
@@ -433,7 +431,6 @@ void BH280::RefreshMeas()
 			sizeof(Meas.pps));	
 	pthread_mutex_unlock( Mutex );
 }
-
 void BH280::RememberData()
 {
 	memcpy(	(char *)&pCons,
@@ -444,7 +441,6 @@ void BH280::RememberData()
 			sizeof(HandMeas));
 	memcpy(	&lc,&now,sizeof(now));	
 }
-
 void BH280::SendToHand()
 {
 	gettimeofday(&now, NULL);

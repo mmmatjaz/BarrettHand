@@ -8,7 +8,7 @@ LDFLAGS=
 SOURCES=main.cpp app.cpp server.cpp bh280.cpp
 #SOURCES=client_udp.c
 OBJ=$(SOURCES:.cpp=.o)
-ODIR=./obj
+ODIR=obj
 OBJECTS = $(patsubst %,$(ODIR)/%,$(OBJ))
 
 EXECUTABLE=../bin-linux/RTserver
@@ -46,6 +46,7 @@ default: ${OBJECTS}
 	g++ ${OBJECTS} ${INCLUDES} ${LIBDIR} ${LDLIBS} -o ${EXECUTABLE}
 ${OBJECTS}: ${SOURCES}
 	@echo Kompajlam
+	mkdir -p $(ODIR)
 	g++ ${DEFS} ${INCLUDES} -c ${SOURCES} #-o ${OBJECTS}
 	mv *.o ./obj/
 .PHONY: clean 
