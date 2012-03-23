@@ -37,10 +37,9 @@
 
 #include "..\port2win\timeofday.h"
 #include "..\port2win\winpthreads.h"
-#include "..\pthreadwin\include\pthread.h"
 
-//typedef void  threadMethod;
-#define threadMethod void*  
+typedef void  threadMethod;
+//#define threadMethod void*  
 #endif
 
 using namespace std;

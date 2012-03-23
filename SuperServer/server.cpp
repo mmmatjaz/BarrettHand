@@ -2,7 +2,7 @@
 
 #define SIGNATURE "Server:"
 
-SuperServer::SuperServer( 	int port,
+void SuperServer::Init( 	int port,
 							Command * Comm_, Reply * Rep_,
 							pthread_mutex_t * mutex,
 							timeval * LastReceived)
@@ -47,9 +47,6 @@ SuperServer::SuperServer( 	int port,
 		cout << "Server initialized"<<endl;
 }
 
-SuperServer::~SuperServer()
-{
-}
 
 void SuperServer::ReceiveCommands()
 {
@@ -124,7 +121,7 @@ threadMethod SuperServer::Pong()
 	isRunning=true;
 	while (shouldRun)
 	{		
-		cout<<"ne vem kaj mi je"<<endl;
+		cout<<"nocem"<<endl;
 		ReceiveCommands();
 		WaitForHands();
 		SendReply();			
@@ -147,14 +144,8 @@ double SuperServer::DiffClock(timeval* currentTime, timeval* startTime)
 	}
 }
 
-void SuperServer::Start()
-{
-	pthread_create(&threadServer, NULL, &SuperServer::RunServer, (void *) this);
-}
-
 void SuperServer::Stop()
 {
-	pthread_cancel(threadServer);
 	cout<<"Server thread killed"<<endl;
 }
 

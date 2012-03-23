@@ -1,14 +1,22 @@
 
 #include "server.h"
-#include "bh280.h"
+#include "BHSupervisory.h"
 #include "app.h"
 
 using namespace std;
 
+SuperServer Server;
+BHsupervisory BH280;
+BHsupervisory BH262;
 Command ComG;
 Reply	RepG;
 timeval LastReceived;
 pthread_mutex_t mutex1;
+pthread_t serverThread, bh280Thread, bh262Thread;
+
+threadMethod serverLoop(void *threadid){Server.Pong();}
+threadMethod bh280Loop(void *threadid){BH280.Loop();}
+//threadMethod bh262Loop(void *threadid){BH262.Pong();}
 
 int main(int argc, char* argv[])
 {
@@ -20,19 +28,20 @@ int main(int argc, char* argv[])
 
 	pthread_mutex_init(&mutex1, NULL);
 	memset(&ComG,0,sizeof(ComG)); memset(&RepG,0,sizeof(RepG));	
-	
 	RepG.executed280=false;
-	SuperServer Server(	Config.port,
-						&ComG, &RepG,
-						&mutex1, 
-						&LastReceived);//(Config);
-	//BHsupervisory bh280(0,ComG.command280,RepG.reply280,&RepG.executed280,
-	//					&mutex1,&LastReceived);
-	Server.Start();
-	//bh280.Start();
+
+	Server.Init(	Config.port,
+					&ComG, &RepG,
+					&mutex1, 
+					&LastReceived);//(Config);
+	
+	BH280.Init(0,ComG.command280,RepG.reply280,&RepG.executed280,
+				&mutex1,&LastReceived);
+	pthread_create(&serverThread, NULL, serverLoop, NULL);
+	if (Config.use280) pthread_create(&bh280Thread, NULL, bh280Loop, NULL);
 	
 	string input;
-	string tmp;
+	
 	int offset;
 	while (true)
 	{
@@ -53,7 +62,7 @@ int main(int argc, char* argv[])
 		cout<<endl;
 	}
 	
-	Server.Stop();
+	//Server.Stop();
 	//bh280.Stop();
 	
 	

@@ -1,12 +1,7 @@
 #include "server.h"
 
+#define SIGNATURE "Server:"
 
-#define BUFFSIZE 255
-
-extern pthread_mutex_t mutex1;
-/*	Default constructor. Nothing to see here, cause the class must be initialized
- * 	before main() (so its global), but the necessary parameters are not
- * 	available before main() -> see ServerSetup */
 void Server::Init( 	int RXport, int TXport, 
 					char * rxPnt, char *txPnt,
 					int rxLength, int txLength,

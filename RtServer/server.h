@@ -17,29 +17,7 @@ typedef int socklen_t;
 
 #include "app.h"
 
-
 using namespace std;
-
-struct Setup
-{
-	int RXport;
-	int TXport;
-	char * rxBuff;
-	//int rxBuffLen;
-	char * txBuff;
-	//int rxBuffLen;
-	float SampleTime;
-	
-	timeval * LastReceived;
-	int RXsock;
-	int TXsock;
-	
-	struct sockaddr_in RXaddr;
-	unsigned int RXaddrLen;
-	struct sockaddr_in TXaddr;
-	unsigned int TXaddrLen;
-};
-
 
 class Server
 {
@@ -78,20 +56,7 @@ public:
 				double ST);
 	~Server();
 	void Pong();
-	//void *Pong();
-	//static void* RunServer(void *ptr){return (Server *) ptr->Pong(); };
-	void rxLoop();
-	void txLoop();
 	void Stop();
-	/*
-	void *run();
-	static void* run_server(void *ptr){return (serverremote *) ptr->run(); };
-	*/
-	/*
-	if(pthread_create(&thread_server, &tattr_server, &ServerRemote::run_server, (void *) this) != 0)
-	void* run();  //kle not je zanka: void *ServerRemote::run()
-	static void* run_server(void *ptr) { return ((ServerRemote *) ptr)->run(); }
-	*/
 };
 
 #endif

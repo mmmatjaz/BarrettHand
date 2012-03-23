@@ -5,7 +5,7 @@
 CC=g++
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=main.cpp app.cpp server.cpp bh280.cpp
+SOURCES=main.cpp app.cpp server.cpp BHSupervisory.cpp
 #SOURCES=client_udp.c
 OBJ=$(SOURCES:.cpp=.o)
 ODIR=obj

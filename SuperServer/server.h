@@ -22,7 +22,6 @@ using namespace std;
 class SuperServer
 {
 private:
-	pthread_t threadServer;
 //socket
 	int length;
 	int sockRX, sockTX;
@@ -48,15 +47,13 @@ private:
 	void Die(char *mess);
 	double DiffClock(timeval* currentTime, timeval* startTime);
 public:
-	SuperServer(int port,
+	void Init(	int port,
 				Command * Comm_, Reply * Rep_,
 				pthread_mutex_t * mutex,
 				timeval * LastReceived);
 	
-	~SuperServer();
 	threadMethod Pong();
 	void Start();
-	static threadMethod RunServer(void *ptr){return ((SuperServer *) ptr)->Pong(); };
 	void Stop();
 	
 };

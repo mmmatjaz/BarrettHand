@@ -34,11 +34,11 @@ private:
 	void Error();
 	double diffclock(timeval* currentTime, timeval* startTime);
 public:
-	//BHsupervisory();
-	BHsupervisory(  int hand,
-					char * command, char * reply, bool * executed,
-					pthread_mutex_t * mutex,
-					timeval * LastReceived);
+	BHsupervisory(){};
+	void Init(  int hand,
+				char * command, char * reply, bool * executed,
+				pthread_mutex_t * mutex,
+				timeval * LastReceived);
 	void Stop();
 	threadMethod Loop();
 	void Start();

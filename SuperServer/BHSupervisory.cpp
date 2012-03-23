@@ -1,6 +1,6 @@
 #define SIGNATURE "BH280"
 
-#include "bh280.h"
+#include "BHSupervisory.h"
 
 
 void BHsupervisory::Error()
@@ -10,7 +10,7 @@ void BHsupervisory::Error()
 	//exit(0);
 }
 
-BHsupervisory::BHsupervisory(	int hand,
+void BHsupervisory::Init(	int hand,
 						char * command, char * reply, bool * executed,
 						pthread_mutex_t * mutex,
 						timeval * LastReceived)
@@ -99,10 +99,6 @@ double BHsupervisory::diffclock(timeval* currentTime, timeval* startTime)
 		return 0.0;
 }
 
-void BHsupervisory::Start()
-{
-	pthread_create(&thread, NULL, &BHsupervisory::Run, (void *) this);
-}
 
 void BHsupervisory::Stop()
 {
