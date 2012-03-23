@@ -64,37 +64,7 @@ void Server::Init( 	int RXport, int TXport,
 Server::~Server()
 {
 }
-/* Receiving-thread routine*/
-void Server::rxLoop()
-{
-	char message[100];	
-	int rxBufflen=rxl;
-	char * rxBuff;
-	memset(rxBuff, 0, rxl);
-	int received;
-	
-	while (shouldRun)
-	{
-		memset(&rxBuff[0], 0, sizeof(rxBuff));
-		rxBuff[0]='\0';
-		//cout<<"cakam"<<endl;
-		received = recvfrom(sockRX,rxBuff,rxl,0,(struct sockaddr *)&from,&fromlen);
-		from.sin_port = htons(portTX);
-		if (received < 0) Die("rx");
-		//cout<<"dobil"<<endl;
-		
-	pthread_mutex_lock( Mutex );
-	gettimeofday(timeStamp, NULL);
-	memcpy(rxpnt,rxBuff,rxl);
-	pthread_mutex_unlock( Mutex );
-		
-		gettimeofday(&current, NULL);
-		//cout<<DiffClock(&current,&begin)<<endl;
-		
-		if (!haveIP)	
-			haveIP=true;		
-	}	
-}
+
 /* Receiving-thread routine*/
 void Server::Pong()
 {
@@ -136,41 +106,6 @@ void Server::Pong()
 	}	
 }
 /*	Sending-thread routine*/
-void Server::txLoop()
-{
-	struct timeval time2, time1, time0;
-	double dt;
-	gettimeofday(&time0, NULL);
-	int n;
-	
-	char message[100];
-	char * txBuff;
-	txBuff = new char[txl];
-	memset(txBuff, 0, txl);
-	
-	while (shouldRun)
-	{		
-		while (!haveIP && shouldRun){}
-		dt=SampleTime/10;
-		gettimeofday(&time1, NULL);
-		
-		while(dt<SampleTime || !haveIP)
-		{
-			gettimeofday(&time2, NULL);
-			dt=DiffClock(&time2,&time1);
-			usleep(SampleTime*1000000/10);
-		}	
-		
-		pthread_mutex_lock( Mutex );
-		memcpy(txBuff,txpnt,txl);
-		pthread_mutex_unlock( Mutex );
-		
-		n = sendto(sockTX,txBuff,txl,
-			0,(struct sockaddr *)&from,fromlen);
-		if (n  < 0) Die("tx");	
-	}
-	cout<<"Server TX compl33t\n";
-}
 
 double Server::DiffClock(timeval* currentTime, timeval* startTime)
 {

@@ -1,35 +1,10 @@
-﻿Build started 22.3.2012 16:51:52.
+﻿Build started 23.3.2012 14:31:50.
      1>Project "Z:\BarrettHand\RtServer\bhRTserver.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Release\RTserver.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Release\RTserver.unsuccessfulbuild".
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\port2win /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\ctb-0.14\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\Pcan" /I"C:\poco-1.3.6p2\Foundation\include" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw\wx" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw" /I"C:\wxWidgets-2.8.11\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\API" /I..\openGL\GL /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D POCO_STATIC /D __WXMSW__ /D _WINDOWS /D WIN32 /D NDEBUG /D _CONSOLE /D WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt app.cpp bh280.cpp main.cpp server.cpp
-         app.cpp
-     1>z:\barretthand\rtserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-         bh280.cpp
-     1>z:\barretthand\rtserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>bh280.cpp(86): warning C4390: ';' : empty controlled statement found; is this the intent?
-     1>bh280.cpp(241): warning C4101: 'Tstart' : unreferenced local variable
-     1>bh280.cpp(243): warning C4101: 'Tbefore' : unreferenced local variable
-     1>bh280.cpp(242): warning C4101: 'Tnow' : unreferenced local variable
-     1>bh280.cpp(288): warning C4101: 'Tstart' : unreferenced local variable
-     1>bh280.cpp(290): warning C4101: 'Tbefore' : unreferenced local variable
-     1>bh280.cpp(289): warning C4101: 'Tnow' : unreferenced local variable
-     1>bh280.cpp(338): warning C4101: 'reply' : unreferenced local variable
-         main.cpp
-     1>z:\barretthand\rtserver\server.h(13): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>z:\barretthand\rtserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-         server.cpp
-     1>z:\barretthand\rtserver\server.h(13): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>z:\barretthand\rtserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>server.cpp(25): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>server.cpp(38): warning C4101: 'flags' : unreferenced local variable
-     1>server.cpp(75): warning C4101: 'message' : unreferenced local variable
-     1>server.cpp(106): warning C4101: 'message' : unreferenced local variable
-     1>server.cpp(166): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>server.cpp(151): warning C4101: 'message' : unreferenced local variable
-     1>server.cpp(202): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+         All outputs are up-to-date.
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(Z:\BarrettHand\Release\RTserver.exe) does not match the Linker's OutputFile property value (Z:\BarrettHand\bin-win\RTserver.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin-win\RTserver.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:.\openGL /LIBPATH:"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\ctb-0.14\lib" /LIBPATH:"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\lib" /LIBPATH:"C:\poco-1.3.6p2\lib" /LIBPATH:"C:\wxWidgets-2.8.11\lib\vc_lib" /LIBPATH:"C:\Program Files (x86)\Barrett Technology\BHand\API\lib" PocoFoundationmt.lib BHand.lib wxmsw28_gl.lib wxmsw28_core.lib wxbase28.lib comctl32.lib rpcrt4.lib wsock32.lib opengl32.lib glu32.lib glut32.lib Pcan_usb.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\RTserver.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"Z:\BarrettHand\Release\RTserver.pdb" /SUBSYSTEM:CONSOLE /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Z:\BarrettHand\Release\RTserver.lib" /MACHINE:X86 Release\BHandAppHelper.obj
@@ -51,4 +26,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:10.15
+Time Elapsed 00:00:02.43
