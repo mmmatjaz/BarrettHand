@@ -62,6 +62,7 @@ private:
 //methods
 	int Begin();
 	double PositionControlC(int m);
+	double PositionControl(int m);
 	double VelocityControl(int m);
 	void LowPass(int m,double a);
 	void LowPass2(int m,double aa);

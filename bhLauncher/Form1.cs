@@ -106,9 +106,7 @@ namespace BHlauncher
         public void fillForm()
         {
             itsOK = false;
-            textBox1.Text = settsC.IP;
-            textBox2.Text = settsC.RXport.ToString();
-            textBox5.Text = settsC.TXport.ToString();
+            textBox2.Text = settsC.port.ToString();
             checkBox1.Checked = settsC.use280;
             
             checkBox2.Checked = settsC.use262;
@@ -124,9 +122,7 @@ namespace BHlauncher
 
         public void updateSetts()
         {
-            settsC.IP = textBox1.Text;
-            settsC.RXport = int.Parse(textBox2.Text);
-            settsC.TXport = int.Parse(textBox5.Text);
+            settsC.port = int.Parse(textBox2.Text);
             settsC.use280 = checkBox1.Checked;
             settsC.use262 = checkBox2.Checked;// ? int.Parse(comboBox3.SelectedItem.ToString().Substring(3,1)) : 0;
             settsC.PPS = checkBox3.Checked && checkBox1.Checked;

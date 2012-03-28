@@ -1,0 +1,169 @@
+% IJSLogo in Memo                        (C) Copr 1988, 1993  Leon Zlajpah
+%       Leon  1-apr-97  brez univerze, nov naslov
+%       Leon  1-jun-93  predelal za NFSS in dodal "pike"
+%       Leon 20-aug-91  Nove stevilke telefona in faxa
+%       Leon  8-feb-91  Naredil, da je pozicija glave neodvisna od 
+%                       parametrov za stran (\oddsidemargin in \topmargin)
+%
+% Opombe:
+%    -- pri slovenskih besedilih uporabljaj tudi SLOV.STY (obi~ajno le`i na
+%       tex$inputs (VAX) oziroma na \tex\inputs (PC)), sicer bo izpisan datum
+%       v angle{ki namesto v slovenski obliki
+%    -- uporaba dina4.sty ni potrebna, ~e pa je klican kasneje kot ijs.sty, 
+%	se lahko zgodi, da horizontalno pozicioniranje NI PRAVILNO
+%
+% Vsebina in uporaba:
+%       \IJSlogo{#1}{#2}        na navadni papir izpi{e ponaredek originalne
+%                               glave ijs, nato postopa enako kot \ijslogo
+%                               (ni primerno za uradne dopise)
+%       \IJS                    na navadni papir izpi{e ponaredek originalne
+%                               glave ijs ter teko~i datum 
+%                               (ni primerno za uradne dopise)
+%       \MEMO{#1}{#2}           ponaredek originalnega A4 ijs memo (ki tako
+%                               ali tako ni uradni institutski papir)
+%       \IJSglava               na navadni papir izpi{e ponaredek originalne
+%                               glave ijs
+%       \IJSfax{naslov}{st. faxa}{kdo}{st. strani}{st. prilog}
+%                               na navadni papir izpi{e ponaredek originalne
+%                               glave ijs, nato postopa enako kot \ijslogo
+%                               (ni primerno za uradne dopise)
+%       \IJSdots                definicija IJS pik; velikost se doloci z 
+%                               izbiro \unitlength pred \IJSdots.
+
+\thispagestyle{empty}
+
+\def\bigmemo{\fontfamily{cmss}\fontseries{bx}\fontsize{25}{27pt}\selectfont}
+\def\medmemo{\sffamily\fontsize{10}{12pt}\selectfont}
+\def\smallmemo{\sffamily\fontsize{8}{10pt}\selectfont}
+\def\bfmemo{\sffamily\fontseries{bx}\fontsize{10}{12pt}\selectfont}
+\def\smallijs{\sffamily\fontsize{8}{8pt}\selectfont}
+\def\medijs{\sffamily\fontsize{10}{12pt}\selectfont}
+\def\faxijsa{\sffamily\fontsize{14}{16pt}\selectfont}
+\def\faxijsb{\sffamily\fontsize{12}{14pt}\selectfont}
+\def\bigijs{\sffamily\fontseries{b}\fontsize{20}{25pt}\selectfont}
+\def\smallijssl{\sffamily\fontshape{sl}\fontsize{7}{8pt}\selectfont}
+\def\medijssl{\sffamily\fontshape{sl}\fontsize{12}{15pt}\selectfont}
+
+\setlength{\unitlength}{1pt}
+
+ \def\ijsname{Institut ``Jo\v{z}ef Stefan'' Ljubljana, Slovenija}
+ \def\univerza{}%Univerza v Ljubljani}
+ \def\naslov{1000\,Ljubljana,\,Jamova\,39 / p.p.100 /
+     Tel.:\,01\,4773\,900 /
+     Telefax:\,01\,423\,31\,54 ali 01\,219\,385}
+ \def\faxnasa{1000\,Ljubljana,\,Jamova\,39 / p.p. 100 /
+     Tel.:\,01\,4773\,900}
+ \def\faxnasb{/Fax \v st.:\,01\,477\,31\,54 ali 01\,219\,385}
+ \def\vznak{va\v{s} znak:}
+ \def\nznak{na\v{s} znak:}
+ \def\datum{Datum:}
+ \def\komu{Naslov:}
+ \def\faxno{Fax \v{s}t.:}
+ \def\odkoga{Po\v{s}ilja:}
+ \def\strani{Strani:}
+ \def\priloge{Priloge:}
+ \def\zadeva{Vsebina:}
+
+\def\ijs{\ijslogo{}{}}		\def\IJS{\IJSlogo{}{}}
+
+\def\IJSlogo#1#2{\mbox{}\\[-\topmargin]\mbox{}\hspace{-\oddsidemargin}
+ \begin{picture}(409,5)(20,-45)
+  \put(0,-2){\mbox {\smallijs \naslov}}
+  \put(0,11){\mbox {\bigijs \ijsname}}
+  \put(0,35){\mbox {\medijssl \univerza}}
+  \put(0,-30){\mbox{\medijs \vznak}}
+  \put(170,-30){\mbox{\medijs \nznak}}
+  \put(340,-30){\mbox{\medijs \datum}}
+  \put(454,5){ \begin{picture}(60,80)(0,0)
+                 \put(17,6){\circle*{10}}   \put(6,17){\circle*{10}}
+                 \put(28,17){\circle*{10}}  \put(6,28){\circle*{10}}
+                 \put(17,28){\circle*{10}}  \put(17,39){\circle*{10}}
+                 \put(28,39){\circle*{10}}
+               \end{picture}}
+  \put(0,-48){\mbox{\bf{#1}}}		\put(170,-48){\mbox{\bf{#2}}}
+  \put(340,-48){\mbox{\today}}
+  \put(0,-62){\line(1,0){10}}		\put(0,-176){\line(1,0){10}}
+  \put(-67,-194){\line(1,0){15}}  % Crta za v kuverto.
+  \put(-67,-319){\line(1,0){15}}  % Crta na polovici lista. 
+\end{picture}
+\par\noindent }
+
+\def\MEMO#1#2{\mbox{}\\[-\topmargin]\mbox{}\hspace{-\oddsidemargin}
+ \begin{picture}(409,35)(20,-75)
+  \put(0,-71.5){\framebox(185.5,71.5)}
+  \put(0,10){\mbox{\bigmemo MEMO}}
+  \put(0,35){\mbox{\medmemo Institut ``Jo\v{z}ef Stefan'' Ljubljana}}
+  \put(10,-13){\mbox{\smallmemo prejme:}}
+  \put(200,-13){\mbox{\smallmemo po\v{s}ilja:}}
+  \put(360,-13){\mbox{\smallmemo datum:}}
+  \put(360,-35){\mbox{\today}}
+  \put(20,-35){\mbox{\bfmemo #1}}	\put(210,-35){\mbox{\bfmemo #2}}
+  \put(454,0){ \begin{picture}(60,80)(0,0)
+    \put(17,6){\circle*{10}}     \put(6,17){\circle*{10}}
+    \put(28,17){\circle*{10}}    \put(6,28){\circle*{10}}
+    \put(17,28){\circle*{10}}    \put(17,39){\circle*{10}}
+    \put(28,39){\circle*{10}}
+  \end{picture}  }
+ \end{picture}
+\par }
+
+\def\IJSglava{\mbox{}\\[-\topmargin]\mbox{}\hspace{-\oddsidemargin}
+ \begin{picture}(409,5)(20,-45)
+  \put(0,11){\mbox {\bigijs \ijsname}}
+  \put(0,35){\mbox {\medijssl \univerza}}
+  \put(454,0){ \begin{picture}(60,80)(0,0)
+                 \put(17,6){\circle*{10}}   \put(6,17){\circle*{10}}
+                 \put(28,17){\circle*{10}}  \put(6,28){\circle*{10}}
+                 \put(17,28){\circle*{10}}  \put(17,39){\circle*{10}}
+                 \put(28,39){\circle*{10}}
+               \end{picture}}
+\end{picture}\vspace{-1cm}
+\par\noindent}
+
+\def\IJSfax#1#2#3#4#5{\mbox{}\\[-\topmargin]\mbox{}\hspace{-\oddsidemargin}
+ \begin{picture}(409,110)(20,-148)
+  \put(0,-10){\mbox {\faxijsa \faxnasa}}
+  \put(0,-28){\mbox {\faxijsa \faxnasb}}
+  \put(0,11){\mbox {\bigijs \ijsname}}
+  \put(0,35){\mbox {\medijssl \univerza}}
+%  \put(0,-30){\mbox{\faxijsb \komu}}
+  \put(355,-50){\makebox(0,0)[r]{\faxijsb \faxno}}
+  \put(355,-73){\makebox(0,0)[r]{\faxijsb \odkoga}}
+  \put(355,-96){\makebox(0,0)[r]{\faxijsb \strani}}
+  \put(355,-119){\makebox(0,0)[r]{\faxijsb \priloge}}
+  \put(355,-142){\makebox(0,0)[r]{\faxijsb \datum}}
+  \put(454,0){ \begin{picture}(60,80)(0,0)
+                 \put(17,6){\circle*{10}}   \put(6,17){\circle*{10}}
+                 \put(28,17){\circle*{10}}  \put(6,28){\circle*{10}}
+                 \put(17,28){\circle*{10}}  \put(17,39){\circle*{10}}
+                 \put(28,39){\circle*{10}}
+               \end{picture}}
+  \put(30,-65){\parbox[t]{280pt}{\faxijsb #1}}
+  \put(361,-53){\mbox{\faxijsb #2}}
+  \put(361,-76){\mbox{\faxijsb #3}}
+  \put(361,-99){\mbox{\faxijsb #4}}
+  \put(361,-122){\mbox{\faxijsb #5}}
+  \put(361,-145){\mbox{\faxijsb \today}}
+  \put(0,-156){\line(1,0){500}}  
+  \put(0,-170){\mbox{\faxijsb \zadeva}}
+\end{picture}
+
+\par\noindent\phantom{\faxijsb \zadeva }}
+
+\def\IJSdots#1{\unitlength #1
+               \begin{picture}(15,20)(0,5)
+                 \put(5,0){\circle*{2}}   \put(0,5){\circle*{2}}
+                 \put(10,5){\circle*{2}}  \put(0,10){\circle*{2}}
+                 \put(5,10){\circle*{2}}  \put(5,15){\circle*{2}}
+                 \put(10,15){\circle*{2}}
+               \end{picture}}
+
+\def\Pframe{% fraime for foils - portrait orientation
+\unitlength 1mm   
+\begin{picture}(0,0)(0,0)
+  \thicklines
+  \put(85,-122){\oval(190,240)}
+\end{picture}
+}
+
+\endinput

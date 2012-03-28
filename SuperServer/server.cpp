@@ -79,7 +79,6 @@ pthread_mutex_lock( Mutex );
 	Comm->command280[ci2]=0;
 	Rep->executed262=false;
 	Rep->executed280=false;
-	cout<<Rep->executed280<<endl;
 pthread_mutex_unlock( Mutex );
 	cout<<SIGNATURE<<" Received "<< received << " bytes from " << &from.sin_addr << endl;
 }
@@ -121,7 +120,6 @@ threadMethod SuperServer::Pong()
 	isRunning=true;
 	while (shouldRun)
 	{		
-		cout<<"nocem"<<endl;
 		ReceiveCommands();
 		WaitForHands();
 		SendReply();			

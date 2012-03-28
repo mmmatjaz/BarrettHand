@@ -91,6 +91,7 @@
     <ClInclude Include="..\windows\winpthreads.h" />
     <ClInclude Include="app.h" />
     <ClInclude Include="bh280.h" />
+    <ClInclude Include="graphics.h" />
     <ClInclude Include="server.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -100,6 +101,7 @@
     <ClCompile Include="..\port2win\timeofday.cpp" />
     <ClCompile Include="app.cpp" />
     <ClCompile Include="bh280.cpp" />
+    <ClCompile Include="graphics.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="server.cpp" />
     <ClCompile Include="stdafx.cpp">

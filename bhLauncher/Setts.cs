@@ -10,9 +10,7 @@ namespace BHlauncher
 {
     class Setts
     {
-        public string IP;
-        public int RXport;
-        public int TXport;
+        public int port;
         public bool use280;
         public bool PPS;
         public bool use262;
@@ -24,16 +22,14 @@ namespace BHlauncher
 
         public Setts()
         {
-            IP = "127.0.0.1";
-            RXport = 4444;
-            TXport = 5555;
+            port = 5555;
             use280 = true;
             PPS = true;
             use262 = true;
             com = 1;
-            RTfile = "bhRTserver.exe";
+            RTfile = "RtServer.exe";
             RTpath = Environment.CurrentDirectory;
-            Sfile = "bhSserver.exe";
+            Sfile = "SuperServer.exe";
             Spath = Environment.CurrentDirectory;
         }
 
@@ -41,9 +37,7 @@ namespace BHlauncher
                         bool use280, bool use262, bool PPS, int com,
                         string RTfn, string RTp, string Sfn, string Sp)
         {
-            this.IP = IP;
-            this.RXport = RX;
-            this.TXport = TX;
+            this.port = TX;
             this.use280 = use280;
             this.use262 = use262;
             this.PPS = PPS;
@@ -81,13 +75,11 @@ namespace BHlauncher
                               
             }
             */
-            this.IP = doc.GetElementsByTagName("IP")[0].ChildNodes[0].Value;
             this.RTfile = doc.GetElementsByTagName("RTfile")[0].ChildNodes[0].Value;
             this.RTpath = doc.GetElementsByTagName("RTpath")[0].ChildNodes[0].Value;
             this.Sfile = doc.GetElementsByTagName("Sfile")[0].ChildNodes[0].Value;
             this.Spath = doc.GetElementsByTagName("Spath")[0].ChildNodes[0].Value;
-            this.RXport = int.Parse(doc.GetElementsByTagName("RXport")[0].ChildNodes[0].Value);
-            this.TXport = int.Parse(doc.GetElementsByTagName("TXport")[0].ChildNodes[0].Value);
+            this.port = int.Parse(doc.GetElementsByTagName("port")[0].ChildNodes[0].Value);
             this.use262 = bool.Parse(doc.GetElementsByTagName("use262")[0].ChildNodes[0].Value);
             this.use280 = bool.Parse(doc.GetElementsByTagName("use280")[0].ChildNodes[0].Value);
             this.PPS = bool.Parse(doc.GetElementsByTagName("PPS")[0].ChildNodes[0].Value);
@@ -124,9 +116,7 @@ namespace BHlauncher
         {
             string argument = "";
             //argument += this.filename + " ";
-            argument += this.IP + " ";
-            argument += this.RXport + " ";
-            argument += this.TXport + " ";
+            argument +=  this.port + " ";
             argument += ((this.use280 ? 1 : 0) + (this.use280 && this.PPS ? 1 : 0)).ToString() + " ";
             argument += !this.use262 ? "0" : this.com.ToString();
             return argument;

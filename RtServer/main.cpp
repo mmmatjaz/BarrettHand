@@ -2,6 +2,7 @@
 #include "server.h"
 #include "bh280.h"
 #include "app.h"
+#include "graphics.h"
 
 using namespace std;
 
@@ -27,17 +28,12 @@ threadMethod rxLoop(void *threadid)
 threadMethod bh280Loop(void *threadid)
 {	
 	//bh280.Loop();
-	bh280.LoopOfflineTorque();
+	bh280.LoopOffline();
 }
 
 int main(int argc, char* argv[])
 {
-
-	char mode[4]={0,0,0,0};
-	double moded=0.0;
-	memcpy(mode,&moded,sizeof(moded));
-	printf("char %s double %f",mode,moded);
-
+	
 	App.PrintBanner();
 	Config.FromArgs(argc, argv);
 	Config.PrintConf();
@@ -62,8 +58,8 @@ int main(int argc, char* argv[])
 	
 	//pthread_create(&rxThread, &tattr_server, &Server::RunServer, (void *) this)	
 	//pthread_create(&rxThread, 		NULL, rxLoop, NULL);
-	//pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
-	
+	pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
+	initGlut(argc, argv, &MeasG.hdata280, &mutex1);
 	
 	string input;
 	string tmp;

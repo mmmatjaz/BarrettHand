@@ -18,34 +18,28 @@ namespace bhSclient
         int test = 0;
         string RdMessage;
         string IP = "127.0.0.1";
-        int RXport = 4444;
-        int TXport = 5555;
+        int port = 4444;
 
         // GUI thread
         UdpClient senderSock = new UdpClient();
-        UdpClient receiverSock = new UdpClient();
         IPEndPoint senderEIP;
         Thread nitka;
         bool RXthreadRunning = false;
         bool shouldRun = true;
-        bool isRXno = true;
-        bool isTXno = true;
+        bool isPORTno = true;
 
         public void nitkaClass()
         {
             MethodInvoker updateFormDelegate = new MethodInvoker(updateForm);
-            
-            receiverSock = new UdpClient(RXport);
-            IPEndPoint receiverEIP = new IPEndPoint(IPAddress.Parse(IP),RXport);
+
+            senderSock = new UdpClient(port);
+            IPEndPoint receiverEIP = new IPEndPoint(IPAddress.Parse(IP),port);
             Byte[] receiveBytes;
             while (shouldRun)
             {
                 try
                 {
-
-                    // Blocks until a message returns on this socket from a remote host.
-                    receiveBytes = receiverSock.Receive(ref receiverEIP);
-                    
+                    receiveBytes = senderSock.Receive(ref receiverEIP);               
                     RdMessage = Encoding.ASCII.GetString(receiveBytes);
 
                     Invoke(updateFormDelegate);
@@ -60,7 +54,7 @@ namespace bhSclient
                 
                 
             }
-            receiverSock.Close();
+            senderSock.Close();
         }
         void updateForm()
         {
@@ -74,13 +68,11 @@ namespace bhSclient
         
 
         bool SetPar()
-        {
-            
+        {          
             string IP = textBoxIP.Text;
-            bool isRXno = int.TryParse(textBoxRX.Text, out RXport);
-            bool isTXno = int.TryParse(textBoxTX.Text, out TXport);
+                 
 
-            if (!isRXno || !isTXno)
+            if (!isPORTno )
                 return true;
             else return false;
             
@@ -93,15 +85,14 @@ namespace bhSclient
                 nitka.Abort();
                 RXthreadRunning = false;
                 textBoxIP.Enabled = true;
-                textBoxRX.Enabled = true;
-                textBoxTX.Enabled = true;
+                textBoxPORT.Enabled = true;
                 buttonStart.Text = "Start";
                 buttonSend.Enabled = false;
                 //senderSock.Close();
             }
             else
             {
-                if (isRXno && isTXno)
+                if (isPORTno)
                 {
 
                     SetPar();
@@ -111,12 +102,11 @@ namespace bhSclient
                     nitka.Start();
                     RXthreadRunning = true;
                     textBoxIP.Enabled = false;
-                    textBoxRX.Enabled = false;
-                    textBoxTX.Enabled = false;
+                    textBoxPORT.Enabled = false;
                     buttonStart.Text = "Stop";
                     buttonSend.Enabled = true;
                     //senderSock = new UdpClient();
-                    senderEIP = new IPEndPoint(IPAddress.Parse(textBoxIP.Text), int.Parse(textBoxTX.Text));
+                    senderEIP = new IPEndPoint(IPAddress.Parse(textBoxIP.Text), int.Parse(textBoxPORT.Text));
                     //senderSock.Client.Connect(senderEIP);
                 }
                 else
@@ -141,7 +131,7 @@ namespace bhSclient
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            receiverSock.Close();
+            senderSock.Close();
             senderSock.Close();
         }
 
@@ -154,7 +144,7 @@ namespace bhSclient
 
         private void textBoxRX_TextChanged(object sender, EventArgs e)
         {
-            isRXno = int.TryParse(textBoxRX.Text, out RXport);
+            isPORTno = int.TryParse(textBoxPORT.Text, out port);
         }
 
         private void textBoxRX_KeyPress(object sender, KeyPressEventArgs e)
@@ -177,7 +167,7 @@ namespace bhSclient
 
         private void textBoxTX_TextChanged(object sender, EventArgs e)
         {
-            isTXno = int.TryParse(textBoxRX.Text, out TXport);
+            //isTXno = int.TryParse(textBoxRX.Text, out TXport);
         }
 
         private void textBox262_KeyPress(object sender, KeyPressEventArgs e)

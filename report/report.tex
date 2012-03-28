@@ -1,0 +1,327 @@
+\documentclass[12pt,twoside]{article}
+\usepackage[a4paper,width=160mm,height=250mm,left=25mm,right=25mm,top=25mm,bottom=25mm,nohead]{geometry}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[table]{xcolor}
+\usepackage{xcolor,graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{makeidx}
+\usepackage{float}
+\usepackage{epstopdf}
+\usepackage{myijs}
+\usepackage{colortbl} 
+\graphicspath{{images/eps//},{images/bitmap//}}
+%\graphicspath{{images/bitmap//}}
+
+%
+\begin{document}
+
+
+\title{BarrettHand Grasper Control}
+
+\author{Matja\v{z} Ogrinc}
+%\maketitle
+\begin{titlepage}
+\null
+\vspace{2cm}
+\IJSglava
+\begin{flushright}
+DP?????
+\end{flushright}
+
+\vspace{5cm}
+
+% Title
+%\HRule \\[0.4cm]
+\begin{center}
+{ \huge \bfseries BarrettHand Grasper Control}\\[0.4cm]
+\end{center}
+\vspace{1cm}
+
+\begin{flushright} \large
+Matja\v{z} Ogrinc\\
+Andrej Gams\\ 
+Ale\v{s} Ude\\
+ 
+\end{flushright}
+\begin{center}
+
+\end{center}
+\vfill
+
+% Bottom of the page
+\begin{flushright}
+{\large Ljubljana, December 2011}
+\end{flushright}
+\end{titlepage}
+
+\newpage
+%\input{./titlepage.tex}
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+The BarrettHand™ is designed to overcome the inflexibility of conventional grippers with microprocessor-enabled dexterity while maintaining durability, compactness, and ease of use. The BarrettHand is a multi-fingered Grasper with the dexterity to secure target objects of different sizes, shapes, and orientations. Rather than rely on pinching gripper friction or permanent gripper-jaw shape customization the BarrettHand™ gently envelops the object, securely locking its joints until commanded to release.
+
+The BarrettHand, shown in Figure 1, has three fingers labeled F1, F2 and F3. Two of the fingers, F1 and F2, rotate synchronously and symmetrically about the base joint in a spreading action. The “spread” motion around the palm allows “on-the-fly” grasp reconfiguration to adapt to varying target object sizes, shapes, and orientations.
+Aside from the spread motion, each of the three fingers on the BarrettHand™ feature two joints driven by a single DC brushless servo motor. The joints of each finger are coupled through Barrett’s patented TorqueSwitch™, which automatically switches motor torque to the appropriate finger joint when closing on a target object. Using the fingers together allows the BarrettHand™ to "grasp" a wide variety of objects securely. The TorqueSwitch combined with the spread function, makes object grasping nearly target-independent \cite{manual}.
+\begin{figure}[!h]
+    \begin{center}
+        \includegraphics[width=0.9\textwidth]{barrettIntro.eps}
+        \caption{BarretHand} \label{BarretHand}
+    \end{center}
+\end{figure}
+
+The newer model BH280 is more advanced than BH262 in many aspects and offers some new features. It is equipted with pressure profile sensors (PPS), mounted on each finger and the palm. Each of these surfaces consists of 24 individual sensors. The resolution of output value is 10 bits. The BH280 also introduces a better position measurement resolution. The encoders used in the BH280 model provide about 10-times better resolution then those used in BH262. Another major improovement is the communication protocol. The BH280 can be connected to the host machine using faster CAN connection. 
+
+\subsection{Installation}
+To install the hand see the instructions in the manual \cite{manual}, which can be found on the USB dongle included with the BarrettHand. \cite{interface} provides information on how to use the very intuitive BarrettHand Control GUI. The software (including the GUI and API) and documentation is installed with a single installer application and is neccessery for use of the supervisory and realtime server applications, short instuctions are in \cite{quickstart}. API documentation \cite{library} is provided in the html format. Both applications propose that the BH280 model uses CAN connection (use the USB adapter) and BH262 uses serial RS232 connection.
+
+All software including source files, the report and USB stick contents are stored here: 
+\begin{center}
+\tt smb://balsa/Interno/Roboti/BarrettHand/BH\_2011 \\ or smb://balsa/Smetje/Matjaz/BHAND
+\end{center}
+Github repository contains everything but the USB stick content.
+\begin{center}
+\tt git://github.com/mmmatjaz/BarrettHand.git
+\end{center}
+
+\subsection{The repository}
+The Supervisory and Realtime run on both Windows and Linux. The sources of these are cross platform. On linux the applications are built using \emph{make} command. To recompile on Windows, open the \emph{bh.sln} file in Visual Studio. The solution also contains projects \emph{bhLauncer} and \emph{bhSclient}, which use .NET framework and are not cross platform. The binaries will appear in \emph{bin-win} and \emph{bin-linux} folders. \emph{port2win} includes definitions that are neccessery for compilation of the Linux code on Windows.
+
+
+\begin{center}
+\renewcommand{\arraystretch}{1.7}
+\renewcommand{\tabcolsep}{0.3cm}
+\begin{tabular}{  | p{14cm} |}
+\hline
+\rowcolor[rgb]{0.8,0.8,0.8}
+	\large{NOTE: When using the BH262 after it had not been used for more than two days, the firmware must be updated. This can be easily done using BattettHand Control GUI on either Windows or Linux. Click firmware update button on the first tab in the GUI and follow the instuctions. If not sure, see \cite{interface}.}
+ \\
+     \hline
+     \end{tabular}
+\end{center}
+
+%\end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\section{Supervisory Control}
+
+Supervisory mode leverages the control capabilities of the BH8-262 on-board Motorola microprocessor or the BH8-280 Pucks in the hand. BH8-280 hands will directly run motion received motion commands, whereas a BH8-262 hand will need to apply control signals across the four (4) HCTL-1100 motion-control microprocessors. Supervisory mode allows you to command individual or multiple motors to close, open, and move to specific positions; it also provides for setting the various configuration properties and reporting positions and torques \cite{manual}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\subsection{Supervisory Server}
+\begin{figure}[!h]
+    \begin{center}
+        \includegraphics[width=1.0\textwidth]{Sconsole.png}
+        \caption{Supervisory server.} \label{Sconsole}
+    \end{center}
+\end{figure}
+The BHSupervisory server application can control either BH280, BH262 or both simultaniusly. A few parameters must be set to start the server application. These are given as arguments in the order as listed in table \ref{table1}. If application is launched without any arguments, default settings are used. The following line starts the server on port 5555, and only the bh280 will be controlled.
+\begin{center}
+\tt ./SuperServer 5555 1 0
+\end{center}
+
+\begin{table}[h!]
+\begin{center}
+     \begin{tabular}{ | l | l | l |}
+\rowcolor[rgb]{0.8,0.8,0.8}
+     \hline
+     Parameter & Description 		& Default  \\ \hline
+\rowcolor{white}
+     BH280 & 0-disable  			& 1\\
+		 	  & 1-enable  				& \\        \hline
+     BH262 & 0-disable 				& 1\\ 
+           & serial port no 		& \\ \hline
+     Port  & UDP communitcation port & 4444 \\
+     \hline
+	
+     \end{tabular}
+\caption{List of parameters}
+	\label{table1}
+\end{center}
+\end{table}
+
+
+The client, connected by the UDP protocol, sends commands to be set to the grippers. The list of availible commands is installed together with BarrettHand software  (browse to \emph{\%BHAND\%\slash Manuals}). Some commands return a message, this message is forwarded to the client.
+The commands must be provided in a string of ASCII characters:
+\begin{center}
+\tt @"H262\_command"@"BH280\_command"
+\end{center}
+Following single character '@' is the command to be set to the BH262 model, and the BH280 command follows the second '@' character.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\subsection{Supervisory Matlab Script}
+The following code sends supervisory commands to the grippers. 
+\begin{center}
+\renewcommand{\arraystretch}{1.0}
+\renewcommand{\tabcolsep}{0.3cm}
+\begin{tabular}{  | p{13cm} |}
+\hline
+
+\tt r=udp('193.2.6.112', 5555, 'LocalPort', 5555 ); \\
+\tt fopen(r); \\
+\tt fwrite(r,'@gc@go') \\
+\tt fscanf(r) \\
+\tt fclose(r); \\
+     \hline
+     \end{tabular}
+\end{center}
+\vspace{5 mm}
+The BH262's fingers should form a closed fist (gc=grip close) and BH280's outer fingers should point opposite to the middle finger (so=spread open). The code uses pnet library for sending UDP data. See /SuperClientMatlab.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\subsection{Supervisory Windows Client}
+\begin{figure}[!h]
+    \begin{center}
+        \includegraphics[width=1.0\textwidth]{Sclient.png}
+        \caption{Supervisory Client application.} \label{Sclient}
+    \end{center}
+\end{figure}
+Figure \ref{Sclient} shows the Setup tab (left) and the Terminal tab (right). After setting the connection parameters, clicking the \emph{Start} button starts the communication. In the Terminal tab the \emph{Send} button is now enabled. The commands for each hand should be input in the textboxes on top. The sent and received history is printed in the Terminal field.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\section{Real-Time Control}
+RealTime mode extends the capability of Supervisory mode. Sometimes users may wish to bypass the Supervisory functions and apply control directly to the motion-control microprocessors. RealTime mode enables users to close control loops in real time from their host PC or robot controller \cite{manual}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\subsection{Real-Time Server}
+
+The BHserver application allows real time control of the gripper. Once started, it initializes the gripper. The client is connected to the server using UDP protocol, and sends either velocity, position, or desired torque to the server. This enables us to use the graspers internal position control, or design our own controller on client side. The server application applies these values and replies with values read from the gripper (see Figure \ref{sendRec}) All read values are of type double (8 bytes), the PPS data is of type int (4 bytes).
+
+Figure \ref{sendRec} also displayes the sum of data exchanged between the client and server in bytes (B) when controlling both hands. The sum of the PPS output data is much larger than all the other data read from the gripper's internal controller. When PPS reading is enabled, the delay caused by communication over CAN increases from about 3 ms to 33 ms, which equals the delay when using the serial communcation, not reading the PPS sensors. Though the BH280 supports serial communcation, transfering the PPS data over it would cause an unacceptable delay. 
+\begin{figure}[!h]
+    \begin{center}
+        \includegraphics[width=1.0\textwidth]{RTconsole.png}
+        \caption{Real-Time server console.} \label{RTconsole}
+    \end{center}
+\end{figure}
+
+\paragraph{}
+Again, a few parameters must be set to start the server application. These are given as arguments listed in table \ref{table2}. If application is launched without any arguments, default settings are used. 
+\begin{table}[h]
+\begin{center}
+     \begin{tabular}{ | l | l | l |}
+\rowcolor[rgb]{0.8,0.8,0.8}
+     \hline
+     Parameter & Description 		& Default  \\ \hline
+\rowcolor{white}
+     BH280 & 0-disable  			& 1\\
+		 	  & 1-enable  				& \\
+           & 2-read PPS 			& \\
+           & 3-show PPS graphics & \\ \hline
+     BH262 & 0-disable 				& 1 \\ 
+           & serial port no 		&   \\ \hline
+     Port  & UDP communitcation port & 4444 \\
+      \hline
+     \end{tabular}
+\caption{List of parameters}
+	\label{table2}
+\end{center}
+\end{table}
+
+\begin{figure}[!htb]
+    \begin{center}
+        \includegraphics[width=1.0\textwidth]{sendRec.eps}
+        \caption{Server-client traffic diagram.} \label{sendRec}
+    \end{center}
+\end{figure}
+
+The application consists of multiple threads. One runs the server, commands to each gripper are processed in seperate threads. Figure \ref{RTconsole} shows the application console window, where messages of each thread are printed. When launched, application opens a window visualising the sensor data (Figure \ref{visual}). Presure sensor output in displayed in shades of blue, higher pressure couses lighter shade. Pressure sensor are only availeble with the BH280 model. Strain gage sensor output is displayed with orange rectangles, the output level defines the shade of orange color. The outer fingers are rotated according to actal position.
+\begin{figure}[!h]
+    \begin{center}
+        \includegraphics[width=0.80\textwidth]{openGL.png}
+        \caption{Sensor output visualisation.} \label{visual}
+    \end{center}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+
+\subsection{Client in Simulink}
+\begin{figure}[!h]
+    \begin{center}
+        \includegraphics[width=0.3\textwidth]{simmodel2.eps}
+		  \includegraphics[width=0.7\textwidth]{simmask.png}
+        \caption{Simulink model.} \label{simulink}
+    \end{center}
+\end{figure}
+
+Figure \ref{simulink} shows the simulink block and its preferences window. In the first tab, control modes and connection parameters are selected. In second tab unused ports can be disabled.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+%\subsection{Client C++ Wrapper}
+%bla
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\section{Graphical Server Launcher}
+\begin{figure}[!htb]
+    \begin{center}
+        \includegraphics[width=0.40\textwidth]{launcher.png}
+        \caption{Graphical Server Launcher.} \label{launcher}
+    \end{center}
+\end{figure}
+Both real-time and supervisory servers can also be started using the graphical interface, application BHLauncher (see Figure \ref{launcher}). The user can select the necessary parameters, and once set, parameters can be saved. The servers are launched by clicking buttons \emph{Supervisory} or \emph{RealTime}. The bottom textbox shows the assembled string of arguments. When changes are detected, the program offers to save them to an $.xml$ file. If the settings file isn't found at program start, default settings are loaded.
+\begin{center}
+\renewcommand{\arraystretch}{1.7}
+\renewcommand{\tabcolsep}{0.3cm}
+\begin{tabular}{  | p{14cm} |}
+\hline
+\rowcolor[rgb]{0.8,0.8,0.8}
+	\large{By default, the launcher and server applications are in the same folder. If the server applications cannot be located, the BHlauncher displays a dialog to browse for the executable. If you haven't renamed them, you can just delete the config XML file and restart the GUI.}
+ \\
+     \hline
+     \end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+
+\section{C++ templates}
+On Windows OS one Visual Studio Solution contains all projects. The bhWrapper project contains four .cpp files:
+\begin{itemize}
+\item
+BH.cpp is the main file, program entry is here. It contains the main() function. After it launches the threads, it waits for a keypress to terminate.
+\item
+bh262.cpp and bh280.cpp contain thread routines for each hand. First, the hand and the software are initialized. The hand now accepts supervisory commands. To control it in real time, the Realtime Mode must be started using RTStart(). Function
+RunRealTime() is executed each iteration. It sets velocities or positions and reads the data from the hand sensors.
+\item
+glutWindow.cpp contains the OpenGL functions to display the BH280 sensor data.
+\end{itemize}
+On Linux you can use the examples provided by the BarrettHand.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\begin{thebibliography}{1}
+\bibitem{manual}
+Barrett Technology Inc,
+BarrettHand BH8-Series User manual Firmware Version 4.4.x,
+2010
+
+% GUI
+% update firmware page 9
+\bibitem{interface}
+Barrett Technology Inc,
+Control GUI Manual Version 4.4.3,
+2010
+
+\bibitem{library}
+Barrett Technology Inc,
+Barrett Hand API Documentation Version 4.4.3,
+2010
+
+% software install
+\bibitem{quickstart}
+Barrett Technology Inc,
+BarrettHand Control SDK Quickstart Guide,
+2010
+
+\end{thebibliography}
+
+\end{document}

@@ -11,7 +11,7 @@
 #define Ps 0.001
 #define Dg 0//.001
 #define Ds 0//.001
-#define MAX_G 0.003
+#define MAX_G 0.004
 #define MAX_S 0.001
 
 #define VEL_CONTROL 1
@@ -85,14 +85,38 @@ void BH280::Initialize(	bool PPS,
 	
 }
 
-
-
-double BH280::PositionControlC(int m)
+double BH280::PositionControl(int m)
 {
-	LowPass(m,0.2);
+	LowPass(m,0.3);
   double out=0.0;
   double dt=diffclock(&now,&lc);
   double Kf=0.5/10.0;
+  //P
+	double qd=Cons.cValues[m];
+	double qf=Kf*Deadzone(m,0.30);
+	double q= Meas.Position[m];
+	double e= qd-q;//-qf;
+	//Meas.m280[2][m]=qd-q-qf;
+  //D
+	double pqd=pCons.cValues[m];
+	double pqf=Kf*SmoothDeadzone(pMeas.StrainFilt[m]);
+	double pq= pMeas.Position[m];
+	double pe= pqd-pqf-pq;
+	double de=pe/dt;
+  out=reg.P[m]*e;// + reg.D[m]*de;
+
+  if (out>reg.maxV[m]) 		out=reg.maxV[m];
+  if (out<-reg.maxV[m]) 	out=-reg.maxV[m];
+ 
+  return out;
+}
+
+double BH280::PositionControlC(int m)
+{
+	LowPass(m,0.3);
+  double out=0.0;
+  double dt=diffclock(&now,&lc);
+  double Kf=0.5/20.0;
   //P
 	double qd=Cons.cValues[m];
 	double qf=Kf*Deadzone(m,0.30);
@@ -246,8 +270,8 @@ void BH280::LoopOffline()
 	if (result = bh.Command("GFSET DP 100000"))
 		Error();
 
-	if (result = bh.Command("123m"))
-		Error();
+	//if (result = bh.Command("123m"))
+		//Error();
 		
 	if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
 		Error();
@@ -263,16 +287,30 @@ void BH280::LoopOffline()
 		ReadFromHand();
 		RefreshMeas();
 		double f=0.2;//Hz
-		int m=1;
-		double value = PI/3 + (PI/4*sin( f* T*2*PI));
-		Cons.cValues[m]=value;		
+		double value = 0.8*PI/3 + (PI/4*sin( f* T*2*PI));
+
+		if(!pps)
+		{
+			int m=1;
+			Cons.cValues[m]=value;			
+			int temp=(int)((PositionControlC(m) * props.scaleIN[m])+0.5);
+			result=bh.RTSetVelocity(m + '1', temp);
+			m=0;
+			Cons.cValues[m]=value;	
+			temp=(int)((PositionControl(m) * props.scaleIN[m])+0.5);
+			result=bh.RTSetVelocity(m + '1', temp);
+
+			m=3;
+			Cons.cValues[m]=1;	
+			temp=(int)((PositionControl(m) * props.scaleIN[m])+0.5);
+			result=bh.RTSetVelocity(m + '1', temp);
 		
-		int temp=(int)((PositionControlC(m) * props.scaleIN[m])+0.5);
-		result=bh.RTSetVelocity(m + '1', temp);
+			
 		
+			//printf("\ntime: %4.2f r: %4.2f y: %4.2f f: %4.2f",T,value,Meas.Position[m],pMeas.StrainFilt[m]);
+			
+		}
 		bh.RTUpdate();
-		
-		printf("\ntime: %4.2f r: %4.2f y: %4.2f f: %4.2f",T,value,Meas.Position[m],pMeas.StrainFilt[m]);
 		RememberData();
 	}
 	bh.RTAbort();

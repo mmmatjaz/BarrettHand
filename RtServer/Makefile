@@ -5,13 +5,13 @@
 CC=g++
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=main.cpp app.cpp server.cpp bh280.cpp
+SOURCES=main.cpp app.cpp server.cpp bh280.cpp graphics.cpp
 #SOURCES=client_udp.c
 OBJ=$(SOURCES:.cpp=.o)
 ODIR=obj
 OBJECTS = $(patsubst %,$(ODIR)/%,$(OBJ))
 
-EXECUTABLE=../bin-linux/RTserver
+EXECUTABLE=../bin-linux/RTserver2
 
 #EXECUTABLE=client
 #######################################################################
@@ -23,7 +23,7 @@ BHAND_INSTALL_DIR = /usr/local/Barrett/BHand
 #BHAND_DIR = ${BHAND_INSTALL_DIR}
 INCLUDES += -I${BHAND_INSTALL_DIR}/thirdparty/include -I${BHAND_INSTALL_DIR}/API
 LIBDIR += -L${BHAND_INSTALL_DIR}/API/lib
-LDLIBS = -lBHand
+LDLIBS = -lBHand -lglut -lGL -lGLU -lGLEW
 CLEANCMD = rm -f ${PROGRAM} ./obj/*.o
 DEFS = -DLINUX 
 ############################

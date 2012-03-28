@@ -54,3 +54,5 @@ Z:\BarrettHand\bhLauncher\obj\x86\Release\BHlauncher.Form1.resources
 Z:\BarrettHand\bhLauncher\obj\x86\Release\BHlauncher.Properties.Resources.resources
 Z:\BarrettHand\bhLauncher\obj\x86\Release\GenerateResource.read.1.tlog
 Z:\BarrettHand\bhLauncher\obj\x86\Release\GenerateResource.write.1.tlog
+Z:\BarrettHand\bin-win\BHlauncher.exe
+Z:\BarrettHand\bin-win\BHlauncher.pdb

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bhLauncher", "bhLauncher\bhLauncher.csproj", "{ED9F6D0B-BC6D-4FE2-A22F-730A511E947E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RtServer", "RtServer\bhRTserver.vcxproj", "{490EC108-8E6C-4CF2-AB6C-9E92451CD6F2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RTserver", "RtServer\bhRTserver.vcxproj", "{490EC108-8E6C-4CF2-AB6C-9E92451CD6F2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperServer", "SuperServer\SuperServer.vcxproj", "{448DD307-971E-4F69-8057-A21263F62FCF}"
 EndProject

@@ -39,7 +39,7 @@ Config::Config()
 	TXport=	5555;
 	use280=true;
 	use262=false;
-	usePPS=false;
+	usePPS=true;
 	serialPort=1;
 	ST=		0.01;
 };

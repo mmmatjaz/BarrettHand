@@ -1,0 +1,21 @@
+% IJSLOGO.STY  defines ijs dots.
+%
+% \IJSdots   draws IJS dots in a box 0pt width and 0pt heigh
+%
+
+% Leon Zlajpah, may 1993
+
+\RequirePackage{pstricks}
+\newcommand{\IJSdots}[1]{%
+ \psset{unit=#1}
+ \begin{pspicture}(-0.5,-0.5)(2.5,3.5)
+ \qdisk(1,0){0.45}
+ \qdisk(0,1){0.45}
+ \qdisk(2,1){0.45}
+ \qdisk(0,2){0.45}
+ \qdisk(1,2){0.45}
+ \qdisk(1,3){0.45}
+ \qdisk(2,3){0.45}
+ \end{pspicture}
+}
+\endinput
