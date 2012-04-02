@@ -8,9 +8,7 @@
 \contentsline {section}{\numberline {3}Real-Time Control}{6}{section.3}
 \contentsline {subsection}{\numberline {3.1}Real-Time Server}{7}{subsection.3.1}
 \contentsline {paragraph}{}{7}{section*.2}
-\contentsline {subsection}{\numberline {3.2}Client in Simulink}{8}{subsection.3.2}
-\contentsline {section}{\numberline {4}Graphical Server Launcher}{8}{section.4}
-\contentsline {section}{\numberline {5}Linux software}{9}{section.5}
-\contentsline {section}{\numberline {6}C++ templates}{9}{section.6}
-\contentsline {section}{\numberline {7}Performance testing}{10}{section.7}
-\contentsline {subsection}{\numberline {7.1}Step response}{10}{subsection.7.1}
+\contentsline {subsection}{\numberline {3.2}Client in Simulink}{9}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Control Modes}{9}{subsection.3.3}
+\contentsline {section}{\numberline {4}Graphical Server Launcher}{9}{section.4}
+\contentsline {section}{\numberline {5}C++ templates}{10}{section.5}

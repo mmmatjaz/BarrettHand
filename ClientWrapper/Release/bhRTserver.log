@@ -1,0 +1,45 @@
+﻿Build started 23.3.2012 17:31:23.
+     1>Project "Z:\BarrettHand\RtServer\bhRTserver.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Release\RTserver.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "Release\RTserver.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\port2win /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\ctb-0.14\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\Pcan" /I"C:\poco-1.3.6p2\Foundation\include" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw\wx" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw" /I"C:\wxWidgets-2.8.11\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\API" /I..\openGL\GL /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D POCO_STATIC /D __WXMSW__ /D _WINDOWS /D WIN32 /D NDEBUG /D _CONSOLE /D WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Release\RTserver.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\port2win /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\ctb-0.14\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\Pcan" /I"C:\poco-1.3.6p2\Foundation\include" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw\wx" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw" /I"C:\wxWidgets-2.8.11\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\API" /I..\openGL\GL /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D POCO_STATIC /D __WXMSW__ /D _WINDOWS /D WIN32 /D NDEBUG /D _CONSOLE /D WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\port2win\BHandAppHelper.cpp ..\port2win\timeofday.cpp app.cpp bh280.cpp graphics.cpp main.cpp server.cpp
+         BHandAppHelper.cpp
+         timeofday.cpp
+         app.cpp
+     1>z:\barretthand\rtserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+         bh280.cpp
+     1>z:\barretthand\rtserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>bh280.cpp(86): warning C4390: ';' : empty controlled statement found; is this the intent?
+     1>bh280.cpp(265): warning C4101: 'Tstart' : unreferenced local variable
+     1>bh280.cpp(267): warning C4101: 'Tbefore' : unreferenced local variable
+     1>bh280.cpp(266): warning C4101: 'Tnow' : unreferenced local variable
+     1>bh280.cpp(316): warning C4101: 'Tstart' : unreferenced local variable
+     1>bh280.cpp(318): warning C4101: 'Tbefore' : unreferenced local variable
+     1>bh280.cpp(317): warning C4101: 'Tnow' : unreferenced local variable
+     1>bh280.cpp(366): warning C4101: 'reply' : unreferenced local variable
+         graphics.cpp
+     1>z:\barretthand\rtserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>z:\barretthand\rtserver\graphics.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>graphics.cpp(2): error C2143: syntax error : missing ';' before 'using'
+         main.cpp
+     1>z:\barretthand\rtserver\server.h(13): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>z:\barretthand\rtserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>z:\barretthand\rtserver\graphics.h(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>main.cpp(7): error C2143: syntax error : missing ';' before 'using'
+         server.cpp
+     1>z:\barretthand\rtserver\server.h(13): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>z:\barretthand\rtserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>server.cpp(20): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>server.cpp(33): warning C4101: 'flags' : unreferenced local variable
+     1>server.cpp(71): warning C4101: 'message' : unreferenced local variable
+     1>server.cpp(132): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>Done Building Project "Z:\BarrettHand\RtServer\bhRTserver.vcxproj" (rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:14.67

@@ -27,8 +27,7 @@ threadMethod rxLoop(void *threadid)
 }
 threadMethod bh280Loop(void *threadid)
 {	
-	//bh280.Loop();
-	bh280.LoopOffline();
+	bh280.Loop();
 }
 
 int main(int argc, char* argv[])
@@ -57,7 +56,7 @@ int main(int argc, char* argv[])
 						&LastReceived);	
 	
 	//pthread_create(&rxThread, &tattr_server, &Server::RunServer, (void *) this)	
-	//pthread_create(&rxThread, 		NULL, rxLoop, NULL);
+	pthread_create(&rxThread, 		NULL, rxLoop, NULL);
 	pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
 	initGlut(argc, argv, &MeasG.hdata280, &mutex1);
 	

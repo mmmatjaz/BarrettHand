@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SuperServer", "SuperServer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bhSclient", "bhSclient\bhSclient.csproj", "{1503C0F6-F22F-4F19-9486-F8BAA8869E35}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OfflineWrapper", "OfflineWrapper\OfflineWrapper.vcxproj", "{EF35C698-196E-44A0-8D26-070A228E4BC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -59,6 +61,16 @@ Global
 		{1503C0F6-F22F-4F19-9486-F8BAA8869E35}.Release|Win32.ActiveCfg = Release|x86
 		{1503C0F6-F22F-4F19-9486-F8BAA8869E35}.Release|x86.ActiveCfg = Release|x86
 		{1503C0F6-F22F-4F19-9486-F8BAA8869E35}.Release|x86.Build.0 = Release|x86
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Debug|Win32.Build.0 = Debug|Win32
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Debug|x86.ActiveCfg = Debug|Win32
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Release|Win32.ActiveCfg = Release|Win32
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Release|Win32.Build.0 = Release|Win32
+		{EF35C698-196E-44A0-8D26-070A228E4BC1}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,54 @@
+﻿Build started 21.3.2012 11:15:07.
+     1>Project "Z:\BarrettHand\bhRTserver\bhRTserver.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\bhRTserver.lastbuildstate".
+       InitializeBuildStatus:
+         Touching "Debug\bhRTserver.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Barrett Technology\BHand\API" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\Pcan" /I"C:\poco-1.3.6p2\Foundation\include" /ZI /nologo /W3 /WX- /Od /Oi /Oy- /D POCO_STATIC /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Debug\bhRTserver.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Barrett Technology\BHand\API" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\Pcan" /I"C:\poco-1.3.6p2\Foundation\include" /ZI /nologo /W3 /WX- /Od /Oi /Oy- /D POCO_STATIC /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\bhRTserver.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\port2win\BHandAppHelper.cpp ..\port2win\timeofday.cpp app.cpp bh280.cpp main.cpp server.cpp
+         server.cpp
+     1>z:\barretthand\bhrtserver\server.cpp(1): warning C4627: '#include "server.h"': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\bhrtserver\server.cpp(194): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "StdAfx.h"' to your source?
+         main.cpp
+     1>z:\barretthand\bhrtserver\main.cpp(2): warning C4627: '#include "server.h"': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\bhrtserver\main.cpp(3): warning C4627: '#include "bh280.h"': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\bhrtserver\main.cpp(4): warning C4627: '#include "app.h"': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\bhrtserver\main.cpp(93): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "StdAfx.h"' to your source?
+         bh280.cpp
+     1>z:\barretthand\bhrtserver\bh280.cpp(17): warning C4627: '#include "bh280.h"': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\bhrtserver\bh280.cpp(505): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "StdAfx.h"' to your source?
+         app.cpp
+     1>z:\barretthand\bhrtserver\app.cpp(1): warning C4627: '#include "app.h"': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\bhrtserver\app.cpp(80): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "StdAfx.h"' to your source?
+         timeofday.cpp
+     1>z:\barretthand\port2win\timeofday.cpp(2): warning C4627: '#include <time.h>': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\port2win\timeofday.cpp(3): warning C4627: '#include <iostream>': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\port2win\timeofday.cpp(4): warning C4627: '#include <Windows.h>': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\port2win\timeofday.cpp(5): warning C4627: '#include "timeofday.h"': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\port2win\timeofday.cpp(13): warning C4005: 'DELTA_EPOCH_IN_MICROSECS' : macro redefinition
+                 z:\barretthand\port2win\timeofday.cpp(11) : see previous definition of 'DELTA_EPOCH_IN_MICROSECS'
+     1>z:\barretthand\port2win\timeofday.cpp(69): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "StdAfx.h"' to your source?
+         BHandAppHelper.cpp
+     1>z:\barretthand\port2win\bhandapphelper.cpp(1): warning C4627: '#include "BHandAppHelper.h"': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\port2win\bhandapphelper.cpp(3): warning C4627: '#include "BHand.h"': skipped when looking for precompiled header use
+                 Add directive to 'StdAfx.h' or rebuild precompiled header
+     1>z:\barretthand\port2win\bhandapphelper.cpp(63): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "StdAfx.h"' to your source?
+         Generating Code...
+     1>Done Building Project "Z:\BarrettHand\bhRTserver\bhRTserver.vcxproj" (rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.32

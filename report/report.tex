@@ -83,16 +83,12 @@ To install the hand see the instructions in the manual \cite{manual}, which can 
 
 All software including source files, the report and USB stick contents are stored here: 
 \begin{center}
-\tt smb://balsa/Interno/Roboti/BarrettHand/BH\_2011 \\ or smb://balsa/Smetje/Matjaz/BHAND
+\tt smb://balsa/Interno/Roboti/BarrettHand/BH\_2011 \\ smb://balsa/Smetje/Matjaz/BHAND
 \end{center}
 Github repository contains everything but the USB stick content.
 \begin{center}
 \tt git://github.com/mmmatjaz/BarrettHand.git
 \end{center}
-
-\subsection{The repository}
-The Supervisory and Realtime run on both Windows and Linux. The sources of these are cross platform. On linux the applications are built using \emph{make} command. To recompile on Windows, open the \emph{bh.sln} file in Visual Studio. The solution also contains projects \emph{bhLauncer} and \emph{bhSclient}, which use .NET framework and are not cross platform. The binaries will appear in \emph{bin-win} and \emph{bin-linux} folders. \emph{port2win} includes definitions that are neccessery for compilation of the Linux code on Windows.
-
 
 \begin{center}
 \renewcommand{\arraystretch}{1.7}
@@ -105,6 +101,10 @@ The Supervisory and Realtime run on both Windows and Linux. The sources of these
      \hline
      \end{tabular}
 \end{center}
+
+\subsection{The repository}
+The Supervisory and Realtime run on both Windows and Linux. The sources of these are cross platform. On linux the applications are built using \emph{make} command. To recompile on Windows, open the \emph{bh.sln} file in Visual Studio. The solution also contains projects \emph{bhLauncer} and \emph{bhSclient}, which use .NET framework and are not cross platform. The binaries will appear in \emph{bin-win} and \emph{bin-linux} folders. \emph{port2win} includes definitions that are neccessery for compilation of the Linux code on Windows.
+
 
 %\end{tabular}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
@@ -132,7 +132,6 @@ The BHSupervisory server application can control either BH280, BH262 or both sim
 \rowcolor[rgb]{0.8,0.8,0.8}
      \hline
      Parameter & Description 		& Default  \\ \hline
-\rowcolor{white}
      BH280 & 0-disable  			& 1\\
 		 	  & 1-enable  				& \\        \hline
      BH262 & 0-disable 				& 1\\ 
@@ -193,7 +192,7 @@ RealTime mode extends the capability of Supervisory mode. Sometimes users may wi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Real-Time Server}
 
-The BHserver application allows real time control of the gripper. Once started, it initializes the gripper. The client is connected to the server using UDP protocol, and sends either velocity, position, or desired torque to the server. This enables us to use the graspers internal position control, or design our own controller on client side. The server application applies these values and replies with values read from the gripper (see Figure \ref{sendRec}) All read values are of type double (8 bytes), the PPS data is of type int (4 bytes).
+The BHserver application allows real time control of the gripper. Once started, it initializes the gripper. The client is connected to the server using UDP protocol, and sends either velocity, position, or desired torque to the server. The server application applies these values and replies with values read from the gripper (see Figure \ref{sendRec}) All read values are of type double (8 bytes), the PPS data is of type int (4 bytes).
 
 Figure \ref{sendRec} also displayes the sum of data exchanged between the client and server in bytes (B) when controlling both hands. The sum of the PPS output data is much larger than all the other data read from the gripper's internal controller. When PPS reading is enabled, the delay caused by communication over CAN increases from about 3 ms to 33 ms, which equals the delay when using the serial communcation, not reading the PPS sensors. Though the BH280 supports serial communcation, transfering the PPS data over it would cause an unacceptable delay. 
 \begin{figure}[!h]
@@ -211,7 +210,6 @@ Again, a few parameters must be set to start the server application. These are g
 \rowcolor[rgb]{0.8,0.8,0.8}
      \hline
      Parameter & Description 		& Default  \\ \hline
-\rowcolor{white}
      BH280 & 0-disable  			& 1\\
 		 	  & 1-enable  				& \\
            & 2-read PPS 			& \\
@@ -236,7 +234,7 @@ Again, a few parameters must be set to start the server application. These are g
 The application consists of multiple threads. One runs the server, commands to each gripper are processed in seperate threads. Figure \ref{RTconsole} shows the application console window, where messages of each thread are printed. When launched, application opens a window visualising the sensor data (Figure \ref{visual}). Presure sensor output in displayed in shades of blue, higher pressure couses lighter shade. Pressure sensor are only availeble with the BH280 model. Strain gage sensor output is displayed with orange rectangles, the output level defines the shade of orange color. The outer fingers are rotated according to actal position.
 \begin{figure}[!h]
     \begin{center}
-        \includegraphics[width=0.80\textwidth]{openGL.png}
+        \includegraphics[width=0.60\textwidth]{openGL.png}
         \caption{Sensor output visualisation.} \label{visual}
     \end{center}
 \end{figure}
@@ -244,19 +242,24 @@ The application consists of multiple threads. One runs the server, commands to e
 
 
 \subsection{Client in Simulink}
+
+Figure \ref{simulink} shows the simulink block and its preferences window. In the \emph{Control} tab (left) control modes and connection parameters can be configured. Unused output ports can be disabled in second tab \emph{Outputs}.
 \begin{figure}[!h]
     \begin{center}
         \includegraphics[width=0.3\textwidth]{simmodel2.eps}
-		  \includegraphics[width=0.7\textwidth]{simmask.png}
-        \caption{Simulink model.} \label{simulink}
+		  \includegraphics[width=0.69\textwidth]{simmask.png}
+		\caption{Simulink model.} \label{simulink}
     \end{center}
 \end{figure}
 
-Figure \ref{simulink} shows the simulink block and its preferences window. In the first tab, control modes and connection parameters are selected. In second tab unused ports can be disabled.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\subsection{Control Modes}
+The real-time server provides three modes of control to choose from.
+\begin{description}
+\item[Velocity control.] When this mode is selected the server receives velocities in radians per second.
+\item[Position control (Stiff and compliant)] Server receives motor positions in radians and uses a PD controller to apply the velocities. The regulator parameters can be modified in the source header file. In compliant position control mode the regulator is designed so the fingers will give way to the obstacle. The measured force amplified by a constant is added to the position reference.
+\item[Torque control.] TBD.
+\end{description}
 
-%\subsection{Client C++ Wrapper}
-%bla
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \section{Graphical Server Launcher}
@@ -266,7 +269,7 @@ Figure \ref{simulink} shows the simulink block and its preferences window. In th
         \caption{Graphical Server Launcher.} \label{launcher}
     \end{center}
 \end{figure}
-Both real-time and supervisory servers can also be started using the graphical interface, application BHLauncher (see Figure \ref{launcher}). The user can select the necessary parameters, and once set, parameters can be saved. The servers are launched by clicking buttons \emph{Supervisory} or \emph{RealTime}. The bottom textbox shows the assembled string of arguments. When changes are detected, the program offers to save them to an $.xml$ file. If the settings file isn't found at program start, default settings are loaded.
+On Windows both real-time and supervisory servers can also be started using the graphical interface, application BHLauncher (see Figure \ref{launcher}). The user can select the necessary parameters, and once set, parameters can be saved. The servers are launched by clicking buttons \emph{Supervisory} or \emph{RealTime}. The bottom textbox shows the assembled string of arguments. When changes are detected, the program offers to save them to an $.xml$ file. If the settings file isn't found at program start, default settings are loaded.
 \begin{center}
 \renewcommand{\arraystretch}{1.7}
 \renewcommand{\tabcolsep}{0.3cm}
@@ -284,17 +287,24 @@ Both real-time and supervisory servers can also be started using the graphical i
 
 
 \section{C++ templates}
-On Windows OS one Visual Studio Solution contains all projects. The bhWrapper project contains four .cpp files:
+The WrapperOffline project contains the following .cpp files:
 \begin{itemize}
 \item
-BH.cpp is the main file, program entry is here. It contains the main() function. After it launches the threads, it waits for a keypress to terminate.
+\emph{main.cpp} is the main file, program entry is here. It contains the main() function. After it creates instances of all classes, it launches the threads, and waits for a keypress to terminate.
 \item
-bh262.cpp and bh280.cpp contain thread routines for each hand. First, the hand and the software are initialized. The hand now accepts supervisory commands. To control it in real time, the Realtime Mode must be started using RTStart(). Function
+\emph{bh262.cpp and bh280.cpp} contain a class for each hand. First, the hand and the software are initialized. The hand now accepts supervisory commands. To control it in real time, the Realtime mode must be started using RTStart(). Function
 RunRealTime() is executed each iteration. It sets velocities or positions and reads the data from the hand sensors.
 \item
-glutWindow.cpp contains the OpenGL functions to display the BH280 sensor data.
+\emph{glutWindow.cpp} contains the GLUT / freeGLUT functions to display the BH280 sensor data.
 \end{itemize}
-On Linux you can use the examples provided by the BarrettHand.
+
+The WrapperClient project is an alternative to using the client in simulink. 
+\begin{itemize}
+\item
+\emph{main.cpp} is the main file, program entry is here. It contains the main() function. After it creates an instance of the Client class it generates the position reference and sends it to the client in a single thread. 
+\item
+\emph{client.cpp} contain a class definition that handles the ethernet communication.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5

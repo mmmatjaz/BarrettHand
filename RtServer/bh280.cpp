@@ -38,11 +38,11 @@ BH280::BH280()
 	props.scaleIN[2]=1.0*RANGE_280_G/(0.7778*PI);
 	props.scaleIN[3]=1.0*RANGE_280_S/(PI);
 	
-	props.scaleOUT[0]=1.0*RANGE_280_G/(0.7778*PI);
-	props.scaleOUT[1]=1.0*RANGE_280_G/(0.7778*PI);
-	props.scaleOUT[2]=1.0*RANGE_280_G/(0.7778*PI);
-	props.scaleOUT[3]=1.0*RANGE_280_S/(PI);
-	
+	for (int i=0;i<4;i++)
+	{
+		props.scaleOUT[i]=1/props.scaleIN[i];
+	}
+
 	reg.P[0]=Pg; reg.P[1]=Pg; reg.P[2]=Pg; reg.P[3]=Ps;
 	reg.D[0]=Dg; reg.D[1]=Dg; reg.D[2]=Dg; reg.D[3]=Ds;
 	reg.maxV[0]=MAX_G; reg.maxV[1]=MAX_G; reg.maxV[2]=MAX_G; reg.maxV[3]=MAX_S;
@@ -99,7 +99,7 @@ double BH280::PositionControl(int m)
 	//Meas.m280[2][m]=qd-q-qf;
   //D
 	double pqd=pCons.cValues[m];
-	double pqf=Kf*SmoothDeadzone(pMeas.StrainFilt[m]);
+	double pqf;//=Kf*SmoothDeadzone(pMeas.StrainFilt[m]);
 	double pq= pMeas.Position[m];
 	double pe= pqd-pqf-pq;
 	double de=pe/dt;
@@ -125,7 +125,7 @@ double BH280::PositionControlC(int m)
 	//Meas.m280[2][m]=qd-q-qf;
   //D
 	double pqd=pCons.cValues[m];
-	double pqf=Kf*SmoothDeadzone(pMeas.StrainFilt[m]);
+	double pqf=Kf*Deadzone(m,0.30);
 	double pq= pMeas.Position[m];
 	double pe= pqd-pqf-pq;
 	double de=pe/dt;
@@ -156,42 +156,6 @@ void BH280::LowPass(int m,double a)
   double y=x*dt/(a+dt)+y_*a/(a+dt);
   Meas.StrainFilt[m]=y;
   //cout<<x<<" "<<y<<endl;
-}
-
-double BH280::LowPassAny(double x, double y_, double a)
-{
-  double dt=diffclock(&now,&lc);
-  double Y=x*dt/(a+dt)+y_*a/(a+dt);
-  return Y;
-}
-
-void BH280::LowPass2(int m,double aa)
-{
-/*
-	double dt1=diffclock(&now,&lc);
-	double dt2=sCache[m].dt;
-	double x=(Meas.Strain[m]-126);
-	double y_1=sCache[m].y_1;
-	double y_2=sCache[m].y_2;
-	double a=100.0;
-	double K=a*a;
-	double y_0=(dt1*y_1 - dt1*y_2 + dt2*y_1 + 2*dt1*dt2*y_1 + K*dt1*dt1*dt2*x)
-			/(dt2*a*a*dt1*dt1 + 2*dt2*dt1 + dt2);
-	sCache[m].y_2=sCache[m].y_1;
-	sCache[m].y_1=sCache[m].y_0;
-	sCache[m].dt=dt1;
-	Meas.StrainFilt[m]=y_0;
-	cout << "dt1 " << dt1 <<"dt2 "<<dt2<<" s: "<<x<<" sf: "<<y_0<<endl;
-*/
-}
-
-double BH280::SmoothDeadzone(double value)
-{
-	double tresh=7;
-	double level=(value/tresh)*(value/tresh);
-	if (level<-1) level=-1;
-	if (level> 1) level= 1;
-	return level*value;
 }
 
 double BH280::Deadzone(int m, double dz)
@@ -251,119 +215,6 @@ void BH280::Loop()
 		
 		conn_=conn;
 	
-	}
-	bh.RTAbort();
-	result = bh.Command("t");
-	cout<<"Terminating thread bh280\n";
-}
-
-void BH280::LoopOffline()
-{
-/*  *****************************
-			hand thread
-	***************************** */
-	timeval Tstart;
-	timeval Tnow;
-	timeval Tbefore;
-	double T;
-	
-	if (result = bh.Command("GFSET DP 100000"))
-		Error();
-
-	//if (result = bh.Command("123m"))
-		//Error();
-		
-	if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
-		Error();
-	if (result = bh.RTStart( "1234" )) 
-		Error();
-	bh.RTUpdate();
-	T=0.0;
-	gettimeofday(&lc, NULL);
-	while(shouldRun)
-	{	
-		gettimeofday(&now, NULL);
-		T+=diffclock(&now,&lc);
-		ReadFromHand();
-		RefreshMeas();
-		double f=0.2;//Hz
-		double value = 0.8*PI/3 + (PI/4*sin( f* T*2*PI));
-
-		if(!pps)
-		{
-			int m=1;
-			Cons.cValues[m]=value;			
-			int temp=(int)((PositionControlC(m) * props.scaleIN[m])+0.5);
-			result=bh.RTSetVelocity(m + '1', temp);
-			m=0;
-			Cons.cValues[m]=value;	
-			temp=(int)((PositionControl(m) * props.scaleIN[m])+0.5);
-			result=bh.RTSetVelocity(m + '1', temp);
-
-			m=3;
-			Cons.cValues[m]=1;	
-			temp=(int)((PositionControl(m) * props.scaleIN[m])+0.5);
-			result=bh.RTSetVelocity(m + '1', temp);
-		
-			
-		
-			//printf("\ntime: %4.2f r: %4.2f y: %4.2f f: %4.2f",T,value,Meas.Position[m],pMeas.StrainFilt[m]);
-			
-		}
-		bh.RTUpdate();
-		RememberData();
-	}
-	bh.RTAbort();
-	result = bh.Command("t");
-	cout<<"Terminating thread bh280\n";
-}
-
-void BH280::LoopOfflineTorque()
-{
-/*  *****************************
-			hand thread
-	***************************** */
-	timeval Tstart;
-	timeval Tnow;
-	timeval Tbefore;
-	double T;
-	
-	if (result = bh.RTSetFlags( "1234", 0, 0, 0, 1, 1, 1, 1, 1, 0, 1,0,0,0,0 ))
-		Error();
-	
-	if (result = result = bh.Set("1234", "LCP", 1))
-		Error();
-	if (result = result = bh.Set("1234", "LCV", 0))
-		Error();
-	if (result = result = bh.Set("1234", "LCT", 1))
-		Error();
-	
-	if (result = bh.RTStart( "1234" )) 
-		Error();
-	bh.RTUpdate();
-	T=0.0;
-	gettimeofday(&lc, NULL);
-	while(shouldRun)
-	{	
-		gettimeofday(&now, NULL);
-		T+=diffclock(&now,&lc);
-		ReadFromHand();
-		RefreshMeas();
-		int temp=0;
-		int m=1;
-		while(Meas.Position[m]<0.1)
-		{
-			if (result=bh.RTSetTorque(m + '1', temp))
-				Error();
-			temp++;
-			printf("\n%i",temp);
-		}
-		result=bh.RTSetTorque(m + '1',0);
-		cout<<"done at "<<temp<<endl;
-			
-		bh.RTUpdate();
-		
-		RememberData();
 	}
 	bh.RTAbort();
 	result = bh.Command("t");
@@ -431,9 +282,9 @@ void BH280::ReadFromHand()
 {
 	for (int m = 0; m < 4; m++)//! 3->4
 	{	
-		Meas.Position[m] = bh.RTGetPosition(m + '1')/props.scaleOUT[m];
-		Meas.Velocity[m] = bh.RTGetVelocity(m + '1')/props.scaleOUT[m];
-		Meas.DeltaPos[m] = bh.RTGetDeltaPos(m + '1')/props.scaleOUT[m];
+		Meas.Position[m] = bh.RTGetPosition(m + '1')*props.scaleOUT[m];
+		Meas.Velocity[m] = bh.RTGetVelocity(m + '1')*props.scaleOUT[m];
+		Meas.DeltaPos[m] = bh.RTGetDeltaPos(m + '1')*props.scaleOUT[m];
 		Meas.Strain[m] = bh.RTGetStrain(m + '1');
 		if (pps)
 			bh.RTGetPPS(m + '1', &Meas.pps[m][0], MAX_PPS_ELEMENTS);	
@@ -507,7 +358,7 @@ void BH280::SendToHand()
 	case 4:	// torque control
 		for (int m = 3; m < 4; m++)
 		{	
-			//temp=(int)((TorqueControl(m) * props.scaleIN[m])+0.5);
+			//temp=(int)((TorqueControl(m) * props.scale[m])+0.5);
 			cout<<"\r"<<temp;
 			if (result = bh.RTSetTorque(m + '1', temp))
 				Error();			
@@ -517,7 +368,7 @@ void BH280::SendToHand()
 	case 3:	// zero force control
 		for (int m = 2; m < 3; m++)
 		{	
-			//temp=(int)((ForceControl(m)* props.scaleIN[m])+0.5);
+			//temp=(int)((ForceControl(m)* props.scale[m])+0.5);
 			cout<<"\n"<<temp;		
 			result=bh.RTSetVelocity(m + '1', temp);			
 		}

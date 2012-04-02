@@ -9,8 +9,8 @@ using namespace std;
 
 struct Props
 {
-	double scaleIN[4];
 	double scaleOUT[4];
+	double scaleIN[4];
 	double range[4];
 };
 
@@ -65,9 +65,6 @@ private:
 	double PositionControl(int m);
 	double VelocityControl(int m);
 	void LowPass(int m,double a);
-	void LowPass2(int m,double aa);
-	double LowPassAny(double x, double y_, double a);
-	double SmoothDeadzone(double value);
 	double Deadzone(int m, double dz);
 	void RunRealTime();
 	void ReadFromHand();
@@ -85,7 +82,5 @@ public:
 					timeval * LastReceived);
 	void Stop();
 	void Loop();
-	void LoopOffline();
-	void LoopOfflineTorque();
 };
 #endif
