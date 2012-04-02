@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	int txl=sizeof(MeasG);
 	if (!Config.usePPS) txl -=sizeof(MeasG.hdata280.pps);
 	
-	Server.Init(	Config.RXport, Config.TXport,
+	Server.Init(	Config.port, Config.port,
 					(char *) &ConsG, (char *) &MeasG,
 					rxl,txl,
 					&mutex1, &LastReceived,

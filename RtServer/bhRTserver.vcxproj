@@ -88,7 +88,6 @@
     <ClInclude Include="..\port2win\BHandAppHelper.h" />
     <ClInclude Include="..\port2win\timeofday.h" />
     <ClInclude Include="..\port2win\winpthreads.h" />
-    <ClInclude Include="..\windows\winpthreads.h" />
     <ClInclude Include="app.h" />
     <ClInclude Include="bh280.h" />
     <ClInclude Include="graphics.h" />

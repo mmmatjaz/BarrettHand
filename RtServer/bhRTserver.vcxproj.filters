@@ -32,9 +32,6 @@
     <ClInclude Include="server.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\windows\winpthreads.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\port2win\BHandAppHelper.h">
       <Filter>Windows BS</Filter>
     </ClInclude>

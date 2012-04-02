@@ -96,8 +96,7 @@ class Config
 private:
 	void Usage();
 public:
-	int RXport;
-	int TXport;
+	int port;
 	bool use280;
 	bool use262;
 	bool usePPS;

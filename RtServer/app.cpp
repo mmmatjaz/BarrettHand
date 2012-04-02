@@ -35,8 +35,7 @@ double App::DiffClock(timeval* currentTime, timeval* startTime)
 
 Config::Config()
 {
-	RXport= 4444;
-	TXport=	5555;
+	port= 4444;
 	use280=true;
 	use262=false;
 	usePPS=true;
@@ -46,32 +45,28 @@ Config::Config()
 
 void Config::Usage()
 {
-	printf("\tBad arguments. See manual\n");
+	printf("\tBad arguments - using defaults. See manual\n");
 }
 
 void Config::FromArgs(int argc, char* argv[])
 {
-/*
-	for (int i=1;i<argc;i++)
+	if (argc==4)
 	{
-		if(strcmp(argv[i],"-rx")==0) 	{strcpy(IP,argv[i+1]  );mode=MODE_LAME;};
-		if(strcmp(argv[i],"-tx" )==0)	port=	atoi(argv[i+1]);
-		if(strcmp(argv[i],"-m" )==0)	mode=	atoi(argv[i+1]);
-		if(strcmp(argv[i],"-f" )==0)	signals=atoi(argv[i+1]);
-		if(strcmp(argv[i],"-st")==0)	ST	=	atof(argv[i+1]);
-				//printf("\n");
+		port=atoi(argv[1]);
+		use280=atoi(argv[2])==1 ? true:false;
+		usePPS=atoi(argv[2])==2 ? true:false;
+		use262=atoi(argv[3])>0 ? true:false;
+		serialPort=atoi(argv[3]);
 	}
-	if (mode==0 || port==0)
+	if (argc!=4 && argc!=1)
 	{
 		Usage();
-		exit(0);
 	}
-	*/
 }
 
 void Config::PrintConf()
 {
-	cout<<"RX"<<RXport<<" TX"<<TXport<<endl;
+	cout<<"Port "<<port<<endl;
 	if (use280) cout << "using bh280";
 	if (usePPS && use280) cout << " with PPS\n"; else cout<<endl;
 	if (use262) cout<<"using bh262 @com"<<serialPort<<endl;

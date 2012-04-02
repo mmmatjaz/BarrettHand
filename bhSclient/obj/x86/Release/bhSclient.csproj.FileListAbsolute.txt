@@ -27,12 +27,12 @@ E:\matjaz\BH\sandbox\oneSolution\bhSclient\obj\x86\Release\GenerateResource.read
 E:\matjaz\BH\sandbox\oneSolution\bhSclient\obj\x86\Release\GenerateResource.write.1.tlog
 E:\matjaz\BH\sandbox\oneSolution\bhSclient\obj\x86\Release\bhSclient.exe
 E:\matjaz\BH\sandbox\oneSolution\bhSclient\obj\x86\Release\bhSclient.pdb
+Z:\BarrettHand\bin-win\bhSclient.exe
+Z:\BarrettHand\bin-win\bhSclient.pdb
 Z:\BarrettHand\bhSclient\obj\x86\Release\ResolveAssemblyReference.cache
 Z:\BarrettHand\bhSclient\obj\x86\Release\bhSclient.Form1.resources
 Z:\BarrettHand\bhSclient\obj\x86\Release\bhSclient.Properties.Resources.resources
 Z:\BarrettHand\bhSclient\obj\x86\Release\GenerateResource.read.1.tlog
 Z:\BarrettHand\bhSclient\obj\x86\Release\GenerateResource.write.1.tlog
 Z:\BarrettHand\bhSclient\obj\x86\Release\bhSclient.exe
-Z:\BarrettHand\bin-win\bhSclient.exe
-Z:\BarrettHand\bin-win\bhSclient.pdb
 Z:\BarrettHand\bhSclient\obj\x86\Release\bhSclient.pdb

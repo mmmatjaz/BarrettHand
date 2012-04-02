@@ -37,7 +37,6 @@
 
 #include "..\port2win\timeofday.h"
 #include "..\port2win\winpthreads.h"
-
 typedef void  threadMethod;
 //#define threadMethod void*  
 #endif
@@ -85,7 +84,7 @@ public:
 	int port;
 	bool use280;
 	bool use262;
-	bool usePPS;
+
 	int serialPort;
 	
 	double 	ST;

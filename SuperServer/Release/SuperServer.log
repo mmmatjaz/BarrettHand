@@ -1,9 +1,17 @@
-﻿Build started 23.3.2012 15:54:00.
+﻿Build started 2.4.2012 16:25:10.
      1>Project "Z:\BarrettHand\SuperServer\SuperServer.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\SuperServer.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\port2win /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\ctb-0.14\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\Pcan" /I"C:\poco-1.3.6p2\Foundation\include" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw\wx" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw" /I"C:\wxWidgets-2.8.11\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\API" /I..\openGL\GL /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D POCO_STATIC /D __WXMSW__ /D _WINDOWS /D WIN32 /D NDEBUG /D _CONSOLE /D WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt server.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\port2win /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\ctb-0.14\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\Pcan" /I"C:\poco-1.3.6p2\Foundation\include" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw\wx" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw" /I"C:\wxWidgets-2.8.11\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\API" /I..\openGL\GL /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D POCO_STATIC /D __WXMSW__ /D _WINDOWS /D WIN32 /D NDEBUG /D _CONSOLE /D WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt BHSupervisory.cpp app.cpp main.cpp server.cpp
+         BHSupervisory.cpp
+     1>z:\barretthand\superserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>BHSupervisory.cpp(45): warning C4101: 'time2' : unreferenced local variable
+         app.cpp
+     1>z:\barretthand\superserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+         main.cpp
+     1>z:\barretthand\superserver\server.h(13): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>z:\barretthand\superserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
          server.cpp
      1>z:\barretthand\superserver\server.h(13): warning C4067: unexpected tokens following preprocessor directive - expected a newline
      1>z:\barretthand\superserver\app.h(24): warning C4067: unexpected tokens following preprocessor directive - expected a newline
@@ -31,4 +39,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:06.18
+Time Elapsed 00:00:10.12
