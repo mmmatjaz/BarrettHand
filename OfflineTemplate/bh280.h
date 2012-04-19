@@ -48,7 +48,8 @@ private:
 	pthread_mutex_t * Mutex;
 //flags
 	bool pps;
-	bool shouldRun;
+	bool shouldRun1;
+	bool shouldRun2;
 	bool conn;
 	bool conn_;
 	bool realtime;
@@ -79,7 +80,9 @@ public:
 					pthread_mutex_t * mutex,
 					timeval * LastReceived);
 	void Stop();
-	void LoopOffline();
-	void LoopOffline2();
+	void LoopOfflineVelocity();
+	void LoopOfflineTorque();
+	void StopVelocityLoop();
+	void StopTorqueLoop();
 };
 #endif

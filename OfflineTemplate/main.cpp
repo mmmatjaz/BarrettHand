@@ -17,8 +17,10 @@ pthread_t bh280Thread;
 
 threadMethod bh280Loop(void *threadid)
 {	
-	//bh280.Loop();
-	bh280.LoopOffline();
+	bh280.LoopOfflineVelocity();
+	bh280.LoopOfflineTorque();
+	bh280.LoopOfflineVelocity();
+	bh280.LoopOfflineTorque();
 }
 
 int main(int argc, char* argv[])
@@ -36,12 +38,25 @@ int main(int argc, char* argv[])
 	
 	pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
 
-	initGlut(argc, argv, &MeasG.hdata280, &mutex1);
+	//initGlut(argc, argv, &MeasG.hdata280, &mutex1);
 
 	string input;
 	string tmp;
 	int offset;
 	//cout<<"\ncmd> ";
+
+	getline(cin,input);
+	bh280.StopVelocityLoop();
+	usleep(100000);
+	getline(cin,input);
+	bh280.StopTorqueLoop();
+	usleep(100000);
+	getline(cin,input);
+	bh280.StopVelocityLoop();
+	usleep(100000);
+	getline(cin,input);
+	bh280.StopTorqueLoop();
+
 
 	while (true)
 	{

@@ -13,7 +13,7 @@ OBJECTS = $(patsubst %,$(ODIR)/%,$(OBJ))
 
 EXECUTABLE=../bin-linux/OfflineTemplate
 
-#EXECUTABLE=client
+#EXECUTABLE=offline
 #######################################################################
 #######################################################################
 ###	BHAND

@@ -51,9 +51,9 @@ int main(int argc, char* argv[])
 					Config.ST);//(Config);
 					
 	bh280.Initialize(Config.usePPS,
-						&ConsG.con280,&MeasG.hdata280,
-						&mutex1,
-						&LastReceived);	
+					&ConsG.con280,&MeasG.hdata280,
+					&mutex1,
+					&LastReceived);	
 	
 	//pthread_create(&rxThread, &tattr_server, &Server::RunServer, (void *) this)	
 	pthread_create(&rxThread, 		NULL, rxLoop, NULL);
@@ -67,7 +67,6 @@ int main(int argc, char* argv[])
 
 	while (true)
 	{
-		
 		getline(cin,input);
 		offset=input.find("q");
 		if (offset>-1 && input.size()==1)
@@ -75,9 +74,7 @@ int main(int argc, char* argv[])
 		  cout<<"quit\n"<<endl;
 		  break;
 		}
-		
 		cout<<endl;
-	
 	}
 	
 	Server.Stop();

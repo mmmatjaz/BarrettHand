@@ -58,7 +58,7 @@ void BH280::Initialize(	bool PPS,
 {
 //	copy parameters
 	pps=PPS; Cons_=DIN; Meas_=DOUT;
-	Mutex=mutex; tstamp=LastReceived; shouldRun=true;
+	Mutex=mutex; tstamp=LastReceived; shouldRun1=true; shouldRun2=true;
 
 	int hwIndex = BHandHardware::getBHandHardwareIndex("BH8-280");
 	if (hwIndex < 0)
@@ -160,26 +160,35 @@ double BH280::Deadzone(int m, double dz)
 	else return x;
 }
 
-void BH280::LoopOffline()
+void BH280::LoopOfflineVelocity()
 {
 /*  *****************************
 			hand thread
 	***************************** */
+	shouldRun1=true;
 	timeval Tstart;
 	timeval Tnow;
 	timeval Tbefore;
 	double T;
-	
+
 	if (result = bh.Command("GFSET DP 100000"))
 		Error();
 	if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
 		Error();
+	if (result = bh.Set("123S", "LCV", true))
+		Error();
+	if (result = bh.Set("123S", "LCP", false))
+		Error();
+	if (result = bh.Set("123S", "LCT", false))
+		Error();
 	if (result = bh.RTStart( "1234" )) 
 		Error();
+
 	bh.RTUpdate();
+
 	T=0.0;
 	gettimeofday(&lc, NULL);
-	while(shouldRun)
+	while (shouldRun1)
 	{	
 		gettimeofday(&now, NULL);
 		T+=diffclock(&now,&lc);
@@ -213,50 +222,99 @@ void BH280::LoopOffline()
 	cout<<"Terminating thread bh280\n";
 }
 
-void BH280::LoopOffline2()
+void BH280::LoopOfflineTorque()
 {
 /*  *****************************
 			hand thread
 	***************************** */
+	shouldRun2=true;
 	timeval Tstart;
 	timeval Tnow;
 	timeval Tbefore;
 	double T;
 	
-	if (result = bh.RTSetFlags( "1234", 0, 0, 0, 1, 1, 1, 1, 1, 0, 1,0,0,0,0 ))
+	bh.pCallback = NULL;
+	bh.syncMode = BHMODE_SYNC;
+	bh.RTAbort();
+
+	if (result = bh.Command("GFSET DP 100000"))
 		Error();
-	
-	if (result = result = bh.Set("1234", "LCP", 1))
+	if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
 		Error();
-	if (result = result = bh.Set("1234", "LCV", 0))
+	if (result = bh.Set("123S", "LCV", false))
 		Error();
-	if (result = result = bh.Set("1234", "LCT", 1))
+	if (result = bh.Set("123S", "LCP", false))
 		Error();
-	
+	if (result = bh.Set("123S", "LCT", true))
+		Error();
 	if (result = bh.RTStart( "1234" )) 
 		Error();
+
 	bh.RTUpdate();
 	T=0.0;
 	gettimeofday(&lc, NULL);
-	while(shouldRun)
+
+	cout<<"grem v loop"<<endl;
+	int navor=0;
+
+	while (shouldRun2)
 	{	
+
 		gettimeofday(&now, NULL);
 		T+=diffclock(&now,&lc);
 		ReadFromHand();
+		double f=0.2;//Hz
+		double reference = 0.8*PI/3 + (PI/4*sin( f* T*2*PI));
 
+		double torPGainFinger = 500;
+		double torDGainFinger = 3.0;
+		// Spread Gains
+		double torPGainSpread = 2400/2;
+		double torDGainSpread = 36/2;
+		double torque;
 		int temp=0;
-		int m=1;
-		while(Meas.Position[m]<0.1)
+		for (int i = 0; i < 3; i++)
 		{
-			if (result=bh.RTSetTorque(m + '1', temp))
-				Error();
-			temp++;
-			printf("\n%i",temp);
+			/*
+			if (i < 3)
+			{
+				// Original torque control method
+				int actualVel = Meas.Velocity[i];
+				float posError = Meas.Position[i] - reference;
+				if (posError > 3.14f/2)
+					posError = 3.14f/2;
+				else if (posError < -3.14/2)
+					posError = -3.14f/2;
+				torque = posError * torPGainFinger;
+				torque += actualVel * torDGainFinger;
+			}
+			else
+			{
+				//int actualVel = m_hand->RTGetVelocity('1' + i);
+				//torque = (ap[i] - opengl_pos[i]) * torPGainSpread;
+				//torque += actualVel * torDGainSpread;
+			}
+
+			if (result = bh.RTSetTorque('1' + i, -(int)torque))
+					Error();
+		
+			*/
+			cout<<Meas.Position[i]<< ", ";
+			if (Meas.Position[i]<0.5)
+			{
+				if (Meas.Velocity[i]<1)
+				{
+					navor++;
+					cout<<"povecujem ";
+				}
+				cout<<navor<<endl;
+				result = bh.RTSetTorque('1'+i, navor);
+			}
+			else result = bh.RTSetTorque('1'+i, 0);
 		}
-		result=bh.RTSetTorque(m + '1',0);
-		cout<<"done at "<<temp<<endl;
-			
-		bh.RTUpdate();
+		cout<<"\r";
+		bh.RTUpdate(true, true);
+		//bh.RTUpdate();
 		
 		RememberData();
 	}
@@ -269,7 +327,7 @@ void BH280::Stop()
 {
 	bh.RTAbort();
 	result = bh.Command("t");
-	shouldRun=false;
+	//shouldRun=false;
 }
 void BH280::ReadFromHand()
 {
@@ -323,4 +381,17 @@ double BH280::diffclock(timeval* currentTime, timeval* startTime)
 		return t2-t1;
 	else
 		return 0.0;
+}
+
+void BH280::StopVelocityLoop()
+{
+	bh.RTAbort();
+	result = bh.Command("t");
+	shouldRun1=false;
+}
+void BH280::StopTorqueLoop()
+{
+	bh.RTAbort();
+	result = bh.Command("t");
+	shouldRun2=false;
 }

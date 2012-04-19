@@ -287,7 +287,7 @@ On Windows both real-time and supervisory servers can also be started using the 
 
 
 \section{C++ templates}
-The WrapperOffline project contains the following .cpp files:
+The OfflineTemplate project contains the following .cpp files:
 \begin{itemize}
 \item
 \emph{main.cpp} is the main file, program entry is here. It contains the main() function. After it creates instances of all classes, it launches the threads, and waits for a keypress to terminate.
@@ -298,7 +298,7 @@ RunRealTime() is executed each iteration. It sets velocities or positions and re
 \emph{glutWindow.cpp} contains the GLUT / freeGLUT functions to display the BH280 sensor data.
 \end{itemize}
 
-The WrapperClient project is an alternative to using the client in simulink. 
+The ClientTemplate project is an alternative to using the client in simulink. 
 \begin{itemize}
 \item
 \emph{main.cpp} is the main file, program entry is here. It contains the main() function. After it creates an instance of the Client class it generates the position reference and sends it to the client in a single thread. 

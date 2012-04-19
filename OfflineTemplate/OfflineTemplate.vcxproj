@@ -78,7 +78,7 @@
       <AdditionalLibraryDirectories>.\openGL;$(BHAND)\ThirdParty\ctb-0.14\lib;$(BHAND)\ThirdParty\lib;$(POCO_BASE)\lib;$(WXWIN)\lib\vc_lib;$(BHAND)\API\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>PocoFoundationmt.lib;BHand.lib;wxmsw28_gl.lib;wxmsw28_core.lib;wxbase28.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;opengl32.lib;glu32.lib;glut32.lib;Pcan_usb.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <OutputFile>..\bin-win\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>..\bin-win\offline.exe</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
