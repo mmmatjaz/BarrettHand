@@ -17,6 +17,7 @@ struct Props
 struct Regulator
 {
 	double maxV[4];
+	double maxT[4];
 	double P[4];
 	double D[4];
 };
@@ -48,8 +49,8 @@ private:
 	pthread_mutex_t * Mutex;
 //flags
 	bool pps;
-	bool shouldRun1;
-	bool shouldRun2;
+	bool shouldRun;
+	
 	bool conn;
 	bool conn_;
 	bool realtime;
@@ -62,6 +63,7 @@ private:
 	char bufy[100];
 //methods
 	int Begin();
+	double TorqueControlPD(int m);
 	double PositionControlC(int m);
 	double PositionControl(int m);
 	double VelocityControl(int m);
@@ -74,6 +76,7 @@ private:
 	void Error();
 	double diffclock(timeval* currentTime, timeval* startTime);
 public:
+	int ManualValue;
 	BH280();
 	void Initialize(bool PPS,
 					struct HandControls * DIN, struct HandMeasPPS * DOUT,
@@ -81,8 +84,9 @@ public:
 					timeval * LastReceived);
 	void Stop();
 	void LoopOfflineVelocity();
+	void LoopOfflinePosition();
 	void LoopOfflineTorque();
-	void StopVelocityLoop();
-	void StopTorqueLoop();
+	void StopLoop();
+	
 };
 #endif

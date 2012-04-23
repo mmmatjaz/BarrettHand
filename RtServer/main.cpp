@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 	//pthread_create(&rxThread, &tattr_server, &Server::RunServer, (void *) this)	
 	pthread_create(&rxThread, 		NULL, rxLoop, NULL);
 	pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
-	initGlut(argc, argv, &MeasG.hdata280, &mutex1);
+	if(Config.usePPS) initGlut(argc, argv, &MeasG.hdata280, &mutex1);
 	
 	string input;
 	string tmp;
@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
 	}
 	
 	Server.Stop();
-	bh280.Stop();
+	bh280.StopLoop();
 	
 	 pthread_join( rxThread, NULL);
 	  pthread_join( txThread, NULL);

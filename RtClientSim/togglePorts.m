@@ -18,12 +18,16 @@ switch get_param(gcb,'mode262')
         temp =  'color(''blue'') port_label(''input'',1,''\fontsize{12}BH262 {\newline\bfPosition}'',''texmode'',''on'')';
         en=strcat(en,temp);
         en=strcat(en,' ');
+    case 'Torque'
+        temp =  'color(''green'') port_label(''input'',1,''\fontsize{12}BH262 {\newline\bfTorque}'',''texmode'',''on'')';
+        en=strcat(en,temp);
+        en=strcat(en,' ');
     case 'Other'
         temp =  'color(''black'') port_label(''input'',1,''\fontsize{12}BH262 {\newline\bfOther}'',''texmode'',''on'')';
         en=strcat(en,temp);
         en=strcat(en,' ');
     otherwise
-        temp =  'color(''black'') port_label(''input'',1,''\fontsize{12}BH262 {\newline\bfOther}'',''texmode'',''on'')';
+        temp =  'color(''black'') port_label(''input'',1,''\fontsize{12}BH262 {\newline\bfTorque}'',''texmode'',''on'')';
         en=strcat(en,temp);
         en=strcat(en,' '); 
 end
@@ -37,12 +41,16 @@ switch get_param(gcb,'mode280');
         temp =  'color(''blue'') port_label(''input'',2,''\fontsize{12}BH280 {\newline\bfPosition}'',''texmode'',''on'')';
         en=strcat(en,temp);
         en=strcat(en,' ');
+    case 'Torque'
+        temp =  'color(''green'') port_label(''input'',2,''\fontsize{12}BH280 {\newline\bfTorque}'',''texmode'',''on'')';
+        en=strcat(en,temp);
+        en=strcat(en,' ');
     case 'Other'
         temp =  'color(''black'') port_label(''input'',2,''\fontsize{12}BH280 {\newline\bfOther}'',''texmode'',''on'')';
         en=strcat(en,temp);
         en=strcat(en,' ');
     otherwise
-        temp =  'color(''black'') port_label(''input'',2,''\fontsize{12}BH280 {\newline\bfOther}'',''texmode'',''on'')';
+        temp =  'color(''black'') port_label(''input'',2,''\fontsize{12}BH280 {\newline\bfTorque}'',''texmode'',''on'')';
         en=strcat(en,temp);
         en=strcat(en,' ');
 end

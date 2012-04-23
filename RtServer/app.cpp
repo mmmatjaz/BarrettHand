@@ -38,7 +38,7 @@ Config::Config()
 	port= 4444;
 	use280=true;
 	use262=false;
-	usePPS=true;
+	usePPS=false;
 	serialPort=1;
 	ST=		0.01;
 };

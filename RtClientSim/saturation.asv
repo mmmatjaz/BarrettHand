@@ -1,0 +1,12 @@
+function [ output_args ] = saturation( vector, limit )
+%SATURATION Summary of this function goes here
+%   Detailed explanation goes here
+for i=1:lenght(vector)
+    if vector(i)>limit
+        vector=limit
+    end
+    el
+end
+
+end
+

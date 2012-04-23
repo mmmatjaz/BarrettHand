@@ -14,13 +14,18 @@ timeval LastReceived;
 pthread_mutex_t mutex1;
 pthread_t bh280Thread;
 
+static bool shouldRun=true;
 
 threadMethod bh280Loop(void *threadid)
 {	
-	bh280.LoopOfflineVelocity();
-	bh280.LoopOfflineTorque();
-	bh280.LoopOfflineVelocity();
-	bh280.LoopOfflineTorque();
+	while(shouldRun)
+	{
+		bh280.LoopOfflineTorque();
+		//bh280.LoopOfflineVelocity();		
+		//bh280.LoopOfflinePosition();
+		
+	}
+
 }
 
 int main(int argc, char* argv[])
@@ -45,19 +50,6 @@ int main(int argc, char* argv[])
 	int offset;
 	//cout<<"\ncmd> ";
 
-	getline(cin,input);
-	bh280.StopVelocityLoop();
-	usleep(100000);
-	getline(cin,input);
-	bh280.StopTorqueLoop();
-	usleep(100000);
-	getline(cin,input);
-	bh280.StopVelocityLoop();
-	usleep(100000);
-	getline(cin,input);
-	bh280.StopTorqueLoop();
-
-
 	while (true)
 	{
 		
@@ -65,12 +57,28 @@ int main(int argc, char* argv[])
 		offset=input.find("q");
 		if (offset>-1 && input.size()==1)
 		{
-		  cout<<"quit\n"<<endl;
-		  break;
+			shouldRun=false;
+			cout<<"quit\n"<<endl;
+			bh280.StopLoop();
+			bh280.StopLoop();
+			bh280.StopLoop();
+			break;
 		}
-		
+		int temp=atoi(input.c_str());
+		if (temp!=0)
+		{
+			pthread_mutex_lock( &mutex1 );
+			bh280.ManualValue=temp;
+			pthread_mutex_lock( &mutex1 );
+			cout<<"new value "<<temp<<endl;	
+		}
+		else
+		{
+			bh280.StopLoop();
+			cout<<"next loop"<<endl;
+			usleep(300000);
+		}
 		cout<<endl;
-	
 	}
 	
 	

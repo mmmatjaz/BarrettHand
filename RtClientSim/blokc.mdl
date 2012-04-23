@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.1"
+    ComputedModelVersion    "1.2"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -25,9 +25,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Admin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Mar 27 11:34:53 2012"
-  RTWModifiedTimeStamp	  254748779
-  ModelVersionFormat	  "1.%<AutoIncrement:1>"
+  LastModifiedDate	  "Mon Apr 23 10:20:32 2012"
+  RTWModifiedTimeStamp	  257077225
+  ModelVersionFormat	  "1.%<AutoIncrement:2>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -610,13 +610,13 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    1
+    SIDHighWatermark	    2
     Block {
       BlockType		      "S-Function"
       Name		      "Barrett Hand client"
-      SID		      1
-      Ports		      [2, 5]
-      Position		      [95, 46, 265, 284]
+      SID		      2
+      Ports		      [2, 12]
+      Position		      [110, 31, 280, 269]
       FunctionName	      "bh"
       Parameters	      "IP port mode262 mode280 ST a0 a1 a2 a3 a4 a41 a5 a6 a7 a8 a81 a9"
       EnableBusSupport	      off
@@ -625,8 +625,8 @@ Model {
       "not end well.\n\nUnits are rad and rad/s. Strain and pps data is raw (no units)"
       MaskPromptString	      "BH262 mode|BH280 mode|IP|UDP port|ST|Time|262 position|262 velocity|262 deltap|262 strai"
       "n|262 strain filt|280 position|280 velocity|280 deltap|280 strain|280 strain filt|pps"
-      MaskStyleString	      "popup(Velocity|Position|Another),popup(Velocity|Position|Another),edit,edit,edit,checkbox"
-      ",checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox"
+      MaskStyleString	      "popup(Velocity|Position|Torque),popup(Velocity|Position|Torque),edit,edit,edit,checkbox,c"
+      "heckbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox"
       MaskTunableValueString  "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
       MaskCallbackString      "togglePorts()|togglePorts()|togglePorts()|togglePorts()||togglePorts()|togglePorts()|to"
       "gglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|to"
@@ -636,18 +636,22 @@ Model {
       MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
       MaskVariables	      "mode262=@1;mode280=@2;IP=&3;port=@4;ST=@5;a0=@6;a1=@7;a2=@8;a3=@9;a4=@10;a41=@11;a5=@12;a6="
       "@13;a7=@14;a8=@15;a81=@16;a9=@17;"
-      MaskDisplay	      "text(0.3, 0.9, '\\fontsize{10}IP: {\\bf193.2.6.168 \\newline\\rmport: \\bf4444}', 'horizontal"
+      MaskDisplay	      "text(0.3, 0.9, '\\fontsize{10}IP: {\\bf193.2.6.112 \\newline\\rmport: \\bf4444}', 'horizontal"
       "Alignment', 'center','texmode','on')color('red')port_label('input',1,'\\fontsize{12}BH262 {\\newline\\bfVelocity"
       "}','texmode','on')color('blue') port_label('input',2,'\\fontsize{12}BH280 {\\newline\\bfPosition}','texmode','on"
-      "')color('black')port_label('output',1,'Server time')port_label('output',2,'\\fontsize{11}BH280 {\\bfPosition}','"
-      "texmode','on');port_label('output',3,'BH280 {Velocity}','texmode','on');port_label('output',4,'BH280 {Strain}','"
-      "texmode','on');port_label('output',5,'BH280 {StrainFltr}','texmode','on');"
+      "')color('black')port_label('output',1,'Server time')port_label('output',2,'\\fontsize{11}BH262 {\\bfPosition}','"
+      "texmode','on');port_label('output',3,'BH262 {Velocity}','texmode','on');port_label('output',4,'BH262 {DeltaP}','"
+      "texmode','on');port_label('output',5,'BH262 {Strain}','texmode','on');port_label('output',6,'BH262 {StrainFltr}'"
+      ",'texmode','on');port_label('output',7,'\\fontsize{11}BH280 {\\bfPosition}','texmode','on');port_label('output',"
+      "8,'BH280 {Velocity}','texmode','on');port_label('output',9,'BH280 {DeltaP}','texmode','on');port_label('output',"
+      "10,'BH280 {Strain}','texmode','on');port_label('output',11,'BH280 {StrainFltr}','texmode','on');port_label('outp"
+      "ut',12,'BH280 {PPS}','texmode','on');"
       MaskIconFrame	      on
       MaskIconOpaque	      on
       MaskIconRotate	      "none"
       MaskPortRotate	      "default"
       MaskIconUnits	      "normalized"
-      MaskValueString	      "Velocity|Position|193.2.6.168|4444|0.005|on|off|off|off|off|off|on|on|off|on|on|off"
+      MaskValueString	      "Velocity|Position|193.2.6.112|4444|0.005|on|on|on|on|on|on|on|on|on|on|on|on"
       MaskTabNameString	      "Control,Control,Control,Control,Control,Outputs,Outputs,Outputs,Outputs,Outputs,Outputs"
       ",Outputs,Outputs,Outputs,Outputs,Outputs,Outputs"
     }

@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.35"
+    ComputedModelVersion    "1.43"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -25,9 +25,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Admin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Mar 27 11:31:15 2012"
-  RTWModifiedTimeStamp	  254748666
-  ModelVersionFormat	  "1.%<AutoIncrement:35>"
+  LastModifiedDate	  "Mon Apr 23 18:10:47 2012"
+  RTWModifiedTimeStamp	  257105432
+  ModelVersionFormat	  "1.%<AutoIncrement:43>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -587,10 +587,6 @@ Model {
   }
   BlockParameterDefaults {
     Block {
-      BlockType		      Clock
-      DisplayTime	      off
-    }
-    Block {
       BlockType		      Constant
       Value		      "1"
       VectorParams1D	      on
@@ -605,13 +601,6 @@ Model {
       LockScale		      off
       SampleTime	      "inf"
       FramePeriod	      "inf"
-    }
-    Block {
-      BlockType		      Display
-      Format		      "short"
-      Decimation	      "10"
-      Floating		      off
-      SampleTime	      "-1"
     }
     Block {
       BlockType		      Gain
@@ -664,24 +653,6 @@ Model {
       SourceOfInitialOutputValue "Dialog"
       OutputWhenDisabled      "held"
       InitialOutput	      "[]"
-    }
-    Block {
-      BlockType		      Product
-      Inputs		      "2"
-      Multiplication	      "Element-wise(.*)"
-      CollapseMode	      "All dimensions"
-      CollapseDim	      "1"
-      InputSameDT	      on
-      OutMin		      "[]"
-      OutMax		      "[]"
-      OutDataTypeMode	      "Same as first input"
-      OutDataType	      "fixdt(1,16,0)"
-      OutScaling	      "[]"
-      OutDataTypeStr	      "Inherit: Same as first input"
-      LockScale		      off
-      RndMeth		      "Zero"
-      SaturateOnIntegerOverflow	on
-      SampleTime	      "-1"
     }
     Block {
       BlockType		      "S-Function"
@@ -738,15 +709,6 @@ Model {
       VectorParams1D	      on
     }
     Block {
-      BlockType		      Step
-      Time		      "1"
-      Before		      "0"
-      After		      "1"
-      SampleTime	      "-1"
-      VectorParams1D	      on
-      ZeroCross		      on
-    }
-    Block {
       BlockType		      SubSystem
       ShowPortLabels	      "FromPortIcon"
       Permissions	      "ReadWrite"
@@ -795,7 +757,7 @@ Model {
   }
   System {
     Name		    "BHclientV"
-    Location		    [167, 98, 1455, 705]
+    Location		    [373, 323, 1661, 930]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -809,13 +771,13 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    90
+    SIDHighWatermark	    143
     Block {
       BlockType		      "S-Function"
       Name		      "Barrett Hand client"
-      SID		      1
-      Ports		      [2, 5]
-      Position		      [625, 116, 795, 354]
+      SID		      143
+      Ports		      [2, 3]
+      Position		      [690, 147, 840, 393]
       FunctionName	      "bh"
       Parameters	      "IP port mode262 mode280 ST a0 a1 a2 a3 a4 a41 a5 a6 a7 a8 a81 a9"
       EnableBusSupport	      off
@@ -824,8 +786,8 @@ Model {
       "not end well.\n\nUnits are rad and rad/s. Strain and pps data is raw (no units)"
       MaskPromptString	      "BH262 mode|BH280 mode|IP|UDP port|ST|Time|262 position|262 velocity|262 deltap|262 strai"
       "n|262 strain filt|280 position|280 velocity|280 deltap|280 strain|280 strain filt|pps"
-      MaskStyleString	      "popup(Velocity|Position|Another),popup(Velocity|Position|Another),edit,edit,edit,checkbox"
-      ",checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox"
+      MaskStyleString	      "popup(Velocity|Position|Torque|Other),popup(Velocity|Position|Torque|Other),edit,edit,edi"
+      "t,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox"
       MaskTunableValueString  "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
       MaskCallbackString      "togglePorts()|togglePorts()|togglePorts()|togglePorts()||togglePorts()|togglePorts()|to"
       "gglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|to"
@@ -838,41 +800,22 @@ Model {
       MaskDisplay	      "text(0.3, 0.9, '\\fontsize{10}IP: {\\bf193.2.6.168 \\newline\\rmport: \\bf4444}', 'horizontal"
       "Alignment', 'center','texmode','on')color('red')port_label('input',1,'\\fontsize{12}BH262 {\\newline\\bfVelocity"
       "}','texmode','on')color('red') port_label('input',2,'\\fontsize{12}BH280  {\\newline\\bfVelocity}','texmode','on"
-      "')color('black')port_label('output',1,'Server time')port_label('output',2,'\\fontsize{11}BH280 {\\bfPosition}','"
-      "texmode','on');port_label('output',3,'BH280 {Velocity}','texmode','on');port_label('output',4,'BH280 {Strain}','"
-      "texmode','on');port_label('output',5,'BH280 {StrainFltr}','texmode','on');"
+      "')color('black')port_label('output',1,'\\fontsize{11}BH280 {\\bfPosition}','texmode','on');port_label('output',2"
+      ",'BH280 {Velocity}','texmode','on');port_label('output',3,'BH280 {StrainFltr}','texmode','on');"
       MaskIconFrame	      on
       MaskIconOpaque	      on
       MaskIconRotate	      "none"
       MaskPortRotate	      "default"
       MaskIconUnits	      "normalized"
-      MaskValueString	      "Velocity|Velocity|193.2.6.168|4444|0.005|on|off|off|off|off|off|on|on|off|on|on|off"
+      MaskValueString	      "Velocity|Velocity|193.2.6.168|4444|0.005|off|off|off|off|off|off|on|on|off|off|on|off"
       MaskTabNameString	      "Control,Control,Control,Control,Control,Outputs,Outputs,Outputs,Outputs,Outputs,Outputs"
       ",Outputs,Outputs,Outputs,Outputs,Outputs,Outputs"
     }
     Block {
-      BlockType		      Clock
-      Name		      "Clock"
-      SID		      65
-      Position		      [25, 540, 45, 560]
-      Decimation	      "10"
-    }
-    Block {
-      BlockType		      Display
-      Name		      "Display"
-      SID		      44
-      Ports		      [1]
-      Position		      [70, 528, 200, 572]
-      FontName		      "Arial Narrow"
-      FontSize		      20
-      Decimation	      "1"
-      Lockdown		      off
-    }
-    Block {
       BlockType		      Gain
       Name		      "Gain"
-      SID		      7
-      Position		      [435, 160, 465, 190]
+      SID		      119
+      Position		      [485, 200, 515, 230]
       Gain		      "[1 1 1 1]"
       ParameterDataTypeMode   "Inherit via internal rule"
       ParameterDataType	      "fixdt(1, 16)"
@@ -887,9 +830,9 @@ Model {
     Block {
       BlockType		      Mux
       Name		      "Mux"
-      SID		      13
+      SID		      120
       Ports		      [2, 1]
-      Position		      [1085, 376, 1090, 414]
+      Position		      [1135, 416, 1140, 454]
       ShowName		      off
       Inputs		      "2"
       DisplayOption	      "bar"
@@ -897,18 +840,18 @@ Model {
     Block {
       BlockType		      Mux
       Name		      "Mux1"
-      SID		      26
+      SID		      121
       Ports		      [4, 1]
-      Position		      [485, 258, 490, 332]
+      Position		      [535, 298, 540, 372]
       ShowName		      off
       DisplayOption	      "bar"
     }
     Block {
       BlockType		      Reference
       Name		      "PID Controller"
-      SID		      89
+      SID		      122
       Ports		      [1, 1]
-      Position		      [320, 290, 350, 320]
+      Position		      [370, 310, 400, 340]
       LibraryVersion	      "1.41"
       SourceBlock	      "simulink_extras/Additional\nLinear/PID Controller"
       SourceType	      "PID Controller"
@@ -920,7 +863,7 @@ Model {
       RTWMemSecDataConstants  "Inherit from model"
       RTWMemSecDataInternal   "Inherit from model"
       RTWMemSecDataParameters "Inherit from model"
-      P			      "0.03"
+      P			      "0.006"
       I			      "0"
       D			      "0"
     }
@@ -945,29 +888,31 @@ Model {
     Block {
       BlockType		      Saturate
       Name		      "Saturation1"
-      SID		      75
-      Position		      [210, 290, 240, 320]
-      UpperLimit	      "120"
-      LowerLimit	      "0"
+      SID		      123
+      Position		      [465, 310, 495, 340]
+      UpperLimit	      "0.1"
+      LowerLimit	      "-0.1"
       OutDataType	      "fixdt(1, 16)"
       OutScaling	      "2^0"
     }
     Block {
       BlockType		      Scope
       Name		      "Scope"
-      SID		      15
+      SID		      124
       Ports		      [1]
-      Position		      [1140, 369, 1170, 401]
+      Position		      [1170, 419, 1200, 451]
       Floating		      off
-      Location		      [933, 51, 1852, 1074]
+      Location		      [544, 51, 1463, 1074]
       Open		      off
       NumInputPorts	      "1"
+      ZoomMode		      "yonly"
       List {
 	ListType		AxesTitles
 	axes1			"%<SignalLabel>"
       }
-      YMin		      "60"
-      YMax		      "105"
+      TimeRange		      "10"
+      YMin		      "30"
+      YMax		      "100"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       SampleTime	      "0"
@@ -975,62 +920,23 @@ Model {
     Block {
       BlockType		      Selector
       Name		      "Selector"
-      SID		      14
+      SID		      125
       Ports		      [1, 1]
-      Position		      [991, 215, 1029, 255]
+      Position		      [1041, 305, 1079, 345]
       BlockRotation	      270
       BlockMirror	      on
       NamePlacement	      "alternate"
       InputPortWidth	      "4"
       IndexOptions	      "Index vector (dialog)"
-      Indices		      "1"
+      Indices		      "2"
       OutputSizes	      "1"
-    }
-    Block {
-      BlockType		      Selector
-      Name		      "Selector2"
-      SID		      55
-      Ports		      [1, 1]
-      Position		      [870, 264, 890, 296]
-      NamePlacement	      "alternate"
-      InputPortWidth	      "4"
-      IndexOptions	      "Index vector (dialog)"
-      Indices		      "3"
-      OutputSizes	      "1"
-    }
-    Block {
-      BlockType		      Selector
-      Name		      "Selector3"
-      SID		      85
-      Ports		      [1, 1]
-      Position		      [870, 310, 890, 340]
-      InputPortWidth	      "4"
-      IndexOptions	      "Index vector (dialog)"
-      Indices		      "3"
-      OutputSizes	      "1"
-    }
-    Block {
-      BlockType		      Sum
-      Name		      "Sum"
-      SID		      88
-      Ports		      [2, 1]
-      Position		      [150, 295, 170, 315]
-      ShowName		      off
-      IconShape		      "round"
-      Inputs		      "|+-"
-      InputSameDT	      off
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
     }
     Block {
       BlockType		      Sum
       Name		      "Sum2"
-      SID		      90
+      SID		      126
       Ports		      [2, 1]
-      Position		      [265, 295, 285, 315]
+      Position		      [315, 315, 335, 335]
       ShowName		      off
       IconShape		      "round"
       Inputs		      "|+-"
@@ -1044,9 +950,9 @@ Model {
     Block {
       BlockType		      ToWorkspace
       Name		      "To Workspace"
-      SID		      53
+      SID		      127
       Ports		      [1]
-      Position		      [1045, 328, 1075, 352]
+      Position		      [1095, 368, 1125, 392]
       VariableName	      "q"
       MaxDataPoints	      "inf"
       SampleTime	      "-1"
@@ -1054,22 +960,10 @@ Model {
     }
     Block {
       BlockType		      ToWorkspace
-      Name		      "To Workspace1"
-      SID		      54
-      Ports		      [1]
-      Position		      [925, 266, 945, 294]
-      NamePlacement	      "alternate"
-      VariableName	      "s"
-      MaxDataPoints	      "inf"
-      SampleTime	      "-1"
-      SaveFormat	      "Structure"
-    }
-    Block {
-      BlockType		      ToWorkspace
       Name		      "To Workspace4"
-      SID		      58
+      SID		      128
       Ports		      [1]
-      Position		      [260, 238, 290, 262]
+      Position		      [310, 238, 340, 262]
       VariableName	      "qd"
       MaxDataPoints	      "inf"
       SampleTime	      "-1"
@@ -1078,21 +972,10 @@ Model {
     Block {
       BlockType		      ToWorkspace
       Name		      "To Workspace5"
-      SID		      59
+      SID		      129
       Ports		      [1]
-      Position		      [405, 258, 435, 282]
+      Position		      [455, 263, 485, 287]
       VariableName	      "dqd"
-      MaxDataPoints	      "inf"
-      SampleTime	      "-1"
-      SaveFormat	      "Structure"
-    }
-    Block {
-      BlockType		      ToWorkspace
-      Name		      "To Workspace7"
-      SID		      86
-      Ports		      [1]
-      Position		      [925, 313, 945, 337]
-      VariableName	      "sfc"
       MaxDataPoints	      "inf"
       SampleTime	      "-1"
       SaveFormat	      "Structure"
@@ -1100,9 +983,9 @@ Model {
     Block {
       BlockType		      SubSystem
       Name		      "position"
-      SID		      17
+      SID		      130
       Ports		      [0, 1]
-      Position		      [350, 161, 390, 189]
+      Position		      [400, 201, 440, 229]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -1128,7 +1011,7 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant4"
-	  SID			  18
+	  SID			  131
 	  Position		  [55, 95, 85, 125]
 	  Value			  "70"
 	  OutDataType		  "fixdt(1, 16)"
@@ -1137,7 +1020,7 @@ Model {
 	Block {
 	  BlockType		  Sin
 	  Name			  "Sine Wave2"
-	  SID			  19
+	  SID			  132
 	  Ports			  [0, 1]
 	  Position		  [25, 27, 85, 63]
 	  Amplitude		  "30"
@@ -1150,7 +1033,7 @@ Model {
 	Block {
 	  BlockType		  Sum
 	  Name			  "Sum1"
-	  SID			  20
+	  SID			  133
 	  Ports			  [2, 1]
 	  Position		  [125, 35, 145, 55]
 	  ShowName		  off
@@ -1166,7 +1049,7 @@ Model {
 	Block {
 	  BlockType		  Outport
 	  Name			  "q ref"
-	  SID			  21
+	  SID			  134
 	  Position		  [165, 38, 195, 52]
 	  IconDisplay		  "Port number"
 	}
@@ -1194,9 +1077,9 @@ Model {
     Block {
       BlockType		      SubSystem
       Name		      "position1"
-      SID		      30
+      SID		      135
       Ports		      [0, 1]
-      Position		      [35, 291, 75, 319]
+      Position		      [90, 311, 130, 339]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -1222,50 +1105,29 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant4"
-	  SID			  31
-	  Position		  [145, 95, 175, 125]
+	  SID			  136
+	  Position		  [145, 105, 175, 135]
 	  Value			  "70"
 	  OutDataType		  "fixdt(1, 16)"
 	  OutScaling		  "2^0"
 	}
 	Block {
-	  BlockType		  Product
-	  Name			  "Product1"
-	  SID			  63
-	  Ports			  [2, 1]
-	  Position		  [175, 37, 205, 68]
-	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "fixdt(1, 16)"
-	  OutScaling		  "2^0"
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
 	  BlockType		  Sin
 	  Name			  "Sine Wave2"
-	  SID			  32
+	  SID			  137
 	  Ports			  [0, 1]
 	  Position		  [25, 27, 85, 63]
 	  Amplitude		  "30"
 	  Bias			  "0"
-	  Frequency		  "pi"
+	  Frequency		  "0.5*pi"
 	  Phase			  "pi/4"
 	  Samples		  "10"
 	  Offset		  "0"
 	}
 	Block {
-	  BlockType		  Step
-	  Name			  "Step1"
-	  SID			  64
-	  Position		  [55, 95, 85, 125]
-	  Time			  "5"
-	  SampleTime		  "0"
-	}
-	Block {
 	  BlockType		  Sum
 	  Name			  "Sum1"
-	  SID			  33
+	  SID			  138
 	  Ports			  [2, 1]
 	  Position		  [275, 35, 295, 55]
 	  ShowName		  off
@@ -1281,7 +1143,7 @@ Model {
 	Block {
 	  BlockType		  Outport
 	  Name			  "q ref"
-	  SID			  34
+	  SID			  139
 	  Position		  [315, 38, 345, 52]
 	  IconDisplay		  "Port number"
 	}
@@ -1294,28 +1156,14 @@ Model {
 	Line {
 	  SrcBlock		  "Constant4"
 	  SrcPort		  1
-	  Points		  [80, 0; 0, 10; 25, 0]
+	  Points		  [105, 0]
 	  DstBlock		  "Sum1"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Product1"
-	  SrcPort		  1
-	  Points		  [25, 0; 0, -10]
-	  DstBlock		  "Sum1"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Step1"
-	  SrcPort		  1
-	  Points		  [35, 0; 0, -50]
-	  DstBlock		  "Product1"
 	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "Sine Wave2"
 	  SrcPort		  1
-	  DstBlock		  "Product1"
+	  DstBlock		  "Sum1"
 	  DstPort		  1
 	}
       }
@@ -1323,8 +1171,8 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "to degrees"
-      SID		      36
-      Position		      [880, 156, 925, 194]
+      SID		      140
+      Position		      [885, 171, 930, 209]
       Gain		      "180/pi"
       ParameterDataTypeMode   "Inherit via internal rule"
       ParameterDataType	      "fixdt(1, 16)"
@@ -1339,8 +1187,8 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "to radians"
-      SID		      9
-      Position		      [495, 156, 540, 194]
+      SID		      141
+      Position		      [545, 196, 590, 234]
       Gain		      "pi/180"
       ParameterDataTypeMode   "Inherit via internal rule"
       ParameterDataType	      "fixdt(1, 16)"
@@ -1355,8 +1203,8 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "to radians1"
-      SID		      35
-      Position		      [510, 276, 555, 314]
+      SID		      142
+      Position		      [575, 316, 620, 354]
       Gain		      "pi/180"
       ParameterDataTypeMode   "Inherit via internal rule"
       ParameterDataType	      "fixdt(1, 16)"
@@ -1371,7 +1219,7 @@ Model {
     Line {
       SrcBlock		      "Selector"
       SrcPort		      1
-      Points		      [0, 80]
+      Points		      [0, 30]
       Branch {
 	DstBlock		"To Workspace"
 	DstPort			1
@@ -1388,13 +1236,6 @@ Model {
 	  DstPort		  2
 	}
       }
-    }
-    Line {
-      SrcBlock		      "Mux"
-      SrcPort		      1
-      Points		      [0, -10]
-      DstBlock		      "Scope"
-      DstPort		      1
     }
     Line {
       SrcBlock		      "Gain"
@@ -1417,64 +1258,34 @@ Model {
     Line {
       SrcBlock		      "to degrees"
       SrcPort		      1
-      Points		      [80, 0]
+      Points		      [125, 0]
       DstBlock		      "Selector"
       DstPort		      1
     }
     Line {
       SrcBlock		      "position1"
       SrcPort		      1
-      Points		      [25, 0]
+      Points		      [20, 0]
       Branch {
-	Points			[0, -55]
+	Points			[0, -75]
 	DstBlock		"To Workspace4"
 	DstPort			1
       }
       Branch {
-	Points			[0, 100]
+	Points			[0, 120]
 	DstBlock		"Mux"
 	DstPort			2
       }
       Branch {
-	DstBlock		"Sum"
+	DstBlock		"Sum2"
 	DstPort			1
       }
     }
     Line {
-      SrcBlock		      "to radians1"
-      SrcPort		      1
-      DstBlock		      "Barrett Hand client"
-      DstPort		      2
-    }
-    Line {
       SrcBlock		      "to radians"
       SrcPort		      1
+      Points		      [80, 0]
       DstBlock		      "Barrett Hand client"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Clock"
-      SrcPort		      1
-      DstBlock		      "Display"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Barrett Hand client"
-      SrcPort		      2
-      Points		      [65, 0]
-      DstBlock		      "to degrees"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Barrett Hand client"
-      SrcPort		      4
-      DstBlock		      "Selector2"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Sum"
-      SrcPort		      1
-      DstBlock		      "Saturation1"
       DstPort		      1
     }
     Line {
@@ -1482,21 +1293,14 @@ Model {
       SrcPort		      1
       Points		      [15, 0]
       Branch {
-	Points			[0, -35]
+	Points			[0, -50]
 	DstBlock		"To Workspace5"
 	DstPort			1
       }
       Branch {
-	Points			[0, 5; 90, 0; 0, -45]
-	DstBlock		"Mux1"
+	DstBlock		"Saturation1"
 	DstPort			1
       }
-    }
-    Line {
-      SrcBlock		      "Saturation1"
-      SrcPort		      1
-      DstBlock		      "Sum2"
-      DstPort		      1
     }
     Line {
       SrcBlock		      "Sum2"
@@ -1505,22 +1309,31 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Selector2"
+      SrcBlock		      "to radians1"
       SrcPort		      1
-      DstBlock		      "To Workspace1"
-      DstPort		      1
+      DstBlock		      "Barrett Hand client"
+      DstPort		      2
     }
     Line {
-      SrcBlock		      "Selector3"
+      SrcBlock		      "Mux"
       SrcPort		      1
-      DstBlock		      "To Workspace7"
+      DstBlock		      "Scope"
       DstPort		      1
     }
     Line {
       SrcBlock		      "Barrett Hand client"
-      SrcPort		      5
-      DstBlock		      "Selector3"
+      SrcPort		      1
+      DstBlock		      "to degrees"
       DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Saturation1"
+      SrcPort		      1
+      DstBlock		      "Mux1"
+      DstPort		      2
+    }
+    Annotation {
+      Position		      [1065, 278]
     }
   }
 }
