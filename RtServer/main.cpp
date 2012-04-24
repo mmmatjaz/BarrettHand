@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 	
 	int rxl=sizeof(ConsG);
 	int txl=sizeof(MeasG);
-	if (!Config.usePPS) txl -=sizeof(MeasG.hdata280.pps);
+	//if (!Config.usePPS) txl -=sizeof(MeasG.hdata280.pps);
 	
 	Server.Init(	Config.port, Config.port,
 					(char *) &ConsG, (char *) &MeasG,

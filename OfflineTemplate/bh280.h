@@ -62,7 +62,7 @@ private:
 	int result;
 	char bufy[100];
 //methods
-	int Begin();
+	int Begin(int ctrl);
 	double TorqueControlPD(int m);
 	double PositionControlC(int m);
 	double PositionControl(int m);
@@ -70,7 +70,6 @@ private:
 	void LowPass(int m,double a);
 	double Deadzone(int m, double dz);
 	void ReadFromHand();
-	void RefreshData();
 	void RememberData();
 	void SendToHand();
 	void Error();
@@ -83,9 +82,7 @@ public:
 					pthread_mutex_t * mutex,
 					timeval * LastReceived);
 	void Stop();
-	void LoopOfflineVelocity();
-	void LoopOfflinePosition();
-	void LoopOfflineTorque();
+	void LoopOfflineExample();
 	void StopLoop();
 	
 };

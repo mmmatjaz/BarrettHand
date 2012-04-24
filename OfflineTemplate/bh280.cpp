@@ -7,14 +7,18 @@
 #define RANGE_280_G 199000
 #define PI			4.0*atan(1.0)
 
-#define Pg 0.05
-#define Ps 0.001
+#define Pg 0.05/3
+#define Ps 0.001/3
 #define Dg 0//.001
 #define Ds 0//.001
 #define MAX_G 0.004
 #define MAX_S 0.001
 #define MAX_TG 800
 #define MAX_TS 100
+#define VEL_CONTROL		1
+#define POS_CONTROL		2
+#define TOR_CONTROL		3
+
 #include "bh280.h"
 
 
@@ -48,13 +52,6 @@ BH280::BH280()
 	ManualValue=0;
 }
 
-void BH280::Error()
-{
-	sprintf(bufy,"ERROR: %d\n%s\n", result, bh.ErrorMessage(result));
-	cout<<bufy<<endl;
-	//exit(0);
-}
-
 void BH280::Initialize(	bool PPS,
 						struct HandControls * DIN, struct HandMeasPPS * DOUT,
 						pthread_mutex_t * mutex,
@@ -83,28 +80,85 @@ void BH280::Initialize(	bool PPS,
 	//if (result = bh.InitHand("")) Error();
 }
 
-double BH280::TorqueControlPD(int m)
+int BH280::Begin(int ctrl)
 {
-  double out=0.0;
-  double dt=diffclock(&now,&lc);
-  double Kf=0.5/10.0;
-  //P
-	double qd=Cons.cValues[m];
-	double q= Meas.Position[m];
-	double e= qd-q;
-  //D
-	double pqd=pCons.cValues[m];
-	double pq= pMeas.Position[m];
-	double pe= pqd-pq;
-	
-	double de=(e-pe)/dt;
-  
-	out=900*e+15*de;// + reg.D[m]*de;
+	cout<<("PrepareRealTime()... ");
+	char reply[50];
+		
+	bh.pCallback = NULL;
+	bh.syncMode = BHMODE_SYNC;
+	bh.RTAbort();
+	if (ctrl==TOR_CONTROL) bh.Command("2M 50000");
+	bool LCV = true;          // loop control velocity
+	int LCVC = 1;			  // loop control velocity coefficient
+	bool LCPG = true;         // loop control proportional gain
+	bool LCT = false;         // loop control torque
 
- if (out>reg.maxT[m]) 		out=reg.maxT[m];
- if (out<-reg.maxT[m]) 	out=-reg.maxT[m];
- 
-  return out;
+	bool LFV = true;          // loop feedback velocity
+	int  LFVC = 1;            // loop feedback velocity coefficient
+	bool LFS = false;         // loop feedback strain
+	bool LFAP = true;         // loop feedback absolute position
+	bool LFDP = false;        // loop feedback delta position
+	int  LFDPC = 1;           // loop feedback delta position coefficient
+
+	bool LFBP = false;        // loop feedback breakaway position not needed
+	bool LFAIN = false;       // loop feedback analog inputs not needed
+	bool LFDPD = false;       // loop feedback delta position discard not needed
+	bool LFT = false;         // loop feedback temperature not needed
+
+	if (result = bh.Command("GFSET DP 100000"))
+		Error();
+	// Set RealTime mode flags
+	if ((bh.RTSetFlags("123S",	LCV, LCVC, LCPG, LCT,LFV, 
+		LFVC, LFS, LFAP, LFDP, LFDPC, LFBP, LFAIN, LFDPD, LFT)))
+		Error();
+	bh.Command("1fset tstop 10000");bh.Command("2fset tstop 10000");
+	bh.Command("3fset tstop 10000");bh.Command("sset tstop 10000");
+	bh.Command("3fsave");
+
+	switch(ctrl)
+	{
+		case VEL_CONTROL:	// velocity control
+			cout<<"PrepareRealTime()... Velocity mode "<<endl;
+			if (result = bh.Set("123S", "LCV", true))
+				Error();
+			if (result = bh.Set("123S", "LCP", false))
+				Error();
+			if (result = bh.Set("123S", "LCT", false))
+				Error();
+			break;
+
+		case POS_CONTROL:	// position control
+			cout<<"PrepareRealTime()... Position mode "<<endl;
+			if (result = bh.Set("123S", "LCV", false))
+				Error();
+			if (result = bh.Set("123S", "LCP", true))
+				Error();
+			if (result = bh.Set("123S", "LCT", false))
+				Error();
+			break;
+		
+		case TOR_CONTROL:	// torque control			
+			cout<<"PrepareRealTime()... Torque mode "<<endl;					
+			if (result = bh.Set("123S", "LCV", false))
+				;
+			if (result = bh.Set("123S", "LCP", false))
+				;
+			if (result = bh.Set("123S", "LCT", true))
+				;
+			break;
+
+	}
+	
+	cout<<("RTStart()....");
+
+	if (result = bh.RTStart("123S", BHMotorTorqueLimitProtect)) 
+		Error();
+	else cout<<("OK\n");
+
+	bh.RTUpdate();
+	
+	return 0;
 }
 
 double BH280::PositionControl(int m)
@@ -187,34 +241,14 @@ double BH280::Deadzone(int m, double dz)
 	else return x;
 }
 
-void BH280::LoopOfflineVelocity()
+void BH280::LoopOfflineExample()
 {
 /*  *****************************
 			hand thread
 	***************************** */
-	cout<<"velocity loop"<<endl;
-	shouldRun=true;
-	timeval Tstart;
-	timeval Tnow;
-	timeval Tbefore;
-	double T;
+	Begin(VEL_CONTROL);
 
-	if (result = bh.Command("GFSET DP 100000"))
-		Error();
-	if (result = bh.RTSetFlags( "1234", 1, 3, 0, 0, 1, 1, 1, 1, 1, 1,0,0,0,0 ))
-		Error();
-	if (result = bh.Set("123S", "LCV", true))
-		Error();
-	if (result = bh.Set("123S", "LCP", false))
-		Error();
-	if (result = bh.Set("123S", "LCT", false))
-		Error();
-	if (result = bh.RTStart("1234", BHMotorTorqueLimitProtect)) 
-		Error();
-
-	bh.RTUpdate();
-
-	T=0.0;
+	double T=0.0;
 	gettimeofday(&lc, NULL);
 	while (shouldRun)
 	{	
@@ -250,210 +284,6 @@ void BH280::LoopOfflineVelocity()
 	cout<<"Terminating thread bh280\n";
 }
 
-void BH280::LoopOfflinePosition()
-{
-/*  *****************************
-			hand thread
-	***************************** */
-	cout<<"postition loop"<<endl;
-	shouldRun=true;
-	timeval Tstart;
-	timeval Tnow;
-	timeval Tbefore;
-	double T;
-	double dt;
-
-	bool LCV = true;          // loop control velocity
-	int LCVC = 1; // loop control velocity coefficient
-	bool LCPG = true;         // loop control proportional gain
-	bool LCT = false;         // loop control torque
-
-	bool LFV = true;          // loop feedback velocity
-	int  LFVC = 1;            // loop feedback velocity coefficient
-	bool LFS = false;         // loop feedback strain
-	bool LFAP = true;         // loop feedback absolute position
-	bool LFDP = false;        // loop feedback delta position
-	int  LFDPC = 1;           // loop feedback delta position coefficient
-
-	bool LFBP = false;        // loop feedback breakaway position not needed
-	bool LFAIN = false;       // loop feedback analog inputs not needed
-	bool LFDPD = false;       // loop feedback delta position discard not needed
-	bool LFT = false;         // loop feedback temperature not needed
-
-
-	// Set RealTime mode flags
-	if ((bh.RTSetFlags("123S",
-		LCV, LCVC, LCPG, LCT,
-		LFV, LFVC, LFS, LFAP, LFDP, LFDPC,
-		LFBP, LFAIN, LFDPD, LFT)))
-		Error();
-
-	if (result = bh.Set("123S", "LCV", false))
-		Error();
-	if (result = bh.Set("123S", "LCP", true))
-		Error();
-	if (result = bh.Set("123S", "LCT", false))
-		Error();
-	if (result = bh.RTStart("123", BHMotorTorqueLimitProtect)) 
-		Error();
-
-	bh.RTUpdate();
-
-	T=0.0;
-	double m_refPos[4];
-	double opengl_pos[4];
-
-	gettimeofday(&lc, NULL);
-	while (shouldRun)
-	{	
-		gettimeofday(&now, NULL);
-		dt=diffclock(&now,&lc);
-		T=+dt;
-		if (dt < 0.001)	dt = 0.001;
-
-		ReadFromHand();
-		for (int i = 0; i < 3; i++)
-		{	
-			opengl_pos[i]=1;
-			m_refPos[i] -= ((double)(m_refPos[i] - opengl_pos[i]) * dt) * 1.7;
-			double MIN_AMOUNT = 0.00125;
-			double amount = ((double)(m_refPos[i] - opengl_pos[i]) * dt) * 1.7;
-
-			if (amount > 0)
-			{
-				if (amount < MIN_AMOUNT)
-					amount = MIN_AMOUNT;
-				if (m_refPos[i] - amount > opengl_pos[i])
-					m_refPos[i] -= amount;
-			}
-			else if (amount < 0)
-			{
-				if (amount > -MIN_AMOUNT)
-					amount = -MIN_AMOUNT;
-				if (m_refPos[i] - amount < opengl_pos[i])
-					m_refPos[i] -= amount;
-			}
-			int temp=0;
-			temp=(int)(m_refPos[i]* props.scaleIN[i]+0.5);
-		
-			bh.RTSetPosition('1' + i,temp);
-			
-		//	result = bh.RTSetPosition('1'+i, value);		
-		}
-		
-		bh.RTUpdate();
-		RememberData();
-	}
-	bh.RTAbort();
-	result = bh.Command("t");
-	cout<<"Terminating thread bh280\n";
-}
-
-void BH280::LoopOfflineTorque()
-{
-/*  *****************************
-			hand thread
-	***************************** */
-	cout<<"torque loop";
-	shouldRun=true;
-	timeval Tstart;
-	timeval Tnow;
-	timeval Tbefore;
-	double T;
-	
-	bh.pCallback = NULL;
-	bh.syncMode = BHMODE_SYNC;
-	bh.RTAbort();
-
-	bool LCV = true;          // loop control velocity
-	int LCVC = 1;			// loop control velocity coefficient
-	bool LCPG = true;         // loop control proportional gain
-	bool LCT = false;         // loop control torque
-
-	bool LFV = true;          // loop feedback velocity
-	int  LFVC = 1;            // loop feedback velocity coefficient
-	bool LFS = false;         // loop feedback strain
-	bool LFAP = true;         // loop feedback absolute position
-	bool LFDP = false;        // loop feedback delta position
-	int  LFDPC = 1;           // loop feedback delta position coefficient
-
-	bool LFBP = false;        // loop feedback breakaway position not needed
-	bool LFAIN = false;       // loop feedback analog inputs not needed
-	bool LFDPD = false;       // loop feedback delta position discard not needed
-	bool LFT = false;         // loop feedback temperature not needed
-
-	if (result = bh.Command("GFSET DP 100000"))
-		Error();
-	// Set RealTime mode flags
-	if ((bh.RTSetFlags("123S",
-		LCV, LCVC, LCPG, LCT,
-		LFV, LFVC, LFS, LFAP, LFDP, LFDPC,
-		LFBP, LFAIN, LFDPD, LFT)))
-		Error();
-	if (result = bh.Set("123S", "LCV", false))
-		Error();
-	if (result = bh.Set("123S", "LCP", false))
-		Error();
-	if (result = bh.Set("123S", "LCT", true))
-		Error();
-	if (result = bh.RTStart("123S", BHMotorTorqueLimitProtect)) 
-		Error();
-
-	bh.RTUpdate();
-	T=0.0;
-	gettimeofday(&lc, NULL);
-
-	cout<<"grem v loop"<<endl;
-	int navor=0;
-	double torque;
-	double torquePD;
-	double Kp=700;
-	double Kd=3;
-
-	while (shouldRun)
-	{	
-
-		gettimeofday(&now, NULL);
-		T+=diffclock(&now,&lc);
-		ReadFromHand();
-
-		double f=0.2;//Hz
-		double posRef = 0.9*PI/3 + (PI/4*sin( f* T*2*PI));
-		
-		Cons.cValues[0]=posRef;
-		char print[100];
-
-		for (int i = 0; i < 1; i++)
-		{
-			double posErr=Cons.cValues[i]-Meas.Position[i];
-			if (posErr > 3.14/2)
-				posErr = 3.14/2;
-			else if (posErr < -3.14/2)
-				posErr = -3.14/2;
-			
-			torquePD=TorqueControlPD(i);
-
-			torque=Kp*posErr;
-			sprintf(print,"MV: % 4d  pd: % 3.2f  p: % 3.2f T: % 3.2f  T % 3.2f",
-				ManualValue,
-				Cons.cValues[i],
-				Meas.Position[i],
-				torque,
-				torquePD);
-			cout<<"\r"<<print;
-			bh.RTSetTorque('1' + i, (int)torquePD);
-			
-		}
-		bh.RTUpdate(true, true);
-		//bh.RTUpdate();
-		
-		RememberData();
-	}
-	bh.RTAbort();
-	result = bh.Command("t");
-	cout<<"Terminating thread bh280\n";
-}
-
 void BH280::Stop()
 {
 	bh.RTAbort();
@@ -473,25 +303,6 @@ void BH280::ReadFromHand()
 	}
 }
 
-void BH280::RefreshData()
-{
-	pthread_mutex_lock( Mutex );		
-	memcpy(	(char *)&(Cons),
-			(char *)(Cons_),	
-			sizeof(HandControls));	
-			
-	memcpy(	(char *)Meas_, 	
-			(char *)&Meas, 	
-			sizeof(HandMeas));
-	
-	if (pps)
-	 memcpy((char *)Meas_->pps,
-			(char *)Meas.pps,
-			sizeof(Meas.pps));	
-	
-	pthread_mutex_unlock( Mutex );
-}
-
 void BH280::RememberData()
 {
 	memcpy(	(char *)&pCons,
@@ -502,7 +313,6 @@ void BH280::RememberData()
 			sizeof(HandMeas));
 	memcpy(	&lc,&now,sizeof(now));	
 }
-
 
 double BH280::diffclock(timeval* currentTime, timeval* startTime)
 {
@@ -519,4 +329,11 @@ void BH280::StopLoop()
 	bh.RTAbort();
 	result = bh.Command("t");
 	shouldRun=false;
+}
+
+void BH280::Error()
+{
+	sprintf(bufy,"ERROR: %d\n%s\n", result, bh.ErrorMessage(result));
+	cout<<bufy<<endl;
+	//exit(0);
 }

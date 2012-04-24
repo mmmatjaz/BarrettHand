@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.46"
+    ComputedModelVersion    "1.43"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -25,9 +25,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Admin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Apr 24 16:18:47 2012"
-  RTWModifiedTimeStamp	  257185126
-  ModelVersionFormat	  "1.%<AutoIncrement:46>"
+  LastModifiedDate	  "Mon Apr 23 17:10:30 2012"
+  RTWModifiedTimeStamp	  257101827
+  ModelVersionFormat	  "1.%<AutoIncrement:43>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -655,14 +655,6 @@ Model {
       InitialOutput	      "[]"
     }
     Block {
-      BlockType		      RateLimiter
-      RisingSlewLimit	      "1"
-      FallingSlewLimit	      "-1"
-      SampleTimeMode	      "continuous"
-      InitialCondition	      "0"
-      LinearizeAsGain	      on
-    }
-    Block {
       BlockType		      "S-Function"
       FunctionName	      "system"
       SFunctionModules	      "''"
@@ -755,88 +747,447 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    137
+    SIDHighWatermark	    116
     Block {
-      BlockType		      "S-Function"
-      Name		      "Barrett Hand client"
-      SID		      117
-      Ports		      [2, 1]
-      Position		      [545, 46, 715, 284]
-      FunctionName	      "bh"
-      Parameters	      "IP port mode262 mode280 ST a0 a1 a2 a3 a4 a41 a5 a6 a7 a8 a81 a9"
-      EnableBusSupport	      off
-      MaskType		      "Barrett Hand UDP client"
-      MaskDescription	      "Make sure you select the right mode. Sending positions when velocity mode \nselected may "
-      "not end well.\n\nUnits are rad and rad/s. Strain and pps data is raw (no units)"
-      MaskPromptString	      "BH262 mode|BH280 mode|IP|UDP port|ST|Time|262 position|262 velocity|262 deltap|262 strai"
-      "n|262 strain filt|280 position|280 velocity|280 deltap|280 strain|280 strain filt|pps"
-      MaskStyleString	      "popup(Velocity|Position|Torque|Other),popup(Velocity|Position|Torque|Other),edit,edit,edi"
-      "t,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox"
-      MaskTunableValueString  "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
-      MaskCallbackString      "togglePorts()|togglePorts()|togglePorts()|togglePorts()||togglePorts()|togglePorts()|to"
-      "gglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|to"
-      "gglePorts()|togglePorts()"
-      MaskEnableString	      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
-      MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
-      MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
-      MaskVariables	      "mode262=@1;mode280=@2;IP=&3;port=@4;ST=@5;a0=@6;a1=@7;a2=@8;a3=@9;a4=@10;a41=@11;a5=@12;a6="
-      "@13;a7=@14;a8=@15;a81=@16;a9=@17;"
-      MaskDisplay	      "text(0.3, 0.9, '\\fontsize{10}IP: {\\bf193.2.6.168 \\newline\\rmport: \\bf4444}', 'horizontal"
-      "Alignment', 'center','texmode','on')color('blue') port_label('input',1,'\\fontsize{12}BH262 {\\newline\\bfPositi"
-      "on}','texmode','on')color('blue') port_label('input',2,'\\fontsize{12}BH280 {\\newline\\bfPosition}','texmode','"
-      "on')color('black')port_label('output',1,'\\fontsize{11}BH280 {\\bfPosition}','texmode','on');"
-      MaskIconFrame	      on
-      MaskIconOpaque	      on
-      MaskIconRotate	      "none"
-      MaskPortRotate	      "default"
-      MaskIconUnits	      "normalized"
-      MaskValueString	      "Position|Position|193.2.6.168|4444|0.005|off|off|off|off|off|off|on|off|off|off|off|off"
-      MaskTabNameString	      "Control,Control,Control,Control,Control,Outputs,Outputs,Outputs,Outputs,Outputs,Outputs"
-      ",Outputs,Outputs,Outputs,Outputs,Outputs,Outputs"
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "Gain"
-      SID		      118
-      Position		      [355, 90, 385, 120]
-      Gain		      "[1 1 1 1]"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      ParameterDataType	      "fixdt(1, 16)"
-      ParameterScaling	      "2^0"
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Mux
-      Name		      "Mux"
-      SID		      119
-      Ports		      [2, 1]
-      Position		      [1005, 306, 1010, 344]
-      ShowName		      off
-      Inputs		      "2"
-      DisplayOption	      "bar"
-    }
-    Block {
-      BlockType		      Mux
-      Name		      "Mux1"
-      SID		      120
-      Ports		      [4, 1]
-      Position		      [355, 188, 360, 262]
-      ShowName		      off
-      DisplayOption	      "bar"
-    }
-    Block {
-      BlockType		      RateLimiter
-      Name		      "Rate Limiter"
-      SID		      136
-      Position		      [480, 210, 510, 240]
-      RisingSlewLimit	      "0.5"
-      FallingSlewLimit	      "-0.5"
-      SampleTimeMode	      "inherited"
+      BlockType		      SubSystem
+      Name		      "Position Control"
+      SID		      96
+      Ports		      []
+      Position		      [225, 55, 386, 162]
+      ForegroundColor	      "blue"
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      System {
+	Name			"Position Control"
+	Location		[595, 307, 1665, 657]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	Block {
+	  BlockType		  "S-Function"
+	  Name			  "Barrett Hand client"
+	  SID			  98
+	  Ports			  [2, 1]
+	  Position		  [500, 26, 670, 264]
+	  FunctionName		  "bh"
+	  Parameters		  "IP port mode262 mode280 ST a0 a1 a2 a3 a4 a41 a5 a6 a7 a8 a81 a9"
+	  EnableBusSupport	  off
+	  MaskType		  "Barrett Hand UDP client"
+	  MaskDescription	  "Make sure you select the right mode. Sending positions when velocity mode \nselected may not end"
+	  " well.\n\nUnits are rad and rad/s. Strain and pps data is raw (no units)"
+	  MaskPromptString	  "BH262 mode|BH280 mode|IP|UDP port|ST|Time|262 position|262 velocity|262 deltap|262 strain|262 s"
+	  "train filt|280 position|280 velocity|280 deltap|280 strain|280 strain filt|pps"
+	  MaskStyleString	  "popup(Velocity|Position|Torque|Other),popup(Velocity|Position|Torque|Other),edit,edit,edit,check"
+	  "box,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox"
+	  MaskTunableValueString  "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
+	  MaskCallbackString	  "togglePorts()|togglePorts()|togglePorts()|togglePorts()||togglePorts()|togglePorts()|togglePo"
+	  "rts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts"
+	  "()|togglePorts()"
+	  MaskEnableString	  "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
+	  MaskVisibilityString	  "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
+	  MaskToolTipString	  "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
+	  MaskVariables		  "mode262=@1;mode280=@2;IP=&3;port=@4;ST=@5;a0=@6;a1=@7;a2=@8;a3=@9;a4=@10;a41=@11;a5=@12;a6=@13;a7"
+	  "=@14;a8=@15;a81=@16;a9=@17;"
+	  MaskDisplay		  "text(0.3, 0.9, '\\fontsize{10}IP: {\\bf193.2.6.112 \\newline\\rmport: \\bf4444}', 'horizontalAlignm"
+	  "ent', 'center','texmode','on')color('blue') port_label('input',1,'\\fontsize{12}BH262 {\\newline\\bfPosition}','tex"
+	  "mode','on')color('blue') port_label('input',2,'\\fontsize{12}BH280 {\\newline\\bfPosition}','texmode','on')color('b"
+	  "lack')port_label('output',1,'\\fontsize{11}BH280 {\\bfPosition}','texmode','on');"
+	  MaskIconFrame		  on
+	  MaskIconOpaque	  on
+	  MaskIconRotate	  "none"
+	  MaskPortRotate	  "default"
+	  MaskIconUnits		  "normalized"
+	  MaskValueString	  "Position|Position|193.2.6.112|4444|0.005|off|off|off|off|off|off|on|off|off|off|off|off"
+	  MaskTabNameString	  "Control,Control,Control,Control,Control,Outputs,Outputs,Outputs,Outputs,Outputs,Outputs,Output"
+	  "s,Outputs,Outputs,Outputs,Outputs,Outputs"
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "Gain"
+	  SID			  99
+	  Position		  [310, 70, 340, 100]
+	  Gain			  "[1 1 1 1]"
+	  ParameterDataTypeMode	  "Inherit via internal rule"
+	  ParameterDataType	  "fixdt(1, 16)"
+	  ParameterScaling	  "2^0"
+	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
+	  OutDataTypeMode	  "Inherit via internal rule"
+	  OutDataType		  "fixdt(1, 16)"
+	  OutScaling		  "2^0"
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux"
+	  SID			  100
+	  Ports			  [2, 1]
+	  Position		  [960, 286, 965, 324]
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux1"
+	  SID			  101
+	  Ports			  [4, 1]
+	  Position		  [360, 168, 365, 242]
+	  ShowName		  off
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Scope
+	  Name			  "Scope"
+	  SID			  102
+	  Ports			  [1]
+	  Position		  [1015, 289, 1045, 321]
+	  Floating		  off
+	  Location		  [1, 48, 1856, 1079]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  YMin			  "40"
+	  YMax			  "100"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  Selector
+	  Name			  "Selector"
+	  SID			  103
+	  Ports			  [1, 1]
+	  Position		  [866, 180, 904, 220]
+	  BlockRotation		  270
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  InputPortWidth	  "4"
+	  IndexOptions		  "Index vector (dialog)"
+	  Indices		  "2"
+	  OutputSizes		  "1"
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "position"
+	  SID			  104
+	  Ports			  [0, 1]
+	  Position		  [225, 71, 265, 99]
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  System {
+	    Name		    "position"
+	    Location		    [458, 595, 834, 796]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant4"
+	      SID		      105
+	      Position		      [55, 95, 85, 125]
+	      Value		      "70"
+	      OutDataType	      "fixdt(1, 16)"
+	      OutScaling	      "2^0"
+	    }
+	    Block {
+	      BlockType		      Sin
+	      Name		      "Sine Wave2"
+	      SID		      106
+	      Ports		      [0, 1]
+	      Position		      [25, 27, 85, 63]
+	      Amplitude		      "30"
+	      Bias		      "0"
+	      Frequency		      "pi"
+	      Phase		      "pi/4"
+	      Samples		      "10"
+	      Offset		      "0"
+	    }
+	    Block {
+	      BlockType		      Sum
+	      Name		      "Sum1"
+	      SID		      107
+	      Ports		      [2, 1]
+	      Position		      [125, 35, 145, 55]
+	      ShowName		      off
+	      IconShape		      "round"
+	      Inputs		      "|++"
+	      InputSameDT	      off
+	      OutDataTypeMode	      "Inherit via internal rule"
+	      OutDataType	      "fixdt(1, 16)"
+	      OutScaling	      "2^0"
+	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "q ref"
+	      SID		      108
+	      Position		      [165, 38, 195, 52]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "Sum1"
+	      SrcPort		      1
+	      DstBlock		      "q ref"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant4"
+	      SrcPort		      1
+	      Points		      [45, 0]
+	      DstBlock		      "Sum1"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Sine Wave2"
+	      SrcPort		      1
+	      DstBlock		      "Sum1"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  SubSystem
+	  Name			  "position1"
+	  SID			  109
+	  Ports			  [0, 1]
+	  Position		  [25, 161, 65, 189]
+	  MinAlgLoopOccurrences	  off
+	  PropExecContextOutsideSubsystem off
+	  RTWSystemCode		  "Auto"
+	  FunctionWithSeparateData off
+	  Opaque		  off
+	  RequestExecContextInheritance	off
+	  MaskHideContents	  off
+	  System {
+	    Name		    "position1"
+	    Location		    [219, 584, 595, 785]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Constant
+	      Name		      "Constant4"
+	      SID		      110
+	      Position		      [145, 95, 175, 125]
+	      Value		      "70"
+	      OutDataType	      "fixdt(1, 16)"
+	      OutScaling	      "2^0"
+	    }
+	    Block {
+	      BlockType		      Sin
+	      Name		      "Sine Wave2"
+	      SID		      111
+	      Ports		      [0, 1]
+	      Position		      [25, 27, 85, 63]
+	      Amplitude		      "30"
+	      Bias		      "0"
+	      Frequency		      "0.5*pi"
+	      Phase		      "pi/4"
+	      Samples		      "10"
+	      Offset		      "0"
+	    }
+	    Block {
+	      BlockType		      Sum
+	      Name		      "Sum1"
+	      SID		      112
+	      Ports		      [2, 1]
+	      Position		      [275, 35, 295, 55]
+	      ShowName		      off
+	      IconShape		      "round"
+	      Inputs		      "|++"
+	      InputSameDT	      off
+	      OutDataTypeMode	      "Inherit via internal rule"
+	      OutDataType	      "fixdt(1, 16)"
+	      OutScaling	      "2^0"
+	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "q ref"
+	      SID		      113
+	      Position		      [315, 38, 345, 52]
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      SrcBlock		      "Sum1"
+	      SrcPort		      1
+	      DstBlock		      "q ref"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Constant4"
+	      SrcPort		      1
+	      Points		      [80, 0; 0, 10; 25, 0]
+	      DstBlock		      "Sum1"
+	      DstPort		      2
+	    }
+	  }
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "to degrees"
+	  SID			  114
+	  Position		  [755, 126, 800, 164]
+	  Gain			  "180/pi"
+	  ParameterDataTypeMode	  "Inherit via internal rule"
+	  ParameterDataType	  "fixdt(1, 16)"
+	  ParameterScaling	  "2^0"
+	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
+	  OutDataTypeMode	  "Inherit via internal rule"
+	  OutDataType		  "fixdt(1, 16)"
+	  OutScaling		  "2^0"
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "to radians"
+	  SID			  115
+	  Position		  [370, 66, 415, 104]
+	  Gain			  "pi/180"
+	  ParameterDataTypeMode	  "Inherit via internal rule"
+	  ParameterDataType	  "fixdt(1, 16)"
+	  ParameterScaling	  "2^0"
+	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
+	  OutDataTypeMode	  "Inherit via internal rule"
+	  OutDataType		  "fixdt(1, 16)"
+	  OutScaling		  "2^0"
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Gain
+	  Name			  "to radians1"
+	  SID			  116
+	  Position		  [385, 186, 430, 224]
+	  Gain			  "pi/180"
+	  ParameterDataTypeMode	  "Inherit via internal rule"
+	  ParameterDataType	  "fixdt(1, 16)"
+	  ParameterScaling	  "2^0"
+	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
+	  OutDataTypeMode	  "Inherit via internal rule"
+	  OutDataType		  "fixdt(1, 16)"
+	  OutScaling		  "2^0"
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Line {
+	  SrcBlock		  "Selector"
+	  SrcPort		  1
+	  Points		  [0, 70]
+	  DstBlock		  "Mux"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Mux"
+	  SrcPort		  1
+	  DstBlock		  "Scope"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Gain"
+	  SrcPort		  1
+	  DstBlock		  "to radians"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "position"
+	  SrcPort		  1
+	  DstBlock		  "Gain"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "to degrees"
+	  SrcPort		  1
+	  Points		  [80, 0]
+	  DstBlock		  "Selector"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "position1"
+	  SrcPort		  1
+	  Points		  [50, 0; 0, 20]
+	  Branch {
+	    Points		    [0, 120]
+	    DstBlock		    "Mux"
+	    DstPort		    2
+	  }
+	  Branch {
+	    DstBlock		    "Mux1"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  SrcBlock		  "to radians"
+	  SrcPort		  1
+	  DstBlock		  "Barrett Hand client"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Barrett Hand client"
+	  SrcPort		  1
+	  DstBlock		  "to degrees"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "to radians1"
+	  SrcPort		  1
+	  DstBlock		  "Barrett Hand client"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Mux1"
+	  SrcPort		  1
+	  DstBlock		  "to radians1"
+	  DstPort		  1
+	}
+	Annotation {
+	  Position		  [890, 148]
+	}
+      }
     }
     Block {
       BlockType		      Reference
@@ -855,356 +1206,6 @@ Model {
       RTWMemSecDataConstants  "Inherit from model"
       RTWMemSecDataInternal   "Inherit from model"
       RTWMemSecDataParameters "Inherit from model"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "Scope"
-      SID		      121
-      Ports		      [1]
-      Position		      [1060, 309, 1090, 341]
-      Floating		      off
-      Location		      [6, 43, 1861, 1074]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      YMin		      "0"
-      YMax		      "90"
-      SaveName		      "ScopeData1"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Selector
-      Name		      "Selector"
-      SID		      122
-      Ports		      [1, 1]
-      Position		      [911, 200, 949, 240]
-      BlockRotation	      270
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      InputPortWidth	      "4"
-      IndexOptions	      "Index vector (dialog)"
-      Indices		      "2"
-      OutputSizes	      "1"
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "position"
-      SID		      123
-      Ports		      [0, 1]
-      Position		      [270, 91, 310, 119]
-      MinAlgLoopOccurrences   off
-      PropExecContextOutsideSubsystem off
-      RTWSystemCode	      "Auto"
-      FunctionWithSeparateData off
-      Opaque		      off
-      RequestExecContextInheritance off
-      MaskHideContents	      off
-      System {
-	Name			"position"
-	Location		[458, 595, 834, 796]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant4"
-	  SID			  124
-	  Position		  [55, 95, 85, 125]
-	  Value			  "70"
-	  OutDataType		  "fixdt(1, 16)"
-	  OutScaling		  "2^0"
-	}
-	Block {
-	  BlockType		  Sin
-	  Name			  "Sine Wave2"
-	  SID			  125
-	  Ports			  [0, 1]
-	  Position		  [25, 27, 85, 63]
-	  Amplitude		  "30"
-	  Bias			  "0"
-	  Frequency		  "pi"
-	  Phase			  "pi/4"
-	  Samples		  "10"
-	  Offset		  "0"
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum1"
-	  SID			  126
-	  Ports			  [2, 1]
-	  Position		  [125, 35, 145, 55]
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "|++"
-	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "fixdt(1, 16)"
-	  OutScaling		  "2^0"
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "q ref"
-	  SID			  127
-	  Position		  [165, 38, 195, 52]
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  SrcBlock		  "Sine Wave2"
-	  SrcPort		  1
-	  DstBlock		  "Sum1"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Constant4"
-	  SrcPort		  1
-	  Points		  [45, 0]
-	  DstBlock		  "Sum1"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Sum1"
-	  SrcPort		  1
-	  DstBlock		  "q ref"
-	  DstPort		  1
-	}
-      }
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "position1"
-      SID		      128
-      Ports		      [0, 1]
-      Position		      [205, 201, 245, 229]
-      MinAlgLoopOccurrences   off
-      PropExecContextOutsideSubsystem off
-      RTWSystemCode	      "Auto"
-      FunctionWithSeparateData off
-      Opaque		      off
-      RequestExecContextInheritance off
-      MaskHideContents	      off
-      System {
-	Name			"position1"
-	Location		[219, 584, 595, 785]
-	Open			on
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant4"
-	  SID			  129
-	  Position		  [145, 95, 175, 125]
-	  Value			  "60"
-	  OutDataType		  "fixdt(1, 16)"
-	  OutScaling		  "2^0"
-	}
-	Block {
-	  BlockType		  Sin
-	  Name			  "Sine Wave2"
-	  SID			  130
-	  Ports			  [0, 1]
-	  Position		  [25, 27, 85, 63]
-	  Amplitude		  "30"
-	  Bias			  "0"
-	  Frequency		  "0.1*pi"
-	  Phase			  "pi/4"
-	  Samples		  "10"
-	  Offset		  "0"
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum1"
-	  SID			  131
-	  Ports			  [2, 1]
-	  Position		  [275, 35, 295, 55]
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "|++"
-	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "fixdt(1, 16)"
-	  OutScaling		  "2^0"
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "q ref"
-	  SID			  132
-	  Position		  [315, 38, 345, 52]
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  SrcBlock		  "Constant4"
-	  SrcPort		  1
-	  Points		  [80, 0; 0, 10; 25, 0]
-	  DstBlock		  "Sum1"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Sum1"
-	  SrcPort		  1
-	  DstBlock		  "q ref"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Sine Wave2"
-	  SrcPort		  1
-	  DstBlock		  "Sum1"
-	  DstPort		  1
-	}
-      }
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "to degrees"
-      SID		      133
-      Position		      [800, 146, 845, 184]
-      Gain		      "180/pi"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      ParameterDataType	      "fixdt(1, 16)"
-      ParameterScaling	      "2^0"
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "to radians"
-      SID		      134
-      Position		      [415, 86, 460, 124]
-      Gain		      "pi/180"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      ParameterDataType	      "fixdt(1, 16)"
-      ParameterScaling	      "2^0"
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "to radians1"
-      SID		      135
-      Position		      [415, 206, 460, 244]
-      Gain		      "pi/180"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      ParameterDataType	      "fixdt(1, 16)"
-      ParameterScaling	      "2^0"
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Line {
-      SrcBlock		      "Mux"
-      SrcPort		      1
-      DstBlock		      "Scope"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Gain"
-      SrcPort		      1
-      DstBlock		      "to radians"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "position"
-      SrcPort		      1
-      DstBlock		      "Gain"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "to degrees"
-      SrcPort		      1
-      Points		      [80, 0]
-      DstBlock		      "Selector"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "position1"
-      SrcPort		      1
-      Points		      [50, 0]
-      Branch {
-	Points			[0, 120]
-	DstBlock		"Mux"
-	DstPort			2
-      }
-      Branch {
-	DstBlock		"Mux1"
-	DstPort			2
-      }
-    }
-    Line {
-      SrcBlock		      "to radians"
-      SrcPort		      1
-      DstBlock		      "Barrett Hand client"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Barrett Hand client"
-      SrcPort		      1
-      DstBlock		      "to degrees"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Rate Limiter"
-      SrcPort		      1
-      DstBlock		      "Barrett Hand client"
-      DstPort		      2
-    }
-    Line {
-      SrcBlock		      "Mux1"
-      SrcPort		      1
-      DstBlock		      "to radians1"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "to radians1"
-      SrcPort		      1
-      DstBlock		      "Rate Limiter"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Selector"
-      SrcPort		      1
-      Points		      [0, 70]
-      DstBlock		      "Mux"
-      DstPort		      1
-    }
-    Annotation {
-      Position		      [935, 168]
     }
   }
 }

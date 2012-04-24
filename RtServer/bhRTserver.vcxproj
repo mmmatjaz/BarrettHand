@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\RTserver\Makefile" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

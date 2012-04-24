@@ -18,14 +18,7 @@ static bool shouldRun=true;
 
 threadMethod bh280Loop(void *threadid)
 {	
-	while(shouldRun)
-	{
-		bh280.LoopOfflineTorque();
-		//bh280.LoopOfflineVelocity();		
-		//bh280.LoopOfflinePosition();
-		
-	}
-
+	bh280.LoopOfflineExample();
 }
 
 int main(int argc, char* argv[])
@@ -60,24 +53,8 @@ int main(int argc, char* argv[])
 			shouldRun=false;
 			cout<<"quit\n"<<endl;
 			bh280.StopLoop();
-			bh280.StopLoop();
-			bh280.StopLoop();
 			break;
-		}
-		int temp=atoi(input.c_str());
-		if (temp!=0)
-		{
-			pthread_mutex_lock( &mutex1 );
-			bh280.ManualValue=temp;
-			pthread_mutex_lock( &mutex1 );
-			cout<<"new value "<<temp<<endl;	
-		}
-		else
-		{
-			bh280.StopLoop();
-			cout<<"next loop"<<endl;
-			usleep(300000);
-		}
+		}	
 		cout<<endl;
 	}
 	

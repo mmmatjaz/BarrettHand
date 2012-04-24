@@ -196,14 +196,22 @@ int BH280::Begin()
 				Error();
 			break;
 		
-		case TOR_CONTROL:	// torque control
-			
+		case TOR_CONTROL:	// torque control			
 			cout<<"PrepareRealTime()... Torque mode "<<endl;					
 			if (result = bh.Set("123S", "LCV", false))
 				;
 			if (result = bh.Set("123S", "LCP", false))
 				;
 			if (result = bh.Set("123S", "LCT", true))
+				;
+			break;
+
+		case CUSTOM_CONTROL:	//	set one of the bellow flags
+			if (result = bh.Set("123S", "LCV", false))	//velocity
+				;
+			if (result = bh.Set("123S", "LCP", false))	//position
+				;
+			if (result = bh.Set("123S", "LCT", true))	//torque
 				;
 			break;
 	}
@@ -229,50 +237,25 @@ void BH280::SendToHand()
 	switch (ctrl)
 	{
 	case VEL_CONTROL:	// velocity control		
-		for (int m = 1; m < 2; m++)
+		for (int m = 0; m < 4; m++)
 		{
 			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5);
-			cout<<"\nComm: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
+			cout<<"\nvel: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
 			result=bh.RTSetVelocity(m + '1', temp);
 		}
 		break;
 	case POS_CONTROL:	// position control
-		for (int m = 1; m < 2; m++)
+		for (int m = 0; m < 4; m++)
 		{	
 			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5);
 			//cout<<"\nVel: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
-			//result=bh.RTSetPosition(m + '1', temp);
+			result=bh.RTSetPosition(m + '1', temp);
 		}
 		break;
 
 	case TOR_CONTROL:	// torque control
-		for (int m = 1; m < 2; m++)
+		for (int m = 0; m < 4; m++)
 		{	
-			/*
-			double f=0.2;//Hz
-			double posRef = 0.9*PI/3 + (PI/4*sin( f* T*2*PI));		
-			//Cons.cValues[0]=posRef;
-
-			temp=(int)TorqueControlPD(m);
-			char print[100];
-			sprintf(print,"pd: % 3.2f  p: % 3.2f T: % 3d",
-				Cons.cValues[m],
-				Meas.Position[m],
-				temp);
-			//cout<<"\r"<<print;
-			
-			if (Meas.Position[m]<2)
-				ManualValue+=ManualValue/10;
-			else
-				ManualValue=0;
-			
-			Meas.Strain[m]=ManualValue;
-			temp=(int)ManualValue;
-			cout<<"\r"<<ManualValue;
-			
-			if (result = bh.RTSetTorque(m + '1', temp))
-				Error();	
-			*/
 			result=bh.RTSetTorque(m + '1', (int)Cons.cValues[m]);
 			cout<<"\nTor: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
 		}
