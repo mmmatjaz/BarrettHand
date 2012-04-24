@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.47"
+    ComputedModelVersion    "1.53"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -25,9 +25,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "Admin"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Apr 23 18:49:19 2012"
-  RTWModifiedTimeStamp	  257107736
-  ModelVersionFormat	  "1.%<AutoIncrement:47>"
+  LastModifiedDate	  "Tue Apr 24 12:46:44 2012"
+  RTWModifiedTimeStamp	  257171824
+  ModelVersionFormat	  "1.%<AutoIncrement:53>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -125,7 +125,7 @@ Model {
 	  MinStep		  "auto"
 	  MaxConsecutiveMinStep	  "1"
 	  RelTol		  "1e-3"
-	  SolverMode		  "Auto"
+	  SolverMode		  "SingleTasking"
 	  Solver		  "ode3"
 	  SolverName		  "ode3"
 	  ShapePreserveControl	  "DisableAll"
@@ -455,7 +455,7 @@ Model {
 	      Version		      "1.6.0"
 	      Array {
 		Type			"Cell"
-		Dimension		17
+		Dimension		16
 		Cell			"GeneratePreprocessorConditionals"
 		Cell			"IncludeMdlTerminateFcn"
 		Cell			"CombineOutputUpdateFcns"
@@ -467,12 +467,11 @@ Model {
 		Cell			"CPPClassGenCompliant"
 		Cell			"MultiInstanceERTCode"
 		Cell			"PurelyIntegerCode"
-		Cell			"SupportNonFinite"
+		Cell			"PortableWordSizes"
 		Cell			"SupportComplex"
 		Cell			"SupportAbsoluteTime"
 		Cell			"SupportContinuousTime"
 		Cell			"SupportNonInlinedSFcns"
-		Cell			"PortableWordSizes"
 		PropName		"DisabledProps"
 	      }
 	      TargetFcnLib	      "ansi_tfl_table_tmw.mat"
@@ -618,23 +617,6 @@ Model {
       SFunctionDeploymentMode off
     }
     Block {
-      BlockType		      Scope
-      ModelBased	      off
-      TickLabels	      "OneTimeTick"
-      ZoomMode		      "on"
-      Grid		      "on"
-      TimeRange		      "auto"
-      YMin		      "-5"
-      YMax		      "5"
-      SaveToWorkspace	      off
-      SaveName		      "ScopeData"
-      LimitDataPoints	      on
-      MaxDataPoints	      "5000"
-      Decimation	      "1"
-      SampleInput	      off
-      SampleTime	      "-1"
-    }
-    Block {
       BlockType		      Selector
       NumberOfDimensions      "1"
       IndexMode		      "One-based"
@@ -644,7 +626,7 @@ Model {
   }
   System {
     Name		    "BHclientTORQUE"
-    Location		    [373, 323, 1733, 968]
+    Location		    [331, 144, 1691, 789]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -658,7 +640,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    192
+    SIDHighWatermark	    195
     Block {
       BlockType		      "S-Function"
       Name		      "Barrett Hand client"
@@ -702,44 +684,53 @@ Model {
       BlockType		      Constant
       Name		      "Constant"
       SID		      185
-      Position		      [385, 150, 415, 180]
+      Position		      [395, 160, 425, 190]
       Value		      "0"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
+      OutDataTypeMode	      "double"
+      OutDataTypeStr	      "double"
     }
     Block {
       BlockType		      Constant
       Name		      "Constant1"
       SID		      189
-      Position		      [295, 215, 325, 245]
+      Position		      [295, 212, 350, 248]
       Value		      "100"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
+      OutDataTypeMode	      "double"
+      OutDataTypeStr	      "double"
     }
     Block {
       BlockType		      Constant
       Name		      "Constant2"
       SID		      192
-      Position		      [395, 75, 425, 105]
-      Value		      "[0 0 0 0]"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
+      Position		      [395, 100, 425, 130]
+      Value		      "[100 200 300 400]"
+      OutDataTypeMode	      "double"
+      OutDataTypeStr	      "double"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant3"
+      SID		      194
+      Position		      [395, 330, 425, 360]
+      Value		      "[100 200 300 400]"
+      OutDataTypeMode	      "double"
+      OutDataTypeStr	      "double"
     }
     Block {
       BlockType		      Mux
       Name		      "Mux1"
       SID		      145
       Ports		      [4, 1]
-      Position		      [485, 203, 490, 277]
+      Position		      [470, 203, 475, 277]
       ShowName		      off
       DisplayOption	      "bar"
     }
     Block {
       BlockType		      Reference
       Name		      "Real-time\nSynchronization"
-      SID		      11
+      SID		      195
       Ports		      []
-      Position		      [70, 30, 145, 70]
+      Position		      [70, 60, 145, 100]
       LibraryVersion	      "1.214"
       SourceBlock	      "planmant/Utility/Real-time\nSynchronization"
       SourceType	      "Real-time"
@@ -751,23 +742,6 @@ Model {
       RTWMemSecDataConstants  "Inherit from model"
       RTWMemSecDataInternal   "Inherit from model"
       RTWMemSecDataParameters "Inherit from model"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "Scope"
-      SID		      191
-      Ports		      [1]
-      Position		      [455, 359, 485, 391]
-      Floating		      off
-      Location		      [188, 390, 512, 629]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      DataFormat	      "StructureWithTime"
-      SampleTime	      "0"
     }
     Block {
       BlockType		      Selector
@@ -803,12 +777,6 @@ Model {
       OutputSizes	      "1"
     }
     Line {
-      SrcBlock		      "Mux1"
-      SrcPort		      1
-      DstBlock		      "Barrett Hand client"
-      DstPort		      2
-    }
-    Line {
       SrcBlock		      "Barrett Hand client"
       SrcPort		      2
       DstBlock		      "Selector1"
@@ -827,9 +795,21 @@ Model {
       DstPort		      1
     }
     Line {
+      SrcBlock		      "Constant2"
+      SrcPort		      1
+      DstBlock		      "Barrett Hand client"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Constant1"
+      SrcPort		      1
+      DstBlock		      "Mux1"
+      DstPort		      2
+    }
+    Line {
       SrcBlock		      "Constant"
       SrcPort		      1
-      Points		      [30, 0; 0, 45]
+      Points		      [20, 0; 0, 35]
       Branch {
 	Points			[0, 0; 0, 40]
 	Branch {
@@ -848,25 +828,14 @@ Model {
       }
     }
     Line {
-      SrcBlock		      "Constant1"
+      SrcBlock		      "Constant3"
       SrcPort		      1
-      Points		      [40, 0]
-      Branch {
-	DstBlock		"Mux1"
-	DstPort			2
-      }
-      Branch {
-	Points			[0, 145]
-	DstBlock		"Scope"
-	DstPort			1
-      }
-    }
-    Line {
-      SrcBlock		      "Constant2"
-      SrcPort		      1
-      Points		      [30, 0; 0, 25]
+      Points		      [65, 0]
       DstBlock		      "Barrett Hand client"
-      DstPort		      1
+      DstPort		      2
+    }
+    Annotation {
+      Position		      [455, 299]
     }
   }
 }

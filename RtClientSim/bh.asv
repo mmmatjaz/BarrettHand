@@ -46,6 +46,7 @@
 #define PORT 4444
 #define IP "193.2.6.168"
 
+// dimensions
 #define OUT_1_W		1 //time
 #define OUT_2_W		4 //pos
 #define OUT_3_W		4 //vel
@@ -59,7 +60,7 @@
 #define OUT_11_W	4
 #define OUT_12_W	4*24
 
-
+// arguments
 #define NUMBER_OF_ARGS          (17)
 #define IP_ADDRESS_ARG          ssGetSFcnParam(S,0)
 #define IP_PORT_ARG           	ssGetSFcnParam(S,1) //receive port
@@ -79,6 +80,7 @@
 #define OUT_11		          	ssGetSFcnParam(S,15)
 #define OUT_12		          	ssGetSFcnParam(S,16)
 
+// pointer2argument
 #define MODE_1_             ((int_T)  mxGetPr(MODE_1)[0])
 #define MODE_2_	         	((int_T)  mxGetPr(MODE_2)[0])
 #define ST_					((int_T)  mxGetPr(ST)[0])

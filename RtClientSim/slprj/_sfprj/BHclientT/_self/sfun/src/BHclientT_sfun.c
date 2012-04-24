@@ -68,10 +68,10 @@ unsigned int sf_BHclientT_process_check_sum_call( int nlhs, mxArray * plhs[],
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3585413576U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(565651875U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2168127583U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3946377247U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3273889028U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2740159814U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1157484101U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(265694329U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
@@ -98,10 +98,10 @@ unsigned int sf_BHclientT_process_check_sum_call( int nlhs, mxArray * plhs[],
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(296693598U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3344882317U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3973121249U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1699836649U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(4246286486U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(397112927U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(463561871U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(254341622U);
   }
 
   return 1;

@@ -185,7 +185,7 @@ int ReceiveMeasurement()
          printf("# ERROR: no telegram (Receive).\n");
     }
     
-//     printf("Received packet %d.\n", n);
+   // printf("Received packet %d., Buffer: %d\n", n,sizeof(meas));
 	return n;
 }
 //---------------------------------------------------------------------------------------------------
@@ -211,6 +211,10 @@ static void mdlInitializeSizes(SimStruct *S)
 	int output_size=0;
     int index=0;
 	ssSetNumSFcnParams(    S, NUMBER_OF_ARGS);  
+	
+	ssSetNumSampleTimes(S, 1);
+    ssSetNumContStates(S, 0);
+    ssSetNumDiscStates(S, 0);
 	
     // Specify I/O
     if (!ssSetNumInputPorts(S, 2)) return;
@@ -239,7 +243,7 @@ static void mdlInitializeSizes(SimStruct *S)
 	
     mode1= 		(int_T)mxGetPr(MODE_1)[0];
 	mode2= 		(int_T)mxGetPr(MODE_2)[0];	
-    printf("\nInit Sizes: mode: %i %i\n",mode1,mode2);
+    //printf("\nInit Sizes: mode: %i %i\n",mode1,mode2);
 	//'193.2.6.168' 4444 1 1 0.005 1 1 1 1 1 1 1 1 1 1 1
 	//'193.2.6.168' 4444 0 0 0.005 0 0 0 0 0 0 0 0 0 0 0
 	printf("mdlInitializeSizes\n");
@@ -386,7 +390,7 @@ static void mdlOutputs(SimStruct *S, int_T tid)
         mexErrMsgTxt("Error transmitting data to Kuka server.");
        
     }
-    //! Receive measurements from kuka server to matlab
+    
     if(ReceiveMeasurement() < 0) 
     {
         mexErrMsgTxt("Error receiving data from Kuka server.");      
@@ -413,7 +417,8 @@ static void mdlOutputs(SimStruct *S, int_T tid)
 		for (z=0;z<24*4;z++)
 			y11[z]=(double)temp[z];
 	}
-    //printf("\r%f:: %f %f %f %f",meas.time,meas.m280[2][0],meas.m280[2][1],meas.m280[2][2],meas.m280[2][3]);
+    printf("\n%f %f %f %f",cons.con280.cValues[0],cons.con280.cValues[1],
+								cons.con280.cValues[2],cons.con280.cValues[3]);
     
 	
   }

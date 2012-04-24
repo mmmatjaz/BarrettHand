@@ -103,7 +103,7 @@ Github repository contains everything but the USB stick content.
 \end{center}
 
 \subsection{The repository}
-The Supervisory and Realtime run on both Windows and Linux. The sources of these are cross platform. On linux the applications are built using \emph{make} command. To recompile on Windows, open the \emph{bh.sln} file in Visual Studio. The solution also contains projects \emph{bhLauncer} and \emph{bhSclient}, which use .NET framework and are not cross platform. The binaries will appear in \emph{bin-win} and \emph{bin-linux} folders. \emph{port2win} includes definitions that are neccessery for compilation of the Linux code on Windows.
+The Supervisory and Realtime servers run on both Windows and Linux. The sources of these and the offline template are cross platform. On linux the applications are built from Terminal using \emph{make} command while in the coresponding directory. To recompile on Windows, open the \emph{bh.sln} solution file in Visual Studio. The solution also contains projects \emph{bhLauncer} and \emph{bhSclient}, which use .NET framework and are not cross platform. The binaries will appear in \emph{bin-win} and \emph{bin-linux} folders respectivly. \emph{port2win} includes definitions that are neccessery for compilation of the Linux code on Windows.
 
 
 %\end{tabular}
@@ -253,11 +253,13 @@ Figure \ref{simulink} shows the simulink block and its preferences window. In th
 \end{figure}
 
 \subsection{Control Modes}
-The real-time server provides three modes of control to choose from.
+The real-time server provides four modes of control to choose from.
 \begin{description}
-\item[Velocity control.] When this mode is selected the server receives velocities in radians per second.
-\item[Position control (Stiff and compliant)] Server receives motor positions in radians and uses a PD controller to apply the velocities. The regulator parameters can be modified in the source header file. In compliant position control mode the regulator is designed so the fingers will give way to the obstacle. The measured force amplified by a constant is added to the position reference.
-\item[Torque control.] TBD.
+\item[Velocity control.] When this mode is selected the server expects velocities in radians per second.
+\item[Position control.] Server receives motor positions in radians.
+\item[Torque control.] Server expects values of torque. For example, to overcome the static friction of the fingers about 400 units of torque is required (API documentation doesn't specify units of torque).
+\item[Other.] This mode is reserved for any custom implementation of control on server side. As an example a custom position control is implemented. The regulator parameters can be modified in the source header files bh280.h and bh262. To implement a custom controller, you must select one of the three control modes in function \emph{int Begin()} in the \emph{switch} statement under \emph{case CUSTOM\_CONTROL:}. The \emph{SendToHand()} defines the commands that are excecuted each iteration. Current and previous measured values are stored in structs \emph{Meas} and \emph{pMeas}, and the commands received from the client can be accessed in \emph{Cons} and \emph{pCons}.
+
 \end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
