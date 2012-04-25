@@ -1,5 +1,5 @@
-﻿Build started 24.4.2012 16:24:06.
-     1>Project "Z:\BarrettHand\ClientTemplate\ClientTemplate.vcxproj" on node 3 (build target(s)).
+﻿Build started 25.4.2012 13:26:56.
+     1>Project "Z:\BarrettHand\ClientTemplate\ClientTemplate.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\ClientTemplate.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
@@ -16,4 +16,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.34
+Time Elapsed 00:00:00.32

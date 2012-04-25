@@ -1,6 +1,9 @@
 #ifndef APP_H
 #define APP_H
 
+#define MODEL262	1
+#define MODEL280	2
+
 #ifdef __linux__
 #include <stdio.h>
 #include <stdlib.h>
