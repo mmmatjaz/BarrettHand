@@ -76,10 +76,10 @@ Aside from the spread motion, each of the three fingers on the BarrettHand™ feat
     \end{center}
 \end{figure}
 
-The newer model BH280 is more advanced than BH262 in many aspects and offers some new features. It is equipted with pressure profile sensors (PPS), mounted on each finger and the palm. Each of these surfaces consists of 24 individual sensors. The resolution of output value is 10 bits. The BH280 also introduces a better position measurement resolution. The encoders used in the BH280 model provide about 10-times better resolution then those used in BH262. Another major improovement is the communication protocol. The BH280 can be connected to the host machine using faster CAN connection. 
+The newer model BH280 is more advanced than BH262 in many aspects and offers some new features. It is equipped with pressure profile sensors (PPS), mounted on each finger and the palm. Each of these surfaces consists of 24 individual sensors. The resolution of sensors' output is 10 bits. The BH280 also introduces a better position measurement resolution. The encoders used in the BH280 model provide about 10-times better resolution then those used in BH262. Another major improvement is the communication protocol. The BH280 can be connected to the host machine using faster CAN connection. 
 
 \subsection{Installation}
-To install the hand see the instructions in the manual \cite{manual}, which can be found on the USB dongle included with the BarrettHand. \cite{interface} provides information on how to use the very intuitive BarrettHand Control GUI. The software (including the GUI and API) and documentation is installed with a single installer application and is neccessery for use of the supervisory and realtime server applications, short instuctions are in \cite{quickstart}. API documentation \cite{library} is provided in the html format. Both applications propose that the BH280 model uses CAN connection (use the USB adapter) and BH262 uses serial RS232 connection.
+Installing a BarrettHand is quite simple. The BH262 model uses serial communication, and the BH280 connects using CAN interface, the supplied USB-CAN adapter can be used. Before use, hand software must be installed. This is simply done using an installer located on the USB stick. It installs all necessery drivers, control software and API. See the instructions in the manual \cite{manual}, which can be found on the USB stick. \cite{interface} provides information on how to use the very intuitive BarrettHand Control GUI. Short instructions are in \cite{quickstart}. API documentation \cite{library} is provided in the HTML format.
 
 All software including source files, the report and USB stick contents are stored here: 
 \begin{center}
@@ -96,14 +96,14 @@ Github repository contains everything but the USB stick content.
 \begin{tabular}{  | p{14cm} |}
 \hline
 \rowcolor[rgb]{0.8,0.8,0.8}
-	\large{NOTE: When using the BH262 after it had not been used for more than two days, the firmware must be updated. This can be easily done using BattettHand Control GUI on either Windows or Linux. Click firmware update button on the first tab in the GUI and follow the instuctions. If not sure, see \cite{interface}.}
+	\large{NOTE: When using the BH262 after it had not been used for more than two days, the firmware must be updated. This can be easily done using BattettHand Control GUI on either Windows or Linux. Click firmware update button on the first tab in the GUI and follow the instructions. If not sure, see \cite{interface}.}
  \\
      \hline
      \end{tabular}
 \end{center}
 
 \subsection{The repository}
-The Supervisory and Realtime run on both Windows and Linux. The sources of these are cross platform. On linux the applications are built using \emph{make} command. To recompile on Windows, open the \emph{bh.sln} file in Visual Studio. The solution also contains projects \emph{bhLauncer} and \emph{bhSclient}, which use .NET framework and are not cross platform. The binaries will appear in \emph{bin-win} and \emph{bin-linux} folders. \emph{port2win} includes definitions that are neccessery for compilation of the Linux code on Windows.
+The Supervisory and Realtime servers run on both Windows and Linux. The sources of these and the offline template are cross platform. On linux the applications are built from Terminal using \emph{make} command while in the corresponding directory. To rebuild on Windows, open the \emph{bh.sln} solution file in Visual Studio. The solution also contains projects \emph{bhLauncer} and \emph{bhSclient}, which use .NET framework and are not cross platform. The binaries will appear in \emph{bin-win} and \emph{bin-linux} folders respectively. \emph{port2win} includes definitions that are necessary for compilation of the Linux code on Windows.
 
 
 %\end{tabular}
@@ -121,7 +121,7 @@ Supervisory mode leverages the control capabilities of the BH8-262 on-board Moto
         \caption{Supervisory server.} \label{Sconsole}
     \end{center}
 \end{figure}
-The BHSupervisory server application can control either BH280, BH262 or both simultaniusly. A few parameters must be set to start the server application. These are given as arguments in the order as listed in table \ref{table1}. If application is launched without any arguments, default settings are used. The following line starts the server on port 5555, and only the bh280 will be controlled.
+The BHSupervisory server application can control either BH280, BH262 or both simultaneously. A few parameters must be set to start the server application. These are given as arguments in the order as listed in table \ref{table1}. If application is launched without any arguments, default settings are used. The following line starts the server on port 5555, and only the bh280 will be controlled.
 \begin{center}
 \tt ./SuperServer 5555 1 0
 \end{center}
@@ -136,7 +136,7 @@ The BHSupervisory server application can control either BH280, BH262 or both sim
 		 	  & 1-enable  				& \\        \hline
      BH262 & 0-disable 				& 1\\ 
            & serial port no 		& \\ \hline
-     Port  & UDP communitcation port & 4444 \\
+     Port  & UDP communication port & 4444 \\
      \hline
 	
      \end{tabular}
@@ -146,12 +146,12 @@ The BHSupervisory server application can control either BH280, BH262 or both sim
 \end{table}
 
 
-The client, connected by the UDP protocol, sends commands to be set to the grippers. The list of availible commands is installed together with BarrettHand software  (browse to \emph{\%BHAND\%\slash Manuals}). Some commands return a message, this message is forwarded to the client.
+The client, connected by the UDP protocol, sends commands to be set to the grippers. The list of available commands is installed together with BarrettHand software  (browse to \emph{\%BHAND\%\slash Manuals}). Some commands return a message, this message is forwarded to the client.
 The commands must be provided in a string of ASCII characters:
 \begin{center}
 \tt @"H262\_command"@"BH280\_command"
 \end{center}
-Following single character '@' is the command to be set to the BH262 model, and the BH280 command follows the second '@' character.
+Following a single character '@' is the command to be set to the BH262 model, and the BH280 command follows the second '@' character.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Supervisory Matlab Script}
@@ -192,9 +192,9 @@ RealTime mode extends the capability of Supervisory mode. Sometimes users may wi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Real-Time Server}
 
-The BHserver application allows real time control of the gripper. Once started, it initializes the gripper. The client is connected to the server using UDP protocol, and sends either velocity, position, or desired torque to the server. The server application applies these values and replies with values read from the gripper (see Figure \ref{sendRec}) All read values are of type double (8 bytes), the PPS data is of type int (4 bytes).
+The BHserver application allows real time control of the gripper. Once started, it initializes the gripper. The client connects to the server using UDP protocol, and sends either velocity, position, or desired torque to the server. The server application applies these values and replies with values read from the gripper (see Figure \ref{sendRec}) All read values are of type double (8 bytes), the PPS data is of type int (4 bytes).
 
-Figure \ref{sendRec} also displayes the sum of data exchanged between the client and server in bytes (B) when controlling both hands. The sum of the PPS output data is much larger than all the other data read from the gripper's internal controller. When PPS reading is enabled, the delay caused by communication over CAN increases from about 3 ms to 33 ms, which equals the delay when using the serial communcation, not reading the PPS sensors. Though the BH280 supports serial communcation, transfering the PPS data over it would cause an unacceptable delay. 
+Figure \ref{sendRec} also displays the sum of data exchanged between the client and server in bytes (B) when controlling both hands. The sum of the PPS output data is much larger than all the other data read from the gripper's internal controller. When PPS reading is enabled, the delay caused by communication over CAN increases from about 3 ms to 33 ms, which equals the delay when using the serial communication, not reading the PPS sensors. Though the BH280 supports serial communication, transferring the PPS data over it would cause an unacceptable delay. 
 \begin{figure}[!h]
     \begin{center}
         \includegraphics[width=1.0\textwidth]{RTconsole.png}
@@ -216,7 +216,7 @@ Again, a few parameters must be set to start the server application. These are g
            & 3-show PPS graphics & \\ \hline
      BH262 & 0-disable 				& 1 \\ 
            & serial port no 		&   \\ \hline
-     Port  & UDP communitcation port & 4444 \\
+     Port  & UDP communication port & 4444 \\
       \hline
      \end{tabular}
 \caption{List of parameters}
@@ -231,11 +231,11 @@ Again, a few parameters must be set to start the server application. These are g
     \end{center}
 \end{figure}
 
-The application consists of multiple threads. One runs the server, commands to each gripper are processed in seperate threads. Figure \ref{RTconsole} shows the application console window, where messages of each thread are printed. When launched, application opens a window visualising the sensor data (Figure \ref{visual}). Presure sensor output in displayed in shades of blue, higher pressure couses lighter shade. Pressure sensor are only availeble with the BH280 model. Strain gage sensor output is displayed with orange rectangles, the output level defines the shade of orange color. The outer fingers are rotated according to actal position.
+The application consists of multiple threads. One runs the server, commands to each gripper are processed in separate threads. Figure \ref{RTconsole} shows the application console window, where messages of each thread are printed. When launched, application opens a window visualizing the sensor data (Figure \ref{visual}). Pressure sensor output is displayed in shades of blue, higher pressure causes lighter shade. Pressure sensors are only available with the BH280 model. Strain gage sensor output is displayed as orange rectangles, the output level defines the shade of orange color. The outer fingers are rotated according to actual position.
 \begin{figure}[!h]
     \begin{center}
         \includegraphics[width=0.60\textwidth]{openGL.png}
-        \caption{Sensor output visualisation.} \label{visual}
+        \caption{Sensor output visualization.} \label{visual}
     \end{center}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
@@ -253,11 +253,13 @@ Figure \ref{simulink} shows the simulink block and its preferences window. In th
 \end{figure}
 
 \subsection{Control Modes}
-The real-time server provides three modes of control to choose from.
+The real-time server provides four modes of control to choose from.
 \begin{description}
-\item[Velocity control.] When this mode is selected the server receives velocities in radians per second.
-\item[Position control (Stiff and compliant)] Server receives motor positions in radians and uses a PD controller to apply the velocities. The regulator parameters can be modified in the source header file. In compliant position control mode the regulator is designed so the fingers will give way to the obstacle. The measured force amplified by a constant is added to the position reference.
-\item[Torque control.] TBD.
+\item[Velocity control.] When this mode is selected the server expects velocities in radians per second.
+\item[Position control.] Server receives motor positions in radians.
+\item[Torque control.] Server expects values of torque. For example, to overcome the static friction of the fingers about 400 units of torque is required (API documentation doesn't specify units of torque).
+\item[Other.] This mode is reserved for any custom implementation of control on server side. As an example a custom position control is implemented. To implement a custom controller, you must select one of the three control modes in function \emph{int Begin()} in the \emph{switch} statement under \emph{case CUSTOM\_CONTROL:}. The \emph{SendToHand()} defines the commands that are excecuted each iteration. Current and previous measured values are stored in structs \emph{Meas} and \emph{pMeas}, and the commands received from the client can be accessed in \emph{Cons} and \emph{pCons}.
+
 \end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
@@ -290,7 +292,7 @@ On Windows both real-time and supervisory servers can also be started using the 
 The OfflineTemplate project contains the following .cpp files:
 \begin{itemize}
 \item
-\emph{main.cpp} is the main file, program entry is here. It contains the main() function. After it creates instances of all classes, it launches the threads, and waits for a keypress to terminate.
+\emph{main.cpp} is the main file, program entry is here. It contains the main() function. After it creates instances of all classes, it launches the threads, and waits for a key press to terminate.
 \item
 \emph{bh262.cpp and bh280.cpp} contain a class for each hand. First, the hand and the software are initialized. The hand now accepts supervisory commands. To control it in real time, the Realtime mode must be started using RTStart(). Function
 RunRealTime() is executed each iteration. It sets velocities or positions and reads the data from the hand sensors.
@@ -303,7 +305,7 @@ The ClientTemplate project is an alternative to using the client in simulink.
 \item
 \emph{main.cpp} is the main file, program entry is here. It contains the main() function. After it creates an instance of the Client class it generates the position reference and sends it to the client in a single thread. 
 \item
-\emph{client.cpp} contain a class definition that handles the ethernet communication.
+\emph{client.cpp} contains a class definition that handles the Ethernet communication.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
