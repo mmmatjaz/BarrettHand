@@ -1,19 +1,19 @@
-﻿Build started 25.4.2012 13:26:56.
-     1>Project "Z:\BarrettHand\ClientTemplate\ClientTemplate.vcxproj" on node 2 (build target(s)).
+﻿Build started 26.4.2012 12:19:07.
+     1>Project "E:\matjaz\BarrettHand\ClientTemplate\ClientTemplate.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\ClientTemplate.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
          All outputs are up-to-date.
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(Z:\BarrettHand\Release\ClientTemplate.exe) does not match the Linker's OutputFile property value (Z:\BarrettHand\bin-win\ClientTemplate.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(E:\matjaz\BarrettHand\Release\ClientTemplate.exe) does not match the Linker's OutputFile property value (E:\matjaz\BarrettHand\bin-win\ClientTemplate.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
        Link:
          All outputs are up-to-date.
-         ClientTemplate.vcxproj -> Z:\BarrettHand\Release\ClientTemplate.exe
+         ClientTemplate.vcxproj -> E:\matjaz\BarrettHand\Release\ClientTemplate.exe
        FinalizeBuildStatus:
          Deleting file "Release\ClientTemplate.unsuccessfulbuild".
          Touching "Release\ClientTemplate.lastbuildstate".
-     1>Done Building Project "Z:\BarrettHand\ClientTemplate\ClientTemplate.vcxproj" (build target(s)).
+     1>Done Building Project "E:\matjaz\BarrettHand\ClientTemplate\ClientTemplate.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.32
+Time Elapsed 00:00:00.04

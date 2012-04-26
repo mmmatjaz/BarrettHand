@@ -56,3 +56,12 @@ Z:\BarrettHand\bin-win\ServerLauncher.exe
 Z:\BarrettHand\bin-win\ServerLauncher.pdb
 Z:\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.exe
 Z:\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.pdb
+E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.exe
+E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.pdb
+E:\matjaz\BarrettHand\bin-win\ServerLauncher.exe
+E:\matjaz\BarrettHand\bin-win\ServerLauncher.pdb
+E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\ResolveAssemblyReference.cache
+E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\BHlauncher.Form1.resources
+E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\BHlauncher.Properties.Resources.resources
+E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\GenerateResource.read.1.tlog
+E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\GenerateResource.write.1.tlog

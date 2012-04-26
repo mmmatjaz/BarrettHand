@@ -36,3 +36,12 @@ Z:\BarrettHand\bhSclient\obj\x86\Release\GenerateResource.read.1.tlog
 Z:\BarrettHand\bhSclient\obj\x86\Release\GenerateResource.write.1.tlog
 Z:\BarrettHand\bhSclient\obj\x86\Release\bhSclient.exe
 Z:\BarrettHand\bhSclient\obj\x86\Release\bhSclient.pdb
+E:\matjaz\BarrettHand\bin-win\bhSclient.exe
+E:\matjaz\BarrettHand\bin-win\bhSclient.pdb
+E:\matjaz\BarrettHand\bhSclient\obj\x86\Release\ResolveAssemblyReference.cache
+E:\matjaz\BarrettHand\bhSclient\obj\x86\Release\bhSclient.Form1.resources
+E:\matjaz\BarrettHand\bhSclient\obj\x86\Release\bhSclient.Properties.Resources.resources
+E:\matjaz\BarrettHand\bhSclient\obj\x86\Release\GenerateResource.read.1.tlog
+E:\matjaz\BarrettHand\bhSclient\obj\x86\Release\GenerateResource.write.1.tlog
+E:\matjaz\BarrettHand\bhSclient\obj\x86\Release\bhSclient.exe
+E:\matjaz\BarrettHand\bhSclient\obj\x86\Release\bhSclient.pdb

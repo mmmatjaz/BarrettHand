@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 
 	pthread_mutex_init(&mutex1, NULL);
 	memset(&ComG,0,sizeof(ComG)); memset(&RepG,0,sizeof(RepG));	
-	RepG.executed280=false;
+	RepG.executed280=true;
 
 	Server.Init(	Config.port,
 					&ComG, &RepG,

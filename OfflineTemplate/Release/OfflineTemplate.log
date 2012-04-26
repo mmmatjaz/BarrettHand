@@ -1,10 +1,20 @@
-﻿Build started 25.4.2012 13:28:26.
-     1>Project "Z:\BarrettHand\OfflineTemplate\OfflineTemplate.vcxproj" on node 2 (ClCompile target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I.\port2win /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\ctb-0.14\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\ThirdParty\Pcan" /I"C:\poco-1.3.6p2\Foundation\include" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw\wx" /I"C:\wxWidgets-2.8.11\lib\vc_lib\msw" /I"C:\wxWidgets-2.8.11\include" /I"C:\Program Files (x86)\Barrett Technology\BHand\API" /I..\openGL\GL /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D POCO_STATIC /D __WXMSW__ /D _WINDOWS /D WIN32 /D NDEBUG /D _CONSOLE /D WINDOWS /D _CRT_SECURE_NO_DEPRECATE /D _UNICODE /D UNICODE /GF /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Release\OfflineTemplate.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
-         stdafx.cpp
-     1>Done Building Project "Z:\BarrettHand\OfflineTemplate\OfflineTemplate.vcxproj" (ClCompile target(s)).
+﻿Build started 26.4.2012 12:19:07.
+     1>Project "E:\matjaz\BarrettHand\OfflineTemplate\OfflineTemplate.vcxproj" on node 3 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\OfflineTemplate.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(E:\matjaz\BarrettHand\Release\OfflineTemplate.exe) does not match the Linker's OutputFile property value (E:\matjaz\BarrettHand\bin-win\offline.exe). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(OfflineTemplate) does not match the Linker's OutputFile property value (offline). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         All outputs are up-to-date.
+         OfflineTemplate.vcxproj -> E:\matjaz\BarrettHand\Release\OfflineTemplate.exe
+       FinalizeBuildStatus:
+         Deleting file "Release\OfflineTemplate.unsuccessfulbuild".
+         Touching "Release\OfflineTemplate.lastbuildstate".
+     1>Done Building Project "E:\matjaz\BarrettHand\OfflineTemplate\OfflineTemplate.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.69
+Time Elapsed 00:00:00.03

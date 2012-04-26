@@ -65,10 +65,10 @@ Ale\v{s} Ude\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
-The BarrettHand™ is designed to overcome the inflexibility of conventional grippers with microprocessor-enabled dexterity while maintaining durability, compactness, and ease of use. The BarrettHand is a multi-fingered Grasper with the dexterity to secure target objects of different sizes, shapes, and orientations. Rather than rely on pinching gripper friction or permanent gripper-jaw shape customization the BarrettHand™ gently envelops the object, securely locking its joints until commanded to release.
+The robotic gripper BarrettHand™ is designed to overcome the inflexibility of conventional grippers with microprocessor-enabled dexterity while maintaining durability, compactness, and ease of use. The BarrettHand is a multi-fingered Grasper with the dexterity to secure target objects of different sizes, shapes, and orientations. Rather than rely on pinching gripper friction or permanent gripper-jaw shape customization the BarrettHand™ gently envelops the object, securely locking its joints until commanded to release.
 
 The BarrettHand, shown in Figure 1, has three fingers labeled F1, F2 and F3. Two of the fingers, F1 and F2, rotate synchronously and symmetrically about the base joint in a spreading action. The “spread” motion around the palm allows “on-the-fly” grasp reconfiguration to adapt to varying target object sizes, shapes, and orientations.
-Aside from the spread motion, each of the three fingers on the BarrettHand™ feature two joints driven by a single DC brushless servo motor. The joints of each finger are coupled through Barrett’s patented TorqueSwitch™, which automatically switches motor torque to the appropriate finger joint when closing on a target object. Using the fingers together allows the BarrettHand™ to "grasp" a wide variety of objects securely. The TorqueSwitch combined with the spread function, makes object grasping nearly target-independent \cite{manual}.
+Aside from the spread motion, each of the three fingers on the BarrettHand™ features two joints driven by a single DC brushless servo motor. The joints of each finger are coupled through Barrett’s patented TorqueSwitch™, which automatically switches motor torque to the appropriate finger joint when closing on a target object. Using the fingers together allows the BarrettHand™ to "grasp" a wide variety of objects securely. The TorqueSwitch combined with the spread function, makes object grasping nearly target-independent \cite{manual}.
 \begin{figure}[!h]
     \begin{center}
         \includegraphics[width=0.9\textwidth]{barrettIntro.eps}
@@ -76,14 +76,14 @@ Aside from the spread motion, each of the three fingers on the BarrettHand™ feat
     \end{center}
 \end{figure}
 
-The newer model BH280 is more advanced than BH262 in many aspects and offers some new features. It is equipped with pressure profile sensors (PPS), mounted on each finger and the palm. Each of these surfaces consists of 24 individual sensors. The resolution of sensors' output is 10 bits. The BH280 also introduces a better position measurement resolution. The encoders used in the BH280 model provide about 10-times better resolution then those used in BH262. Another major improvement is the communication protocol. The BH280 can be connected to the host machine using faster CAN connection. 
+The newer model BH280 is more advanced than BH262 in many aspects and offers some new features. It is equipped with pressure profile sensors (PPS), mounted on each finger and the palm. Each of these surfaces consists of 24 individual sensors. The resolution of sensors' output is 10 bits. The BH280 also introduces a better position measurement resolution. The encoders used in the BH280 model provide about 10-times better resolution then those used in BH262. Another major improvement is the communication protocol. The BH280 can be connected to the host machine using the faster CAN connection. 
 
 \subsection{Installation}
-Installing a BarrettHand is quite simple. The BH262 model uses serial communication, and the BH280 connects using CAN interface, the supplied USB-CAN adapter can be used. Before use, hand software must be installed. This is simply done using an installer located on the USB stick. It installs all necessery drivers, control software and API. See the instructions in the manual \cite{manual}, which can be found on the USB stick. \cite{interface} provides information on how to use the very intuitive BarrettHand Control GUI. Short instructions are in \cite{quickstart}. API documentation \cite{library} is provided in the HTML format.
+Installing a BarrettHand is quite simple. The BH262 model uses serial communication, and the BH280 connects using CAN interface, the supplied USB-CAN adapter can be used. Before use, hand software must be installed. This is simply done using an installer located on the USB stick. It installs all necessary drivers, control software and the API. See the instructions in the manual \cite{manual}, which can be found on the USB stick. The GUI manual \cite{interface} provides information on how to use the very intuitive BarrettHand Control GUI. Short instructions are in the Quickstart quide\cite{quickstart}. API documentation \cite{library} is provided in the HTML format.
 
 All software including source files, the report and USB stick contents are stored here: 
 \begin{center}
-\tt smb://balsa/Interno/Roboti/BarrettHand/BH\_2011 \\ smb://balsa/Smetje/Matjaz/BHAND
+\tt smb://balsa/Interno/Roboti/BarrettHand/BH\_2011 
 \end{center}
 Github repository contains everything but the USB stick content.
 \begin{center}
@@ -111,7 +111,7 @@ The Supervisory and Realtime servers run on both Windows and Linux. The sources 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \section{Supervisory Control}
 
-Supervisory mode leverages the control capabilities of the BH8-262 on-board Motorola microprocessor or the BH8-280 Pucks in the hand. BH8-280 hands will directly run motion received motion commands, whereas a BH8-262 hand will need to apply control signals across the four (4) HCTL-1100 motion-control microprocessors. Supervisory mode allows you to command individual or multiple motors to close, open, and move to specific positions; it also provides for setting the various configuration properties and reporting positions and torques \cite{manual}.
+Supervisory mode leverages the control capabilities of the BH8-262 on-board Motorola microprocessor or the BH8-280 Pucks in the hand. BH8-280 hands will directly run received motion commands, whereas a BH8-262 hand will need to apply control signals across the four (4) HCTL-1100 motion-control microprocessors. Supervisory mode allows you to command individual or multiple motors to close, open, and move to specific positions; it also provides for setting the various configuration properties and reporting positions and torques \cite{manual}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
 \subsection{Supervisory Server}
@@ -121,7 +121,7 @@ Supervisory mode leverages the control capabilities of the BH8-262 on-board Moto
         \caption{Supervisory server.} \label{Sconsole}
     \end{center}
 \end{figure}
-The BHSupervisory server application can control either BH280, BH262 or both simultaneously. A few parameters must be set to start the server application. These are given as arguments in the order as listed in table \ref{table1}. If application is launched without any arguments, default settings are used. The following line starts the server on port 5555, and only the bh280 will be controlled.
+The BHSupervisory server application enables remote control of either BH280, BH262 or both simultaneously. While running on the machine connected to the hand, it applies the commands received from a client machine in a local network. A few parameters must be set to start the server application. These are given as arguments in the order as listed in table \ref{table1}. If application is launched without any arguments, default settings are used. The following line starts the server on port 5555, and only the bh280 will be controlled.
 \begin{center}
 \tt ./SuperServer 5555 1 0
 \end{center}
@@ -155,7 +155,7 @@ Following a single character '@' is the command to be set to the BH262 model, an
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Supervisory Matlab Script}
-The following code sends supervisory commands to the grippers. 
+The following code sends supervisory commands to the grippers from Matlab. The BH262's fingers should form a closed fist (gc=grip close) and BH280's outer fingers should point opposite to the middle finger (so=spread open). The code uses PNET library for sending data over UDP, and is provided with the example. See /SuperClientMatlab in the repository.
 \begin{center}
 \renewcommand{\arraystretch}{1.0}
 \renewcommand{\tabcolsep}{0.3cm}
@@ -171,7 +171,7 @@ The following code sends supervisory commands to the grippers.
      \end{tabular}
 \end{center}
 \vspace{5 mm}
-The BH262's fingers should form a closed fist (gc=grip close) and BH280's outer fingers should point opposite to the middle finger (so=spread open). The code uses pnet library for sending UDP data. See /SuperClientMatlab.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Supervisory Windows Client}
 \begin{figure}[!h]
@@ -188,11 +188,11 @@ Figure \ref{Sclient} shows the Setup tab (left) and the Terminal tab (right). Af
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
 \section{Real-Time Control}
-RealTime mode extends the capability of Supervisory mode. Sometimes users may wish to bypass the Supervisory functions and apply control directly to the motion-control microprocessors. RealTime mode enables users to close control loops in real time from their host PC or robot controller \cite{manual}.
+RealTime mode extends the capability of the Supervisory mode. Sometimes users may wish to bypass the Supervisory functions and apply control directly to the motion-control microprocessors. RealTime mode enables users to close control loops in real time from their host PC or robot controller \cite{manual}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 \subsection{Real-Time Server}
 
-The BHserver application allows real time control of the gripper. Once started, it initializes the gripper. The client connects to the server using UDP protocol, and sends either velocity, position, or desired torque to the server. The server application applies these values and replies with values read from the gripper (see Figure \ref{sendRec}) All read values are of type double (8 bytes), the PPS data is of type int (4 bytes).
+The BHserver application allows real time control of the gripper. Once started, it initializes the gripper. The client connects to the server using UDP protocol, and sends either velocity, position, or desired torque values to the server. The server application applies these values and replies with values read from the gripper (see Figure \ref{sendRec}) All read values are of type double (8 bytes), the PPS data is of type int (4 bytes).
 
 Figure \ref{sendRec} also displays the sum of data exchanged between the client and server in bytes (B) when controlling both hands. The sum of the PPS output data is much larger than all the other data read from the gripper's internal controller. When PPS reading is enabled, the delay caused by communication over CAN increases from about 3 ms to 33 ms, which equals the delay when using the serial communication, not reading the PPS sensors. Though the BH280 supports serial communication, transferring the PPS data over it would cause an unacceptable delay. 
 \begin{figure}[!h]
@@ -203,7 +203,10 @@ Figure \ref{sendRec} also displays the sum of data exchanged between the client 
 \end{figure}
 
 \paragraph{}
-Again, a few parameters must be set to start the server application. These are given as arguments listed in table \ref{table2}. If application is launched without any arguments, default settings are used. 
+Again, a few parameters must be set to start the server application. These are given as arguments listed in table \ref{table2}. If application is launched without any arguments, default settings are used. The following command launches the server that will listen at port 5555. It will open the visualization window (argument "3") and initialize the BH262 model at serial port COM1.
+\begin{center}
+\tt ./RtServer 5555 3 1
+\end{center}
 \begin{table}[h]
 \begin{center}
      \begin{tabular}{ | l | l | l |}

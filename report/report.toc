@@ -5,10 +5,10 @@
 \contentsline {subsection}{\numberline {2.1}Supervisory Server}{5}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Supervisory Matlab Script}{6}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}Supervisory Windows Client}{6}{subsection.2.3}
-\contentsline {section}{\numberline {3}Real-Time Control}{6}{section.3}
+\contentsline {section}{\numberline {3}Real-Time Control}{7}{section.3}
 \contentsline {subsection}{\numberline {3.1}Real-Time Server}{7}{subsection.3.1}
 \contentsline {paragraph}{}{7}{section*.2}
-\contentsline {subsection}{\numberline {3.2}Client in Simulink}{9}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Control Modes}{9}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.2}Client in Simulink}{8}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Control Modes}{8}{subsection.3.3}
 \contentsline {section}{\numberline {4}Graphical Server Launcher}{10}{section.4}
-\contentsline {section}{\numberline {5}C++ templates}{10}{section.5}
+\contentsline {section}{\numberline {5}C++ templates}{11}{section.5}

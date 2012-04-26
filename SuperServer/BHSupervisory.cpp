@@ -28,11 +28,11 @@ void BHsupervisory::Init(	int hand,
 	}
 	bh.setHardwareDesc(hwIndex);
 	bool use280Config = (strcmp(bh.getHardwareDesc()->getModelNumber(), "BH8-280") == 0);
-	cout<<("Initialization...")<<endl;
-	if (result = handInitWithMenu(&bh)) Error();	
-	if (result = bh.InitHand("")) Error();
-	else ;//printC("Done",BHAND280);	
-	cout<<*executed<<endl;
+	
+	cout<<("Initializing hand...")<<endl;
+	bh.Init(0, THREAD_PRIORITY_TIME_CRITICAL, BH_CAN_COMMUNICATION, true);
+		bh.InitHand("");
+
 	
 }
 
@@ -43,7 +43,7 @@ threadMethod BHsupervisory::Loop()
 			hand thread
 	***************************** */
 	timeval time2;
-	cout<<"Hand thread running"<<endl;
+	cout<<"Hand thread started"<<endl;
 	while(shouldRun)
 	{	
 		WaitForNewCommand();
