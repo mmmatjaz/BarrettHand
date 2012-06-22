@@ -1,4 +1,4 @@
-﻿/*
+/*
  This file is part of "IJS BarrettHand Utils".
 
     IJS BarrettHand Utils is free software: you can redistribute it and/or modify
@@ -13,31 +13,10 @@
     You should have received a copy of the GNU General Public License
     along with IJS BarrettHand Utils.  If not, see <http://www.gnu.org/licenses/>.
 	
-	author: Matjaž Ogrinc
+	author: Matja� Ogrinc
 			matjaz.ogrinc42@gmail.com
 			https://github.com/mmmatjaz
 			
 			IJS 2011-2012
 			abr.ijs.si
 */	
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-
-namespace BHlauncher
-{
-    static class Program
-    {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-        }
-    }
-}
