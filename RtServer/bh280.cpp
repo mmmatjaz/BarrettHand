@@ -13,7 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with IJS BarrettHand Utils.  If not, see <http://www.gnu.org/licenses/>.
 	
-	author: Matjaž Ogrinc
+	author: Matjaï¿½ Ogrinc
 			matjaz.ogrinc42@gmail.com
 			https://github.com/mmmatjaz
 			
@@ -22,33 +22,7 @@
 */	
 
 
-#define POS_SCALE_280_S 1.0
-#define POS_SCALE_280_G 1.0
-#define TOR_SCALE_280_S 1.0
-#define TOR_SCALE_280_G 1.0
 
-#define RANGE_280_S 35840
-#define RANGE_280_G 199000
-#define PI			4.0*atan(1.0)
-
-#define Pg 0.05
-#define Ps 0.001
-#define Dg 0//.001
-#define Ds 0//.001
-#define MAX_G 0.004
-#define MAX_S 0.001
-#define MAX_TG 1100
-#define MAX_TS 100
-
-#define VEL_CONTROL		1
-#define POS_CONTROL		2
-#define TOR_CONTROL		3
-#define CUSTOM_CONTROL	4
-
-#define NO_CONN		!conn_ && !conn
-#define CONN		 conn_ &&  conn
-#define CONN_LOST	 conn_ && !conn
-#define CONN_INIT	!conn_ &&  conn
 
 #include "bh280.h"
 
@@ -263,7 +237,8 @@ void BH280::SendToHand()
 	case VEL_CONTROL:	// velocity control		
 		for (int m = 0; m < 4; m++)
 		{
-			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5);
+			// convert rad/s to ticks/ms
+			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5)/1000;
 			cout<<"\nvel: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
 			result=bh.RTSetVelocity(m + '1', temp);
 		}
@@ -281,14 +256,14 @@ void BH280::SendToHand()
 		for (int m = 0; m < 4; m++)
 		{	
 			result=bh.RTSetTorque(m + '1', (int)Cons.cValues[m]);
-			cout<<"\nTor: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
+			//cout<<"\nTor: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
 		}
 		break;
 	case CUSTOM_CONTROL:
 		for (int m = 0; m < 4; m++)
 		{
 			temp=(int)((PositionControlC(m) * props.scaleIN[m])+0.5);
-			result=bh.RTSetVelocity(m + '1', temp);
+			//result=bh.RTSetVelocity(m + '1', temp);
 		}
 		break;
 	}

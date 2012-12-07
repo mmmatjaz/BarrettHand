@@ -30,9 +30,6 @@
 #define TOR_SCALE_262_S 1.0
 #define TOR_SCALE_262_G 1.0
 
-#define RANGE_280_S 35840
-#define RANGE_280_G 199000
-
 #define RANGE_262_S 3150
 #define RANGE_262_G 17500
 

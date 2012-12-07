@@ -54,6 +54,12 @@ BH262::BH262()
 	conn=false;conn_=false;
 	ManualValue=100;
 	T=0;
+
+	int m=1;
+	Cons.cValues[m]=1;
+	int temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5)/100;
+	cout<<"\nvel: "<<temp;
+
 }
 
 
@@ -224,8 +230,8 @@ void BH262::SendToHand()
 	case VEL_CONTROL:	// velocity control		
 		for (int m = 0; m < 4; m++)
 		{
-			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5);
-			cout<<"\nvel: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
+			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5)/100;
+			//cout<<"\nvel: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
 			result=bh.RTSetVelocity(m + '1', temp);
 		}
 		break;
@@ -242,14 +248,14 @@ void BH262::SendToHand()
 		for (int m = 0; m < 4; m++)
 		{	
 			result=bh.RTSetTorque(m + '1', (int)Cons.cValues[m]);
-			cout<<"\nTor: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
+			//cout<<"\nTor: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
 		}
 		break;
 	case CUSTOM_CONTROL:
 		for (int m = 0; m < 4; m++)
 		{
 			temp=(int)((PositionControlC(m) * props.scaleIN[m])+0.5);
-			result=bh.RTSetVelocity(m + '1', temp);
+			//result=bh.RTSetVelocity(m + '1', temp);
 		}
 		break;
 	}
