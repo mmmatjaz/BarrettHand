@@ -94,8 +94,8 @@ void Client::Send()
 
 	txBuff = new char[txl];
 	memset(txBuff, 0, txl);
-	while (shouldRun)
-	{
+	//while (shouldRun)
+	//{
 		
 	pthread_mutex_lock( Mutex );
 	memcpy(txBuff,txpnt,txl);
@@ -108,7 +108,7 @@ void Client::Send()
 			0,(struct sockaddr *)&from,fromlen);
 		if (n  < 0) Die("tx");	
 			
-	}	
+	//}	
 }
 
 void Client::Receive()

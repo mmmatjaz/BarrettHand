@@ -20,10 +20,13 @@
 			IJS 2011-2012
 			abr.ijs.si
 */	
-
+#define MODEL262	1
+#define MODEL280	2
 
 #include "server.h"
 #include "bh280.h"
+#include "bh262.h"
+//#include "bhRT.h"
 #include "app.h"
 #include "graphics.h"
 
@@ -33,29 +36,36 @@ App		App;
 Config	Config;
 Server 	Server;
 BH280	bh280;
+BH262	bh262;
 
 Controls  ConsG;
 Measurements MeasG;
 timeval LastReceived;
 
 pthread_mutex_t mutex1;
-pthread_t rxThread;
-pthread_t txThread;
+pthread_t serverThread;
+//pthread_t txThread;
 pthread_t bh280Thread;
+pthread_t bh262Thread;
 
 
 threadMethod rxLoop(void *threadid)
 {	
 	Server.Pong();
 }
+
 threadMethod bh280Loop(void *threadid)
 {	
 	bh280.Loop();
 }
 
+threadMethod bh262Loop(void *threadid)
+{	
+	bh262.Loop();
+}
+
 int main(int argc, char* argv[])
 {
-	
 	App.PrintBanner();
 	Config.FromArgs(argc, argv);
 	Config.PrintConf();
@@ -77,10 +87,16 @@ int main(int argc, char* argv[])
 					&ConsG.con280,&MeasG.hdata280,
 					&mutex1,
 					&LastReceived);	
+
+	bh262.Initialize(Config.serialPort,
+					&ConsG.con262,&MeasG.hdata262,
+					&mutex1,
+					&LastReceived);	
 	
 	//pthread_create(&rxThread, &tattr_server, &Server::RunServer, (void *) this)	
-	pthread_create(&rxThread, 		NULL, rxLoop, NULL);
+	pthread_create(&serverThread, 	NULL, rxLoop, NULL);
 	pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
+	pthread_create(&bh262Thread, 	NULL, bh262Loop, NULL);
 	if(Config.usePPS) initGlut(argc, argv, &MeasG.hdata280, &mutex1);
 	
 	string input;
@@ -103,8 +119,7 @@ int main(int argc, char* argv[])
 	Server.Stop();
 	bh280.StopLoop();
 	
-	 pthread_join( rxThread, NULL);
-	  pthread_join( txThread, NULL);
+	 pthread_join( serverThread, NULL);
 	   //pthread_join( bh280Thread, NULL);
 	printf("\n");
 	return 0;

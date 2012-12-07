@@ -20,7 +20,8 @@
 			IJS 2011-2012
 			abr.ijs.si
 */	
-
+#define MODEL262	1
+#define MODEL280	2
 
 #include "server.h"
 #include "BHSupervisory.h"
@@ -31,15 +32,15 @@ using namespace std;
 SuperServer Server;
 BHsupervisory BH280;
 BHsupervisory BH262;
-Command ComG;
-Reply	RepG;
+Command		ComG;
+Reply		RepG;
 timeval LastReceived;
 pthread_mutex_t mutex1;
 pthread_t serverThread, bh280Thread, bh262Thread;
 
 threadMethod serverLoop(void *threadid){Server.Pong();}
 threadMethod bh280Loop(void *threadid){BH280.Loop();}
-//threadMethod bh262Loop(void *threadid){BH262.Pong();}
+threadMethod bh262Loop(void *threadid){BH262.Loop();}
 
 int main(int argc, char* argv[])
 {
@@ -58,11 +59,21 @@ int main(int argc, char* argv[])
 					&mutex1, 
 					&LastReceived);//(Config);
 	
+	pthread_create(&serverThread, NULL, serverLoop, NULL);
+	
+	if (Config.use280){
 	BH280.Init(0,ComG.command280,RepG.reply280,&RepG.executed280,
 				&mutex1,&LastReceived);
-	pthread_create(&serverThread, NULL, serverLoop, NULL);
-	if (Config.use280) pthread_create(&bh280Thread, NULL, bh280Loop, NULL);
+	pthread_create(&bh280Thread, NULL, bh280Loop, NULL);
+	}
+
+	if (Config.use262){
+		BH262.Init(Config.serialPort,ComG.command262,RepG.reply262,&RepG.executed262,
+				&mutex1,&LastReceived);
+	pthread_create(&bh262Thread, NULL, bh262Loop, NULL);
+	}
 	
+
 	string input;
 	
 	int offset;

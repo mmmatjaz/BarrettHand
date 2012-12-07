@@ -24,6 +24,9 @@
 #ifndef BH280_H
 #define BH280_H
 
+#define MODEL262	1
+#define MODEL280	2
+
 #include "app.h"
 #include "BHand.h"
 #include "BHandAppHelper.h" // for connection menu

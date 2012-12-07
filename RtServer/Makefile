@@ -5,13 +5,13 @@
 CC=g++
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=main.cpp app.cpp server.cpp bh280.cpp graphics.cpp
+SOURCES=main.cpp app.cpp server.cpp bh280.cpp bh262.cpp graphics.cpp
 #SOURCES=client_udp.c
 OBJ=$(SOURCES:.cpp=.o)
 ODIR=obj
 OBJECTS = $(patsubst %,$(ODIR)/%,$(OBJ))
 
-EXECUTABLE=../bin-linux/RTserver2
+EXECUTABLE=../bin-linux/RtServer
 
 #EXECUTABLE=client
 #######################################################################

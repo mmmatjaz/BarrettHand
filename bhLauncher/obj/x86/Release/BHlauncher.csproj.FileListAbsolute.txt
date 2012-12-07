@@ -65,3 +65,7 @@ E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\BHlauncher.Form1.resources
 E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\BHlauncher.Properties.Resources.resources
 E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\GenerateResource.read.1.tlog
 E:\matjaz\BarrettHand\bhLauncher\obj\x86\Release\GenerateResource.write.1.tlog
+E:\SkyDrive\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.exe
+E:\SkyDrive\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.pdb
+D:\SkyDrive\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.exe
+D:\SkyDrive\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.pdb

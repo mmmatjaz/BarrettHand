@@ -22,7 +22,7 @@
 */	
 
 
-#define SIGNATURE "BH280"
+#define SIGNATURE "BH"
 
 #include "BHSupervisory.h"
 
@@ -54,8 +54,17 @@ void BHsupervisory::Init(	int hand,
 	bool use280Config = (strcmp(bh.getHardwareDesc()->getModelNumber(), "BH8-280") == 0);
 	
 	cout<<("Initializing hand...")<<endl;
-	bh.Init(0, THREAD_PRIORITY_TIME_CRITICAL, BH_CAN_COMMUNICATION, true);
+	
+	if (hand==0)	
+	{
+		bh.Init(0, THREAD_PRIORITY_TIME_CRITICAL, BH_CAN_COMMUNICATION, true);
 		bh.InitHand("");
+	}else
+	{
+		if( result=bh.InitSoftware(hand,THREAD_PRIORITY_TIME_CRITICAL) )	Error();
+		if( result=bh.ComSetTimeouts(0,100,15000,100,5000) )				Error();
+		if( result=bh.Baud(38400) )											Error();
+		if (result = bh.InitHand(""))										Error();
 
 	
 }

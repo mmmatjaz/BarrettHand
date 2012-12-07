@@ -25,6 +25,34 @@
 #ifndef BH280_H
 #define BH280_H
 
+#define POS_SCALE_280_S 1.0
+#define POS_SCALE_280_G 1.0
+#define TOR_SCALE_280_S 1.0
+#define TOR_SCALE_280_G 1.0
+
+#define RANGE_280_S 35840
+#define RANGE_280_G 199000
+#define PI			4.0*atan(1.0)
+
+#define Pg 0.05
+#define Ps 0.001
+#define Dg 0//.001
+#define Ds 0//.001
+#define MAX_G 0.004
+#define MAX_S 0.001
+#define MAX_TG 1100
+#define MAX_TS 100
+
+#define VEL_CONTROL		1
+#define POS_CONTROL		2
+#define TOR_CONTROL		3
+#define CUSTOM_CONTROL	4
+
+#define NO_CONN		!conn_ && !conn
+#define CONN		 conn_ &&  conn
+#define CONN_LOST	 conn_ && !conn
+#define CONN_INIT	!conn_ &&  conn
+
 #include "app.h"
 #include "BHand.h"
 #include "BHandAppHelper.h" // for connection menu
