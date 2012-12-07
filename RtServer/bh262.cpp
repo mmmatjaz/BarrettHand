@@ -13,7 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with IJS BarrettHand Utils.  If not, see <http://www.gnu.org/licenses/>.
 	
-	author: Matjaž Ogrinc
+	author: Matjaï¿½ Ogrinc
 			matjaz.ogrinc42@gmail.com
 			https://github.com/mmmatjaz
 			
@@ -64,7 +64,7 @@ void BH262::Initialize(	int ComPort,
 						timeval * LastReceived)
 {
 //	copy parameters
-	pps=PPS; Cons_=DIN; Meas_=DOUT;
+	Cons_=DIN; Meas_=DOUT;
 	Mutex=mutex; tstamp=LastReceived; shouldRun=true;
 
 	cout<<("Initialization...")<<endl;
@@ -387,8 +387,8 @@ void BH262::ReadFromHand()
 		Meas.Velocity[m] = bh.RTGetVelocity(m + '1')*props.scaleOUT[m];
 		Meas.DeltaPos[m] = bh.RTGetDeltaPos(m + '1')*props.scaleOUT[m];
 		Meas.Strain[m] = bh.RTGetStrain(m + '1');
-		if (pps)
-			bh.RTGetPPS(m + '1', &Meas.pps[m][0], MAX_PPS_ELEMENTS);	
+	//	if (pps)
+	//	bh.RTGetPPS(m + '1', &Meas.pps[m][0], MAX_PPS_ELEMENTS);
 	}
 }
 void BH262::RefreshData()
@@ -401,12 +401,12 @@ void BH262::RefreshData()
 	memcpy(	(char *)Meas_, 	
 			(char *)&Meas, 	
 			sizeof(HandMeas));
-	
+	/*
 	if (pps)
 	 memcpy((char *)Meas_->pps,
 			(char *)Meas.pps,
 			sizeof(Meas.pps));	
-	
+	*/
 	pthread_mutex_unlock( Mutex );
 }
 void BH262::RefreshMeas()
@@ -414,11 +414,11 @@ void BH262::RefreshMeas()
 	pthread_mutex_lock( Mutex );				
 	memcpy(	(char *)Meas_, 	
 			(char *)&Meas, 	
-			sizeof(HandMeas));
+			sizeof(HandMeas));/*
 	if (pps)
 	 memcpy((char *)Meas_->pps,
 			(char *)Meas.pps,
-			sizeof(Meas.pps));	
+			sizeof(Meas.pps));	*/
 	pthread_mutex_unlock( Mutex );
 }
 void BH262::RememberData()

@@ -13,7 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with IJS BarrettHand Utils.  If not, see <http://www.gnu.org/licenses/>.
 	
-	author: Matjaž Ogrinc
+	author: Matjaï¿½ Ogrinc
 			matjaz.ogrinc42@gmail.com
 			https://github.com/mmmatjaz
 			
@@ -63,6 +63,29 @@
 #include "..\port2win\winpthreads.h"
 typedef void  threadMethod;
 #endif
+
+struct Props
+{
+	double scaleOUT[4];
+	double scaleIN[4];
+	double range[4];
+};
+
+struct Regulator
+{
+	double maxV[4];
+	double maxT[4];
+	double P[4];
+	double D[4];
+};
+
+
+struct FilterCache
+{
+	double  y_0;
+	double  y_1;
+	double 	dt;
+};
 
 using namespace std;
 

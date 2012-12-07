@@ -90,6 +90,7 @@
     <ClInclude Include="..\port2win\timeofday.h" />
     <ClInclude Include="..\port2win\winpthreads.h" />
     <ClInclude Include="app.h" />
+    <ClInclude Include="bh262.h" />
     <ClInclude Include="bh280.h" />
     <ClInclude Include="bhRT.h" />
     <ClInclude Include="graphics.h" />
@@ -101,6 +102,7 @@
     <ClCompile Include="..\port2win\BHandAppHelper.cpp" />
     <ClCompile Include="..\port2win\timeofday.cpp" />
     <ClCompile Include="app.cpp" />
+    <ClCompile Include="bh262.cpp" />
     <ClCompile Include="bh280.cpp" />
     <ClCompile Include="bhRT.cpp" />
     <ClCompile Include="graphics.cpp" />

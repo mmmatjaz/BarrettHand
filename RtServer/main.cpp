@@ -13,7 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with IJS BarrettHand Utils.  If not, see <http://www.gnu.org/licenses/>.
 	
-	author: Matjaž Ogrinc
+	author: Matjaï¿½ Ogrinc
 			matjaz.ogrinc42@gmail.com
 			https://github.com/mmmatjaz
 			
@@ -82,21 +82,29 @@ int main(int argc, char* argv[])
 					rxl,txl,
 					&mutex1, &LastReceived,
 					Config.ST);//(Config);
-					
-	bh280.Initialize(Config.usePPS,
+	pthread_create(&serverThread, 	NULL, rxLoop, NULL);
+
+	usleep(500000);
+	if (Config.use280){
+		cout<<"init 280"<<endl;
+		bh280.Initialize(Config.usePPS,
 					&ConsG.con280,&MeasG.hdata280,
 					&mutex1,
 					&LastReceived);	
-
-	bh262.Initialize(Config.serialPort,
+		pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
+	}
+	if (Config.use262){
+		cout<<"init 262"<<endl;
+		bh262.Initialize(Config.serialPort,
 					&ConsG.con262,&MeasG.hdata262,
 					&mutex1,
 					&LastReceived);	
-	
+		pthread_create(&bh262Thread, 	NULL, bh262Loop, NULL);
+	}
 	//pthread_create(&rxThread, &tattr_server, &Server::RunServer, (void *) this)	
-	pthread_create(&serverThread, 	NULL, rxLoop, NULL);
-	pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
-	pthread_create(&bh262Thread, 	NULL, bh262Loop, NULL);
+
+
+
 	if(Config.usePPS) initGlut(argc, argv, &MeasG.hdata280, &mutex1);
 	
 	string input;

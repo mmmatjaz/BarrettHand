@@ -28,8 +28,10 @@ CLEANCMD = rm -f ${PROGRAM} ./obj/*.o
 DEFS = -DLINUX 
 ############################
 # Linux CAN Driver Dependency (must be included)
-INCLUDES += -I../../thirdparty/peak-linux-driver-6.20/driver
-INCLUDES += -I../../thirdparty/peak-linux-driver-6.20/lib
+#INCLUDES += -I../../thirdparty/peak-linux-driver-6.20/driver
+#INCLUDES += -I../../thirdparty/peak-linux-driver-6.20/lib
+INCLUDES += -I${BHAND_INSTALL_DIR}/thirdparty/peak-linux-driver-6.20/driver
+INCLUDES += -I${BHAND_INSTALL_DIR}/thirdparty/peak-linux-driver-6.20/lib
 LDLIBS += -lpcan
 ############################
 # Linux Serial Driver Dependency (optional)

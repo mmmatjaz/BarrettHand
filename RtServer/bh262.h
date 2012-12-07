@@ -13,7 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with IJS BarrettHand Utils.  If not, see <http://www.gnu.org/licenses/>.
 	
-	author: Matjaž Ogrinc
+	author: Matjaï¿½ Ogrinc
 			matjaz.ogrinc42@gmail.com
 			https://github.com/mmmatjaz
 			
@@ -59,10 +59,11 @@
 
 #include "app.h"
 #include "BHand.h"
+//#include "/usr/local/Barrett/BHand/API/BHand.h"
 #include "BHandAppHelper.h" // for connection menu
 
 using namespace std;
-
+/*
 struct Props
 {
 	double scaleOUT[4];
@@ -85,7 +86,7 @@ struct FilterCache
 	double  y_1;
 	double 	dt;
 };
-
+*/
 class BH262
 {
 private:
