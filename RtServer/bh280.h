@@ -66,6 +66,7 @@ class BH280
 {
 private:
 //local data
+	double dt;
 	double T;
 	//current
 	timeval now;

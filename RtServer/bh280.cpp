@@ -97,7 +97,7 @@ void BH280::Loop()
 	***************************** */
 	timeval time2;
 	
-	double dt;
+
 	while(shouldRun)
 	{	
 		gettimeofday(&time2, NULL);
@@ -237,10 +237,13 @@ void BH280::SendToHand()
 	case VEL_CONTROL:	// velocity control		
 		for (int m = 0; m < 4; m++)
 		{
+			if (dt<0.03)
+			{
 			// convert rad/s to ticks/ms
 			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5)/1000;
 			cout<<"\nvel: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
 			result=bh.RTSetVelocity(m + '1', temp);
+			}
 		}
 		break;
 	case POS_CONTROL:	// position control

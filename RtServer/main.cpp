@@ -13,7 +13,7 @@
     You should have received a copy of the GNU General Public License
     along with IJS BarrettHand Utils.  If not, see <http://www.gnu.org/licenses/>.
 	
-	author: Matjaï¿½ Ogrinc
+	author: Matjaž Ogrinc
 			matjaz.ogrinc42@gmail.com
 			https://github.com/mmmatjaz
 			
@@ -86,7 +86,6 @@ int main(int argc, char* argv[])
 
 	usleep(500000);
 	if (Config.use280){
-		cout<<"init 280"<<endl;
 		bh280.Initialize(Config.usePPS,
 					&ConsG.con280,&MeasG.hdata280,
 					&mutex1,
@@ -94,7 +93,6 @@ int main(int argc, char* argv[])
 		pthread_create(&bh280Thread, 	NULL, bh280Loop, NULL);
 	}
 	if (Config.use262){
-		cout<<"init 262"<<endl;
 		bh262.Initialize(Config.serialPort,
 					&ConsG.con262,&MeasG.hdata262,
 					&mutex1,
@@ -126,7 +124,7 @@ int main(int argc, char* argv[])
 	
 	Server.Stop();
 	bh280.StopLoop();
-	
+	bh262.StopLoop();
 	 pthread_join( serverThread, NULL);
 	   //pthread_join( bh280Thread, NULL);
 	printf("\n");

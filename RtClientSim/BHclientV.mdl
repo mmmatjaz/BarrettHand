@@ -1,12 +1,12 @@
 Model {
   Name			  "BHclientV"
-  Version		  7.4
+  Version		  7.8
   MdlSubVersion		  0
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.44"
+    ComputedModelVersion    "1.45"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -16,18 +16,20 @@ Model {
   OverrideScopeRefreshTime on
   DisableAllScopes	  off
   DataTypeOverride	  "UseLocalSettings"
+  DataTypeOverrideAppliesTo "AllNumericTypes"
   MinMaxOverflowLogging	  "UseLocalSettings"
   MinMaxOverflowArchiveMode "Overwrite"
+  FPTRunName		  "Run 1"
   MaxMDLFileLineLength	  120
   Created		  "Mon Mar 12 15:56:53 2012"
   Creator		  "Admin"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "Admin"
+  LastModifiedBy	  "matjaz"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Apr 24 09:31:44 2012"
-  RTWModifiedTimeStamp	  257106440
-  ModelVersionFormat	  "1.%<AutoIncrement:44>"
+  LastModifiedDate	  "Sat Dec 08 14:52:56 2012"
+  RTWModifiedTimeStamp	  276879144
+  ModelVersionFormat	  "1.%<AutoIncrement:45>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -35,6 +37,7 @@ Model {
   WideLines		  off
   ShowLineDimensions	  off
   ShowPortDataTypes	  off
+  ShowDesignRanges	  off
   ShowLoopsOnError	  on
   IgnoreBidirectionalLines off
   ShowStorageClass	  off
@@ -102,13 +105,13 @@ Model {
     Dimension		    1
     Simulink.ConfigSet {
       $ObjectID		      1
-      Version		      "1.6.0"
+      Version		      "1.11.1"
       Array {
 	Type			"Handle"
 	Dimension		9
 	Simulink.SolverCC {
 	  $ObjectID		  2
-	  Version		  "1.6.0"
+	  Version		  "1.11.1"
 	  StartTime		  "0.0"
 	  StopTime		  "inf"
 	  AbsTol		  "auto"
@@ -126,8 +129,10 @@ Model {
 	  MaxConsecutiveMinStep	  "1"
 	  RelTol		  "1e-3"
 	  SolverMode		  "Auto"
+	  ConcurrentTasks	  off
 	  Solver		  "ode3"
 	  SolverName		  "ode3"
+	  SolverJacobianMethodControl "auto"
 	  ShapePreserveControl	  "DisableAll"
 	  ZeroCrossControl	  "UseLocalSettings"
 	  ZeroCrossAlgorithm	  "Nonadaptive"
@@ -140,7 +145,7 @@ Model {
 	}
 	Simulink.DataIOCC {
 	  $ObjectID		  3
-	  Version		  "1.6.0"
+	  Version		  "1.11.1"
 	  Decimation		  "1"
 	  ExternalInput		  "[t, u]"
 	  FinalStateName	  "xFinal"
@@ -152,9 +157,11 @@ Model {
 	  SaveFinalState	  off
 	  SaveCompleteFinalSimState off
 	  SaveFormat		  "Array"
+	  SignalLoggingSaveFormat "ModelDataLogs"
 	  SaveOutput		  on
 	  SaveState		  off
 	  SignalLogging		  on
+	  DSMLogging		  on
 	  InspectSignalLogs	  off
 	  SaveTime		  on
 	  ReturnWorkspaceOutputs  off
@@ -162,6 +169,7 @@ Model {
 	  TimeSaveName		  "tout"
 	  OutputSaveName	  "yout"
 	  SignalLoggingName	  "logsout"
+	  DSMLoggingName	  "dsmout"
 	  OutputOption		  "RefineOutputTimes"
 	  OutputTimes		  "[]"
 	  ReturnWorkspaceOutputsName "out"
@@ -169,7 +177,7 @@ Model {
 	}
 	Simulink.OptimizationCC {
 	  $ObjectID		  4
-	  Version		  "1.6.0"
+	  Version		  "1.11.1"
 	  Array {
 	    Type		    "Cell"
 	    Dimension		    7
@@ -187,14 +195,16 @@ Model {
 	  ConditionallyExecuteInputs on
 	  InlineParams		  off
 	  UseIntDivNetSlope	  off
+	  UseFloatMulNetSlope	  off
+	  UseSpecifiedMinMax	  off
 	  InlineInvariantSignals  off
 	  OptimizeBlockIOStorage  on
 	  BufferReuse		  on
 	  EnhancedBackFolding	  off
 	  StrengthReduction	  off
-	  EnforceIntegerDowncast  on
 	  ExpressionFolding	  on
 	  BooleansAsBitfields	  off
+	  BitfieldContainerType	  "uint_T"
 	  EnableMemcpy		  on
 	  MemcpyThreshold	  64
 	  PassReuseOutputArgsAs	  "Structure reference"
@@ -214,13 +224,15 @@ Model {
 	  EfficientMapNaN2IntZero on
 	  OptimizeModelRefInitCode off
 	  LifeSpan		  "inf"
+	  MaxStackSize		  "Inherit from target"
 	  BufferReusableBoundary  on
 	  SimCompilerOptimization "Off"
 	  AccelVerboseBuild	  off
+	  AccelParallelForEachSubsystem	on
 	}
 	Simulink.DebuggingCC {
 	  $ObjectID		  5
-	  Version		  "1.6.0"
+	  Version		  "1.11.1"
 	  RTPrefix		  "error"
 	  ConsistencyChecking	  "none"
 	  ArrayBoundsChecking	  "none"
@@ -243,6 +255,8 @@ Model {
 	  MinStepSizeMsg	  "warning"
 	  TimeAdjustmentMsg	  "none"
 	  MaxConsecutiveZCsMsg	  "error"
+	  MaskedZcDiagnostic	  "warning"
+	  IgnoredZcDiagnostic	  "warning"
 	  SolverPrmCheckMsg	  "warning"
 	  InheritedTsInSrcMsg	  "warning"
 	  DiscreteInheritContinuousMsg "warning"
@@ -273,12 +287,14 @@ Model {
 	  UnconnectedOutputMsg	  "warning"
 	  UnconnectedLineMsg	  "warning"
 	  SFcnCompatibilityMsg	  "none"
+	  FrameProcessingCompatibilityMsg "warning"
 	  UniqueDataStoreMsg	  "none"
 	  BusObjectLabelMismatch  "warning"
 	  RootOutportRequireBusObject "warning"
 	  AssertControl		  "UseLocalSettings"
 	  EnableOverflowDetection off
 	  ModelReferenceIOMsg	  "none"
+	  ModelReferenceMultiInstanceNormalModeStructChecksumCheck "error"
 	  ModelReferenceVersionMismatchMessage "none"
 	  ModelReferenceIOMismatchMessage "none"
 	  ModelReferenceCSMismatchMessage "none"
@@ -288,17 +304,32 @@ Model {
 	  ModelReferenceExtraNoncontSigs "error"
 	  StateNameClashWarn	  "warning"
 	  SimStateInterfaceChecksumMismatchMsg "warning"
+	  SimStateOlderReleaseMsg "error"
+	  InitInArrayFormatMsg	  "warning"
 	  StrictBusMsg		  "Warning"
+	  BusNameAdapt		  "WarnAndRepair"
+	  NonBusSignalsTreatedAsBus "none"
 	  LoggingUnavailableSignals "error"
 	  BlockIODiagnostic	  "none"
+	  SFUnusedDataAndEventsDiag "warning"
+	  SFUnexpectedBacktrackingDiag "warning"
+	  SFInvalidInputDataAccessInChartInitDiag "warning"
+	  SFNoUnconditionalDefaultTransitionDiag "warning"
+	  SFTransitionOutsideNaturalParentDiag "warning"
+	  SFUnconditionalTransitionShadowingDiag "warning"
 	}
 	Simulink.HardwareCC {
 	  $ObjectID		  6
-	  Version		  "1.6.0"
+	  Version		  "1.11.1"
 	  ProdBitPerChar	  8
 	  ProdBitPerShort	  16
 	  ProdBitPerInt		  32
 	  ProdBitPerLong	  32
+	  ProdBitPerFloat	  32
+	  ProdBitPerDouble	  64
+	  ProdBitPerPointer	  32
+	  ProdLargestAtomicInteger "Char"
+	  ProdLargestAtomicFloat  "None"
 	  ProdIntDivRoundTo	  "Undefined"
 	  ProdEndianess		  "Unspecified"
 	  ProdWordSize		  32
@@ -308,6 +339,11 @@ Model {
 	  TargetBitPerShort	  16
 	  TargetBitPerInt	  32
 	  TargetBitPerLong	  32
+	  TargetBitPerFloat	  32
+	  TargetBitPerDouble	  64
+	  TargetBitPerPointer	  32
+	  TargetLargestAtomicInteger "Char"
+	  TargetLargestAtomicFloat "None"
 	  TargetShiftRightIntArith on
 	  TargetIntDivRoundTo	  "Undefined"
 	  TargetEndianess	  "Unspecified"
@@ -321,16 +357,22 @@ Model {
 	}
 	Simulink.ModelReferenceCC {
 	  $ObjectID		  7
-	  Version		  "1.6.0"
+	  Version		  "1.11.1"
 	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
 	  CheckModelReferenceTargetMessage "error"
+	  EnableParallelModelReferenceBuilds off
+	  ParallelModelReferenceErrorOnInvalidPool on
+	  ParallelModelReferenceMATLABWorkerInit "None"
 	  ModelReferenceNumInstancesAllowed "Multi"
+	  PropagateVarSize	  "Infer from blocks in model"
 	  ModelReferencePassRootInputsByReference on
 	  ModelReferenceMinAlgLoopOccurrences off
+	  PropagateSignalLabelsOutOfModel off
+	  SupportModelReferenceSimTargetCustomCode off
 	}
 	Simulink.SFSimCC {
 	  $ObjectID		  8
-	  Version		  "1.6.0"
+	  Version		  "1.11.1"
 	  SFSimEnableDebug	  on
 	  SFSimOverflowDetection  on
 	  SFSimEcho		  on
@@ -339,12 +381,13 @@ Model {
 	  SimExtrinsic		  on
 	  SimIntegrity		  on
 	  SimUseLocalCustomCode	  off
+	  SimParseCustomCode	  off
 	  SimBuildMode		  "sf_incremental_build"
 	}
 	Simulink.RTWCC {
 	  $BackupClass		  "Simulink.RTWCC"
 	  $ObjectID		  9
-	  Version		  "1.6.0"
+	  Version		  "1.11.1"
 	  Array {
 	    Type		    "Cell"
 	    Dimension		    6
@@ -385,14 +428,17 @@ Model {
 	  GenerateTraceReportSf	  off
 	  GenerateTraceReportEml  off
 	  GenerateCodeInfo	  off
+	  GenerateSLWebview	  off
+	  GenerateCodeMetricsReport off
 	  RTWCompilerOptimization "Off"
 	  CheckMdlBeforeBuild	  "Off"
+	  CustomRebuildMode	  "OnUpdate"
 	  Array {
 	    Type		    "Handle"
 	    Dimension		    2
 	    Simulink.CodeAppCC {
 	      $ObjectID		      10
-	      Version		      "1.6.0"
+	      Version		      "1.11.1"
 	      Array {
 		Type			"Cell"
 		Dimension		19
@@ -429,6 +475,7 @@ Model {
 	      IncAutoGenComments      off
 	      SimulinkDataObjDesc     off
 	      SFDataObjDesc	      off
+	      MATLABFcnDesc	      off
 	      IncDataTypeInIds	      off
 	      MangleLength	      1
 	      CustomSymbolStrGlobalVar "$R$N$M"
@@ -443,7 +490,9 @@ Model {
 	      ParamNamingRule	      "None"
 	      SignalNamingRule	      "None"
 	      InsertBlockDesc	      off
+	      InsertPolySpaceComments off
 	      SimulinkBlockComments   on
+	      MATLABSourceComments    off
 	      EnableCustomComments    off
 	      InlinedPrmAccess	      "Literals"
 	      ReqsInCode	      off
@@ -452,10 +501,10 @@ Model {
 	    Simulink.GRTTargetCC {
 	      $BackupClass	      "Simulink.TargetCC"
 	      $ObjectID		      11
-	      Version		      "1.6.0"
+	      Version		      "1.11.1"
 	      Array {
 		Type			"Cell"
-		Dimension		17
+		Dimension		16
 		Cell			"GeneratePreprocessorConditionals"
 		Cell			"IncludeMdlTerminateFcn"
 		Cell			"CombineOutputUpdateFcns"
@@ -467,12 +516,11 @@ Model {
 		Cell			"CPPClassGenCompliant"
 		Cell			"MultiInstanceERTCode"
 		Cell			"PurelyIntegerCode"
-		Cell			"SupportNonFinite"
+		Cell			"PortableWordSizes"
 		Cell			"SupportComplex"
 		Cell			"SupportAbsoluteTime"
 		Cell			"SupportContinuousTime"
 		Cell			"SupportNonInlinedSFcns"
-		Cell			"PortableWordSizes"
 		PropName		"DisabledProps"
 	      }
 	      TargetFcnLib	      "ansi_tfl_table_tmw.mat"
@@ -481,6 +529,7 @@ Model {
 	      TargetFunctionLibrary   "ANSI_C"
 	      UtilityFuncGeneration   "Auto"
 	      ERTMultiwordTypeDef     "System defined"
+	      CodeExecutionProfiling  off
 	      ERTMultiwordLength      256
 	      MultiwordLength	      2048
 	      GenerateFullHeader      on
@@ -490,9 +539,11 @@ Model {
 	      ModelReferenceCompliant on
 	      ParMdlRefBuildCompliant on
 	      CompOptLevelCompliant   on
+	      ConcurrentExecutionCompliant on
 	      IncludeMdlTerminateFcn  on
 	      GeneratePreprocessorConditionals "Disable all"
 	      CombineOutputUpdateFcns off
+	      CombineSignalStateStructs	off
 	      SuppressErrorStatus     off
 	      ERTFirstTimeCompliant   off
 	      IncludeFileDelimiter    "Auto"
@@ -524,6 +575,7 @@ Model {
 	      RTWCAPISignals	      off
 	      RTWCAPIParams	      off
 	      RTWCAPIStates	      off
+	      RTWCAPIRootIO	      off
 	      GenerateASAP2	      off
 	    }
 	    PropName		    "Components"
@@ -531,7 +583,7 @@ Model {
 	}
 	hdlcoderui.hdlcc {
 	  $ObjectID		  12
-	  Version		  "1.6.0"
+	  Version		  "1.11.1"
 	  Description		  "HDL Coder custom configuration component"
 	  Name			  "HDL Coder"
 	  Array {
@@ -546,7 +598,7 @@ Model {
       }
       Name		      "Configuration"
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition    " [ 520, 225, 1400, 855 ] "
+      ConfigPrmDlgPosition     [ 520, 225, 1400, 855 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -593,14 +645,11 @@ Model {
       SamplingMode	      "Sample based"
       OutMin		      "[]"
       OutMax		      "[]"
-      OutDataTypeMode	      "Inherit from 'Constant value'"
-      OutDataType	      "fixdt(1,16,0)"
-      ConRadixGroup	      "Use specified scaling"
-      OutScaling	      "[]"
       OutDataTypeStr	      "Inherit: Inherit from 'Constant value'"
       LockScale		      off
       SampleTime	      "inf"
       FramePeriod	      "inf"
+      PreserveConstantTs      off
     }
     Block {
       BlockType		      Gain
@@ -608,16 +657,9 @@ Model {
       Multiplication	      "Element-wise(K.*u)"
       ParamMin		      "[]"
       ParamMax		      "[]"
-      ParameterDataTypeMode   "Same as input"
-      ParameterDataType	      "fixdt(1,16,0)"
-      ParameterScalingMode    "Best Precision: Matrix-wise"
-      ParameterScaling	      "[]"
       ParamDataTypeStr	      "Inherit: Same as input"
       OutMin		      "[]"
       OutMax		      "[]"
-      OutDataTypeMode	      "Same as input"
-      OutDataType	      "fixdt(1,16,0)"
-      OutScaling	      "[]"
       OutDataTypeStr	      "Inherit: Same as input"
       LockScale		      off
       RndMeth		      "Floor"
@@ -635,19 +677,14 @@ Model {
     Block {
       BlockType		      Outport
       Port		      "1"
-      UseBusObject	      off
-      BusObject		      "BusObject"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: auto"
+      LockScale		      off
       BusOutputAsStruct	      off
       PortDimensions	      "-1"
       VarSizeSig	      "Inherit"
       SampleTime	      "-1"
-      OutMin		      "[]"
-      OutMax		      "[]"
-      DataType		      "auto"
-      OutDataType	      "fixdt(1,16,0)"
-      OutScaling	      "[]"
-      OutDataTypeStr	      "Inherit: auto"
-      LockScale		      off
       SignalType	      "auto"
       SamplingMode	      "auto"
       SourceOfInitialOutputValue "Dialog"
@@ -655,7 +692,7 @@ Model {
       InitialOutput	      "[]"
     }
     Block {
-      BlockType		      "S-Function"
+      BlockType		      S-Function
       FunctionName	      "system"
       SFunctionModules	      "''"
       PortCounts	      "[]"
@@ -663,16 +700,15 @@ Model {
     }
     Block {
       BlockType		      Saturate
+      UpperLimitSource	      "Dialog"
       UpperLimit	      "0.5"
+      LowerLimitSource	      "Dialog"
       LowerLimit	      "-0.5"
       LinearizeAsGain	      on
       ZeroCross		      on
       SampleTime	      "-1"
       OutMin		      "[]"
       OutMax		      "[]"
-      OutDataTypeMode	      "Same as input"
-      OutDataType	      "fixdt(1,16,0)"
-      OutScaling	      "[]"
       OutDataTypeStr	      "Inherit: Same as input"
       LockScale		      off
       RndMeth		      "Floor"
@@ -705,6 +741,12 @@ Model {
       BlockType		      Sin
       SineType		      "Time based"
       TimeSource	      "Use simulation time"
+      Amplitude		      "1"
+      Bias		      "0"
+      Frequency		      "1"
+      Phase		      "0"
+      Samples		      "10"
+      Offset		      "0"
       SampleTime	      "-1"
       VectorParams1D	      on
     }
@@ -725,7 +767,11 @@ Model {
       RTWMemSecDataParameters "Inherit from model"
       SimViewingDevice	      off
       DataTypeOverride	      "UseLocalSettings"
+      DataTypeOverrideAppliesTo	"AllNumericTypes"
       MinMaxOverflowLogging   "UseLocalSettings"
+      SFBlockType	      "NONE"
+      Variant		      off
+      GeneratePreprocessorConditionals off
     }
     Block {
       BlockType		      Sum
@@ -737,9 +783,6 @@ Model {
       AccumDataTypeStr	      "Inherit: Inherit via internal rule"
       OutMin		      "[]"
       OutMax		      "[]"
-      OutDataTypeMode	      "Same as first input"
-      OutDataType	      "fixdt(1,16,0)"
-      OutScaling	      "[]"
       OutDataTypeStr	      "Inherit: Same as first input"
       LockScale		      off
       RndMeth		      "Floor"
@@ -753,6 +796,7 @@ Model {
       Decimation	      "1"
       SampleTime	      "0"
       FixptAsFi		      off
+      NumInputs		      "1"
     }
   }
   System {
@@ -771,11 +815,11 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    143
+    SIDHighWatermark	    "143"
     Block {
-      BlockType		      "S-Function"
+      BlockType		      S-Function
       Name		      "Barrett Hand client"
-      SID		      143
+      SID		      "143"
       Ports		      [2, 3]
       Position		      [690, 147, 840, 393]
       FunctionName	      "bh"
@@ -788,6 +832,8 @@ Model {
       "n|262 strain filt|280 position|280 velocity|280 deltap|280 strain|280 strain filt|pps"
       MaskStyleString	      "popup(Velocity|Position|Torque|Other),popup(Velocity|Position|Torque|Other),edit,edit,edi"
       "t,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox,checkbox"
+      MaskVariables	      "mode262=@1;mode280=@2;IP=&3;port=@4;ST=@5;a0=@6;a1=@7;a2=@8;a3=@9;a4=@10;a41=@11;a5=@12;a6="
+      "@13;a7=@14;a8=@15;a81=@16;a9=@17;"
       MaskTunableValueString  "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
       MaskCallbackString      "togglePorts()|togglePorts()|togglePorts()|togglePorts()||togglePorts()|togglePorts()|to"
       "gglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|togglePorts()|to"
@@ -795,8 +841,6 @@ Model {
       MaskEnableString	      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
       MaskVisibilityString    "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
       MaskToolTipString	      "on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on,on"
-      MaskVariables	      "mode262=@1;mode280=@2;IP=&3;port=@4;ST=@5;a0=@6;a1=@7;a2=@8;a3=@9;a4=@10;a41=@11;a5=@12;a6="
-      "@13;a7=@14;a8=@15;a81=@16;a9=@17;"
       MaskDisplay	      "text(0.3, 0.9, '\\fontsize{10}IP: {\\bf193.2.6.168 \\newline\\rmport: \\bf4444}', 'horizontal"
       "Alignment', 'center','texmode','on')color('red')port_label('input',1,'\\fontsize{12}BH262 {\\newline\\bfVelocity"
       "}','texmode','on')color('red') port_label('input',2,'\\fontsize{12}BH280  {\\newline\\bfVelocity}','texmode','on"
@@ -814,23 +858,17 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "Gain"
-      SID		      119
-      Position		      [485, 200, 515, 230]
+      SID		      "119"
+      Position		      [485, 195, 515, 225]
       Gain		      "[1 1 1 1]"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      ParameterDataType	      "fixdt(1, 16)"
-      ParameterScaling	      "2^0"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
     Block {
       BlockType		      Mux
       Name		      "Mux"
-      SID		      120
+      SID		      "120"
       Ports		      [2, 1]
       Position		      [1135, 416, 1140, 454]
       ShowName		      off
@@ -840,7 +878,7 @@ Model {
     Block {
       BlockType		      Mux
       Name		      "Mux1"
-      SID		      121
+      SID		      "121"
       Ports		      [4, 1]
       Position		      [535, 298, 540, 372]
       ShowName		      off
@@ -849,20 +887,12 @@ Model {
     Block {
       BlockType		      Reference
       Name		      "PID Controller"
-      SID		      122
+      SID		      "122"
       Ports		      [1, 1]
       Position		      [370, 310, 400, 340]
-      LibraryVersion	      "1.41"
-      SourceBlock	      "simulink_extras/Additional\nLinear/PID Controller"
+      LibraryVersion	      "1.13"
+      SourceBlock	      "simulink_need_slupdate/PID Controller"
       SourceType	      "PID Controller"
-      ShowPortLabels	      "FromPortIcon"
-      SystemSampleTime	      "-1"
-      FunctionWithSeparateData off
-      RTWMemSecFuncInitTerm   "Inherit from model"
-      RTWMemSecFuncExecute    "Inherit from model"
-      RTWMemSecDataConstants  "Inherit from model"
-      RTWMemSecDataInternal   "Inherit from model"
-      RTWMemSecDataParameters "Inherit from model"
       P			      "0.006"
       I			      "0"
       D			      "0"
@@ -870,7 +900,7 @@ Model {
     Block {
       BlockType		      Reference
       Name		      "Real-time\nSynchronization"
-      SID		      11
+      SID		      "11"
       Ports		      []
       Position		      [70, 30, 145, 70]
       LibraryVersion	      "1.214"
@@ -888,17 +918,17 @@ Model {
     Block {
       BlockType		      Saturate
       Name		      "Saturation1"
-      SID		      123
+      SID		      "123"
+      Ports		      [1, 1]
       Position		      [465, 310, 495, 340]
+      InputPortMap	      "u0"
       UpperLimit	      "0.1"
       LowerLimit	      "-0.1"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
     }
     Block {
       BlockType		      Scope
       Name		      "Scope"
-      SID		      124
+      SID		      "124"
       Ports		      [1]
       Position		      [1170, 419, 1200, 451]
       Floating		      off
@@ -920,7 +950,7 @@ Model {
     Block {
       BlockType		      Selector
       Name		      "Selector"
-      SID		      125
+      SID		      "125"
       Ports		      [1, 1]
       Position		      [1041, 305, 1079, 345]
       BlockRotation	      270
@@ -934,23 +964,20 @@ Model {
     Block {
       BlockType		      Sum
       Name		      "Sum2"
-      SID		      126
+      SID		      "126"
       Ports		      [2, 1]
       Position		      [315, 315, 335, 335]
       ShowName		      off
       IconShape		      "round"
       Inputs		      "|+-"
       InputSameDT	      off
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
     Block {
       BlockType		      ToWorkspace
       Name		      "To Workspace"
-      SID		      127
+      SID		      "127"
       Ports		      [1]
       Position		      [1095, 368, 1125, 392]
       VariableName	      "q"
@@ -961,7 +988,7 @@ Model {
     Block {
       BlockType		      ToWorkspace
       Name		      "To Workspace4"
-      SID		      128
+      SID		      "128"
       Ports		      [1]
       Position		      [310, 238, 340, 262]
       VariableName	      "qd"
@@ -972,7 +999,7 @@ Model {
     Block {
       BlockType		      ToWorkspace
       Name		      "To Workspace5"
-      SID		      129
+      SID		      "129"
       Ports		      [1]
       Position		      [455, 263, 485, 287]
       VariableName	      "dqd"
@@ -983,9 +1010,9 @@ Model {
     Block {
       BlockType		      SubSystem
       Name		      "position"
-      SID		      130
+      SID		      "130"
       Ports		      [0, 1]
-      Position		      [400, 201, 440, 229]
+      Position		      [400, 196, 440, 224]
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
       RTWSystemCode	      "Auto"
@@ -1011,45 +1038,37 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant4"
-	  SID			  131
+	  SID			  "131"
 	  Position		  [55, 95, 85, 125]
 	  Value			  "70"
-	  OutDataType		  "fixdt(1, 16)"
-	  OutScaling		  "2^0"
 	}
 	Block {
 	  BlockType		  Sin
 	  Name			  "Sine Wave2"
-	  SID			  132
+	  SID			  "132"
 	  Ports			  [0, 1]
 	  Position		  [25, 27, 85, 63]
 	  Amplitude		  "30"
-	  Bias			  "0"
 	  Frequency		  "pi"
 	  Phase			  "pi/4"
-	  Samples		  "10"
-	  Offset		  "0"
 	}
 	Block {
 	  BlockType		  Sum
 	  Name			  "Sum1"
-	  SID			  133
+	  SID			  "133"
 	  Ports			  [2, 1]
 	  Position		  [125, 35, 145, 55]
 	  ShowName		  off
 	  IconShape		  "round"
 	  Inputs		  "|++"
 	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "fixdt(1, 16)"
-	  OutScaling		  "2^0"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "q ref"
-	  SID			  134
+	  SID			  "134"
 	  Position		  [165, 38, 195, 52]
 	  IconDisplay		  "Port number"
 	}
@@ -1076,8 +1095,8 @@ Model {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "position1"
-      SID		      135
+      Name		      "position reference\nin degrees"
+      SID		      "135"
       Ports		      [0, 1]
       Position		      [90, 311, 130, 339]
       MinAlgLoopOccurrences   off
@@ -1088,7 +1107,7 @@ Model {
       RequestExecContextInheritance off
       MaskHideContents	      off
       System {
-	Name			"position1"
+	Name			"position reference\nin degrees"
 	Location		[219, 584, 595, 785]
 	Open			off
 	ModelBrowserVisibility	off
@@ -1105,45 +1124,37 @@ Model {
 	Block {
 	  BlockType		  Constant
 	  Name			  "Constant4"
-	  SID			  136
+	  SID			  "136"
 	  Position		  [145, 105, 175, 135]
 	  Value			  "70"
-	  OutDataType		  "fixdt(1, 16)"
-	  OutScaling		  "2^0"
 	}
 	Block {
 	  BlockType		  Sin
 	  Name			  "Sine Wave2"
-	  SID			  137
+	  SID			  "137"
 	  Ports			  [0, 1]
 	  Position		  [25, 27, 85, 63]
 	  Amplitude		  "30"
-	  Bias			  "0"
 	  Frequency		  "0.5*pi"
 	  Phase			  "pi/4"
-	  Samples		  "10"
-	  Offset		  "0"
 	}
 	Block {
 	  BlockType		  Sum
 	  Name			  "Sum1"
-	  SID			  138
+	  SID			  "138"
 	  Ports			  [2, 1]
 	  Position		  [275, 35, 295, 55]
 	  ShowName		  off
 	  IconShape		  "round"
 	  Inputs		  "|++"
 	  InputSameDT		  off
-	  OutDataTypeMode	  "Inherit via internal rule"
-	  OutDataType		  "fixdt(1, 16)"
-	  OutScaling		  "2^0"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "q ref"
-	  SID			  139
+	  SID			  "139"
 	  Position		  [315, 38, 345, 52]
 	  IconDisplay		  "Port number"
 	}
@@ -1171,48 +1182,30 @@ Model {
     Block {
       BlockType		      Gain
       Name		      "to degrees"
-      SID		      140
+      SID		      "140"
       Position		      [885, 171, 930, 209]
       Gain		      "180/pi"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      ParameterDataType	      "fixdt(1, 16)"
-      ParameterScaling	      "2^0"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
     Block {
       BlockType		      Gain
       Name		      "to radians"
-      SID		      141
-      Position		      [545, 196, 590, 234]
+      SID		      "141"
+      Position		      [545, 191, 590, 229]
       Gain		      "0"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      ParameterDataType	      "fixdt(1, 16)"
-      ParameterScaling	      "2^0"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
     Block {
       BlockType		      Gain
       Name		      "to radians1"
-      SID		      142
+      SID		      "142"
       Position		      [575, 316, 620, 354]
       Gain		      "pi/180"
-      ParameterDataTypeMode   "Inherit via internal rule"
-      ParameterDataType	      "fixdt(1, 16)"
-      ParameterScaling	      "2^0"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeMode	      "Inherit via internal rule"
-      OutDataType	      "fixdt(1, 16)"
-      OutScaling	      "2^0"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
@@ -1263,7 +1256,7 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "position1"
+      SrcBlock		      "position reference\nin degrees"
       SrcPort		      1
       Points		      [20, 0]
       Branch {
@@ -1284,7 +1277,6 @@ Model {
     Line {
       SrcBlock		      "to radians"
       SrcPort		      1
-      Points		      [80, 0]
       DstBlock		      "Barrett Hand client"
       DstPort		      1
     }
@@ -1339,7 +1331,7 @@ Model {
 }
 # Finite State Machines
 #
-#    Stateflow Version 7.1 (R2009a) dated Jul 17 2009, 10:24:20
+#    Stateflow Version 7.6 (R2011b) dated Aug  6 2011, 13:17:15
 #
 #
 
@@ -1351,7 +1343,7 @@ Stateflow {
     created		    "14-Mar-2012 13:35:40"
     isLibrary		    0
     firstTarget		    2
-    sfVersion		    71014000.00001
+    sfVersion		    76014001.0002
   }
   target {
     id			    2

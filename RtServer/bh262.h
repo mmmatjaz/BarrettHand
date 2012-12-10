@@ -89,6 +89,7 @@ class BH262
 private:
 //local data
 	double T;
+	double dt;
 	//current
 	timeval now;
 	HandControls Cons;

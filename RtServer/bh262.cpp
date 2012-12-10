@@ -90,7 +90,7 @@ void BH262::Loop()
 	***************************** */
 	timeval time2;
 	
-	double dt;
+
 	while(shouldRun)
 	{	
 		gettimeofday(&time2, NULL);
@@ -178,13 +178,16 @@ int BH262::Begin()
 			break;
 
 		case POS_CONTROL:	// position control
-			cout<<"PrepareRealTime()... Position mode "<<endl;
+			cout<<"PrepareRealTime()... Position mode unavailable on BH262!"<<endl;
+			return 0;
+			/*
 			if (result = bh.Set("123S", "LCV", false))
 				Error();
 			if (result = bh.Set("123S", "LCP", true))
 				Error();
 			if (result = bh.Set("123S", "LCT", false))
 				Error();
+				*/
 			break;
 		
 		case TOR_CONTROL:	// torque control			
@@ -230,18 +233,16 @@ void BH262::SendToHand()
 	case VEL_CONTROL:	// velocity control		
 		for (int m = 0; m < 4; m++)
 		{
+			if (dt<0.03)
+			{
 			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5)/100;
 			//cout<<"\nvel: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
 			result=bh.RTSetVelocity(m + '1', temp);
+			}
 		}
 		break;
 	case POS_CONTROL:	// position control
-		for (int m = 0; m < 4; m++)
-		{	
-			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5);
-			//cout<<"\nVel: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
-			result=bh.RTSetPosition(m + '1', temp);
-		}
+		// not available on bh262
 		break;
 
 	case TOR_CONTROL:	// torque control
