@@ -74,12 +74,12 @@ void BH262::Initialize(	int ComPort,
 	Mutex=mutex; tstamp=LastReceived; shouldRun=true;
 
 	cout<<("Initialization...")<<endl;
-	
+	/*
 	if( result=bh.InitSoftware(ComPort,THREAD_PRIORITY_TIME_CRITICAL) )	Error();
 	if( result=bh.ComSetTimeouts(0,100,15000,100,5000) )				Error();
 	if( result=bh.Baud(38400) )											Error();
 	if (result = bh.InitHand(""))										Error();
-	
+	*/
 	//if (result = bh.InitHand("")) Error();
 }
 
@@ -103,9 +103,9 @@ void BH262::Loop()
 		else conn=false;
 		
 		if ( NO_CONN )			usleep(1000);
-		if ( CONN_INIT ) 		Begin();
+		if ( CONN_INIT ) 		;//Begin();
 		if ( CONN ) 			RunRealTime();
-		if ( CONN_LOST )		TerminateRealTime();
+		if ( CONN_LOST )		;//TerminateRealTime();
 		
 		conn_=conn;	
 	}
@@ -116,10 +116,10 @@ void BH262::Loop()
 
 void BH262::RunRealTime()
 {
-	ReadFromHand();
-	RefreshData();
+	//ReadFromHand();
+	//RefreshData();
 	SendToHand();
-	RememberData();
+	//RememberData();
 }
 
 int BH262::Begin()
@@ -238,10 +238,11 @@ void BH262::SendToHand()
 			if (dt<0.03)
 			{
 			temp=(int)((Cons.cValues[m] * props.scaleIN[m])+0.5)/100;
-			//cout<<"\nvel: "<<Cons.cValues[m]<<"  Pos: "<<Meas.Position[m];
-			result=bh.RTSetVelocity(m + '1', temp);
+			cout<<"\tvel: "<<Cons.cValues[m];//<<"  Pos: "<<Meas.Position[m];
+			//result=bh.RTSetVelocity(m + '1', temp);
 			}
 		}
+		cout<<"\r";
 		break;
 	case POS_CONTROL:	// position control
 		// not available on bh262

@@ -77,9 +77,6 @@
     <ClCompile Include="graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bhRT.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="bh262.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -104,7 +104,6 @@
     <ClCompile Include="app.cpp" />
     <ClCompile Include="bh262.cpp" />
     <ClCompile Include="bh280.cpp" />
-    <ClCompile Include="bhRT.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="server.cpp" />
