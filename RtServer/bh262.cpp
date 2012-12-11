@@ -124,7 +124,7 @@ void BH262::RunRealTime()
 
 int BH262::Begin()
 {
-	cout<<("PrepareRealTime()... ");
+	//cout<<("PrepareRealTime()... ");
 	char reply[50];
 	int  ctrl=0;
 	while(ctrl<1 || ctrl>4) 
@@ -171,8 +171,10 @@ int BH262::Begin()
 			cout<<"PrepareRealTime()... Velocity mode "<<endl;
 			if (result = bh.Set("123S", "LCV", true))
 				Error();
+			/*
 			if (result = bh.Set("123S", "LCP", false))
 				Error();
+				*/
 			if (result = bh.Set("123S", "LCT", false))
 				Error();
 			break;
@@ -193,9 +195,9 @@ int BH262::Begin()
 		case TOR_CONTROL:	// torque control			
 			cout<<"PrepareRealTime()... Torque mode "<<endl;					
 			if (result = bh.Set("123S", "LCV", false))
-				;
+				;/*
 			if (result = bh.Set("123S", "LCP", false))
-				;
+				;*/
 			if (result = bh.Set("123S", "LCT", true))
 				;
 			break;

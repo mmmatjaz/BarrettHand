@@ -69,3 +69,5 @@ E:\SkyDrive\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.exe
 E:\SkyDrive\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.pdb
 D:\SkyDrive\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.exe
 D:\SkyDrive\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.pdb
+E:\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.exe
+E:\BarrettHand\bhLauncher\obj\x86\Release\ServerLauncher.pdb
